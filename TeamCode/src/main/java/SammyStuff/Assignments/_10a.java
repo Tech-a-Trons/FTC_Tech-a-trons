@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.MyCode;
+package SammyStuff.Assignments;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;

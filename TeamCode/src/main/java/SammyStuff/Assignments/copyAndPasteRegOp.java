@@ -1,4 +1,16 @@
-package org.firstinspires.ftc.MyCode;
+
+
+
+
+
+// I will convert this to SammyRegOp later
+
+
+
+
+
+
+package SammyStuff.Assignments;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;

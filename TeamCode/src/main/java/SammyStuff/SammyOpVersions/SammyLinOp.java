@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.SammyOpVersions;
+package SammyStuff.SammyOpVersions;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 
@@ -28,6 +27,7 @@ public abstract class SammyLinOp extends LinearOpMode {
     double FLOV = fle.getCurrentPosition();
     double FROV = fre.getCurrentPosition();
     double BMOV = bme.getCurrentPosition();
+
     private final Object      runningNotifier = new Object();
     @Override
     abstract public void runOpMode() throws InterruptedException;
@@ -137,11 +137,13 @@ public abstract class SammyLinOp extends LinearOpMode {
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
-    public void teleOp(){
+    public void MoveChassis(){
+
+
+
         drive = -gamepad1.left_stick_y;
         turn = gamepad1.right_stick_x;
         strafe = gamepad1.left_stick_x;
-
 
         flpwr = drive + turn + strafe;
         frpwr = drive - turn - strafe;

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.MyCode;
+package SammyStuff.Assignments;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;

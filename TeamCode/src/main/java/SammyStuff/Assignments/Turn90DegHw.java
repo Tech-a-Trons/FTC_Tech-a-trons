@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.MyCode;
-
+package SammyStuff.Assignments;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 
-import org.firstinspires.ftc.SammyOpVersions.SammyLinOp;
+import SammyStuff.SammyOpVersions.SammyLinOp;
+
 @Autonomous(name = "90 degree turn")
 public class Turn90DegHw extends SammyLinOp {
     DcMotor fl;
@@ -40,8 +40,10 @@ public class Turn90DegHw extends SammyLinOp {
      waitForStart();
     while (opModeIsActive()) {
 
-        if (getYaw()!= 90){
+        if (getYaw()!= 90&&getYaw() > 45){
         setChassisPwr(1,-1,1,-1);
+        }else if(getYaw()!=90&&getYaw() <45){
+            setChassisPwr(0.5,-0.5,0.5,-0.5);
         }else{
             setChassisPwr(0,0,0,0);
         }

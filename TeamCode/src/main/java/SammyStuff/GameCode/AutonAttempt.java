@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.MyCode;
+package SammyStuff.GameCode;
 
-import org.firstinspires.ftc.SammyOpVersions.SammyLinOp;
+import SammyStuff.SammyOpVersions.SammyLinOp;
 
 public class AutonAttempt extends SammyLinOp {
 
