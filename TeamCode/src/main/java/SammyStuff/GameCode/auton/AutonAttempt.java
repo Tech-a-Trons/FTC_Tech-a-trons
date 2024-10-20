@@ -1,4 +1,4 @@
-package SammyStuff.GameCode;
+package SammyStuff.GameCode.auton;
 
 import SammyStuff.SammyOpVersions.SammyLinOp;
 

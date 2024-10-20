@@ -8,7 +8,9 @@ import SammyStuff.SammyOpVersions.SammyLinOp;
 @Autonomous(name = "90 degree turn")
 public class Turn90DegHw extends SammyLinOp {
     DcMotor fl;
-    DcMotor fr;
+    DcMotor fr;double YawAngle = getYaw();
+    double PitchAngle = getPitch();
+    double RollAngle = getRoll();
     DcMotor br;
     DcMotor bl;
     DcMotor fle, fre,bme;
@@ -18,9 +20,7 @@ public class Turn90DegHw extends SammyLinOp {
     double flpwr, frpwr, blpwr, brpwr;
     double flc,frc,blc,brc;
     IMU imu;
-    double YawAngle = getYaw();
-    double PitchAngle = getPitch();
-    double RollAngle = getRoll();
+
 
     double FLOV = fle.getCurrentPosition();
     double FROV = fre.getCurrentPosition();
