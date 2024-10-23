@@ -1,5 +1,6 @@
 package SammyStuff.Assignments;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 
@@ -8,7 +9,8 @@ import SammyStuff.SammyOpVersions.SammyLinOp;
 @Autonomous(name = "90 degree turn")
 public class Turn90DegHw extends SammyLinOp {
     DcMotor fl;
-    DcMotor fr;double YawAngle = getYaw();
+    DcMotor fr;
+    double YawAngle = getYaw();
     double PitchAngle = getPitch();
     double RollAngle = getRoll();
     DcMotor br;
@@ -31,7 +33,6 @@ public class Turn90DegHw extends SammyLinOp {
     public void runOpMode() throws InterruptedException{
 
      HardwareMap();
-     reverse();
      telemetryInit();
      use_encoder();
      brake();

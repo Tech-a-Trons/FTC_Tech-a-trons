@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import SammyStuff.SammyOpVersions.SammyLinOp;
+
 @TeleOp(name = "8b")
 public class _8b extends LinearOpMode {
     DcMotor fl = null;
@@ -17,7 +20,6 @@ public class _8b extends LinearOpMode {
     double flc,frc,blc,brc;
     @Override
     public void runOpMode() throws InterruptedException {
-
 
 
         HardwareMap();

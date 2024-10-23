@@ -12,41 +12,35 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 public abstract class SammyLinOp extends LinearOpMode {
+    public SammyLinOp() {
+    }
 
-
-
-    // chassis motors
     DcMotor fl;
     DcMotor fr;
     DcMotor br;
     DcMotor bl;
-   //odometry
-    DcMotor fle, fre, bme;
-  //to move the chassis
+    DcMotor fle, fre,bme;
     double drive;
     double turn;
     double strafe;
     double flpwr, frpwr, blpwr, brpwr;
-   double flc, frc, blc, brc;
-  //Imu
-   IMU imu;
-   // telemetry
+    double flc,frc,blc,brc;
+    IMU imu;
     double YawAngle = getYaw();
     double PitchAngle = getPitch();
     double RollAngle = getRoll();
 
-   double FLOV = fle.getCurrentPosition();
-   double FROV = fre.getCurrentPosition();
+    double FLOV = fle.getCurrentPosition();
+    double FROV = fre.getCurrentPosition();
     double BMOV = bme.getCurrentPosition();
-  // Servos
-   Servo servo1;
-   //Linear Slides
+    Servo servo1;
+    Servo servo2;
     DcMotor fsls1;
     DcMotor fsls2;
 
     abstract public void runOpMode() throws InterruptedException;
 
-    public final void HardwareMap() {
+    public void HardwareMap() {
 
         fl = hardwareMap.get(DcMotor.class, "fl");
         fr = hardwareMap.get(DcMotor.class, "fr");
@@ -60,15 +54,12 @@ public abstract class SammyLinOp extends LinearOpMode {
         fsls1 = hardwareMap.get(DcMotor.class, "fl");
         fsls2 = hardwareMap.get(DcMotor.class, "fl");
 
-    }
-
-    public final void reverse() {
-
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    public final void use_encoder() {
+
+    public void use_encoder() {
 
         fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -81,11 +72,6 @@ public abstract class SammyLinOp extends LinearOpMode {
         br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
-        fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
         fle.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bme.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         fre.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -94,14 +80,9 @@ public abstract class SammyLinOp extends LinearOpMode {
         fre.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         bme.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        fle.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        fre.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        bme.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
     }
 
-    public final void DontUseEncoders() {
+    public void DontUseEncoders() {
 
         fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -114,14 +95,14 @@ public abstract class SammyLinOp extends LinearOpMode {
 
     }
 
-    public final void telemetryInit() {
+    public void telemetryInit() {
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
         telemetry.setMsTransmissionInterval(100);
     }
 
-    public final void telemetryAfterInit() {
+    public void telemetryAfterInit() {
 
         flc = fl.getCurrentPosition();
         frc = fr.getCurrentPosition();
@@ -152,14 +133,14 @@ public abstract class SammyLinOp extends LinearOpMode {
 
     }
 
-    public final void brake() {
+    public void brake() {
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public final void MoveChassis() {
+    public void MoveChassis(DcMotor fl,DcMotor fr,DcMotor br,DcMotor bl) {
 
 
         drive = -gamepad1.left_stick_y;
@@ -186,7 +167,7 @@ public abstract class SammyLinOp extends LinearOpMode {
         }
     }
 
-    public final void imuInit() {
+    public void imuInit() {
         imu.initialize(
                 new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
                         RevHubOrientationOnRobot.UsbFacingDirection.RIGHT))
@@ -196,40 +177,40 @@ public abstract class SammyLinOp extends LinearOpMode {
         imu.resetYaw();
     }
 
-    public final void displaySmallOnDS(String Heading, double Data) {
+    public void displaySmallOnDS(String Heading, double Data) {
         telemetry.addData(Heading, Data);
     }
 
-    public final void displayBigOnDS(String Heading) {
+    public void displayBigOnDS(String Heading) {
         telemetry.addLine(Heading);
     }
 
 
-    public final double getYaw() {
+    public double getYaw() {
         assert imu != null;
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
     }
 
 
-    public final double getPitch() {
+    public double getPitch() {
         assert imu != null;
         return imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.DEGREES);
     }
 
 
-    public final double getRoll() {
+    public double getRoll() {
         assert imu != null;
         return imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.DEGREES);
     }
 
-    public final void SetTargetPosChassis(int flt, int frt, int blt, int brt) {
+    public void SetTargetPosChassis(int flt, int frt, int blt, int brt) {
         fl.setTargetPosition(flt);
         fr.setTargetPosition(frt);
         bl.setTargetPosition(blt);
         br.setTargetPosition(brt);
     }
 
-    public final void setChassisPwr(double flp, double frp, double blp, double brp) {
+    public void setChassisPwr(double flp, double frp, double blp, double brp) {
         fl.setPower(flp);
         bl.setPower(blp);
         fr.setPower(frp);
@@ -238,14 +219,14 @@ public abstract class SammyLinOp extends LinearOpMode {
     }
 
 
-    public final void Movefsls1TargetPos(int TargetPos, double pwr) {
+    public void Movefsls1TargetPos(int TargetPos, double pwr) {
         fsls1.setTargetPosition(TargetPos);
         fsls1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         fsls1.setPower(pwr);
     }
 
 
-    public final void Movefsls2TargetPos(int TargetPos, double pwr) {
+    public void Movefsls2TargetPos(int TargetPos, double pwr) {
         fsls2.setTargetPosition(TargetPos);
         fsls2.setPower(pwr);
     }
