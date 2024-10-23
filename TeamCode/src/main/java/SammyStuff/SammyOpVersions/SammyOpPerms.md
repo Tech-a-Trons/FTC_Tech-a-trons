@@ -11,8 +11,7 @@ SammyLinOp functions:
 9.imuInit();
 10.SetTargetPosChassis(int flt, int frt, int blt, int brt);
 11.setChassisPwr(double flp,double frp, double blp, double brp);
-12.Movefsls(1&2)Pwr(double pwr);
-13.Movefsls(1&2)TargetPos(int TargetPos, double pwr)
+12.Movefsls(1&2)TargetPos(int TargetPos, double pwr)
 
 
 
@@ -46,5 +45,6 @@ Copy and paste the stuff below to get access to all the commands
     double BMOV = bme.getCurrentPosition();
     Servo servo1;
     Servo servo2;
-    DcMotor FourStageLinearSlides_1;
+    DcMotor fsls_1;
+    DcMotor fsls_2;
 
