@@ -1,16 +1,43 @@
 SammyLinOp functions:
 
 1.hardwareMap();
+
+
 2.reverse();
+
+
 3.use_encoder();
+
+
 4.DontUseEncoders();
+
+
 5.telemetryInit();
+
+
 6.telemetryAfterInit();
+
+
 7.brake();
+
+
+
 8.teleOp();
+
+
+
 9.imuInit();
+
+
+
 10.SetTargetPosChassis(int flt, int frt, int blt, int brt);
+
+
+
 11.setChassisPwr(double flp,double frp, double blp, double brp);
+
+
+
 12.Movefsls(1&2)TargetPos(int TargetPos, double pwr)
 
 
