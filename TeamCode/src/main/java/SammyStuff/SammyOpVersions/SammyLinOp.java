@@ -12,10 +12,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @SuppressWarnings("unused")
 public abstract class SammyLinOp extends LinearOpMode {
+    LinearOpMode SammyLinOp;
 
-    private LinearOpMode SammyLinOp;
-    public SammyLinOp(LinearOpMode opmode) {SammyLinOp = opmode;
-    }
 
 
     DcMotor fl;
