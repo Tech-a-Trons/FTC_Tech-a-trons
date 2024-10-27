@@ -1,4 +1,3 @@
-SammyFunctions functions:
 
 1.hardwareMap();
 
@@ -41,9 +40,13 @@ SammyFunctions functions:
 12.Movefsls(1&2)TargetPos(int TargetPos, double pwr)
 
 
+
+
+
+
+
+
 will add more later
-
-
 
 
 
@@ -55,24 +58,10 @@ will add more later
 Perms to use: vedu(all)
 
 
-
-
-
-
-
-
-
-This is the same functions as SammyLinOp, but SammyLinOp isnt working rn
-
-
-
-
-
-
-
 Copy and paste the stuff below to get access to all the commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+ private SammyFunctions functions= new SammyFunctions(this);
     DcMotor fl;
     DcMotor fr;
     DcMotor br;
@@ -95,4 +84,3 @@ Copy and paste the stuff below to get access to all the commands
     Servo servo2;
     DcMotor fsls_1;
     DcMotor fsls_2;
-

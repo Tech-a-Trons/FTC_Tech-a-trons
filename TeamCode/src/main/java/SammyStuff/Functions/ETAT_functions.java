@@ -1,14 +1,13 @@
 package SammyStuff.Functions;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -31,17 +30,30 @@ public class ETAT_functions {
     public DcMotor FrontRightEncoder;       //  the right Axial (front/back) Odometry Module
     public DcMotor BackMiddleEncoder;            //  the Lateral (left/right) Odometry Module
 
+    // For Drive Train
+    double drive; // drive: left joystick y-axis
+    double turn;  // turn: right joystick x-axis
+    double strafe;  // strafe: left joystick x-axis
+    double FLspeed, FRspeed, BLspeed, BRspeed;
+
     // For linear slides
     public DcMotor LeftLinearSlide;
     public DcMotor RightLinearSlide;
+    public DcMotor LinearSlide;
 
     // For Claw Servo
-    public Servo claw = null;
+    public Servo Claw_Servo = null;
     public final static double CLAW_HOME = 0.0;
-    public final static double CLAW_MIN_RANGE = 0.0;
-    public final static double CLAW_MAX_RANGE = 0.5;
-    public final static double CLAW_CLOSE = 0.0;
-    public final static double CLAW_OPEN = 0.2;
+//    public final static double CLAW_MIN_RANGE = 0.0;
+//    public final static double CLAW_MAX_RANGE = 0.5;
+//    public final static double CLAW_CLOSE = 0.0;
+//    public final static double CLAW_OPEN = 0.2;
+
+    // For Active-Intake CR Servo
+    public CRServo Active_Intake_CRServo = null;
+    public final static double ACTIVE_INTAKE_IN = 1;
+    public final static double ACTIVE_INTAKE_OUT = -1;
+    public final static double ACTIVE_INTAKE_STOP = 0;
 
     // Robot Constructor
     public ETAT_functions(LinearOpMode opmode) {
@@ -65,7 +77,9 @@ public class ETAT_functions {
                                     String FrontLeftEncoderName, String FrontRightEncoderName,
                                     String BackMiddleEncoderName, String IMUname,
                                     //String LeftLinearSlideName, String RightLinearSlideName,
-                                    String claw_servo_name){
+                                    String LinearSlideName,
+                                    String ClawServeName,
+                                    String ActiveIntakeName){
         FrontRight = myOpMode.hardwareMap.dcMotor.get(frName);
         BackRight = myOpMode.hardwareMap.dcMotor.get(brName);
         FrontLeft = myOpMode.hardwareMap.dcMotor.get(flName);
@@ -81,9 +95,15 @@ public class ETAT_functions {
 //        // Linear slide Hardware initialize:
 //        LeftLinearSlide = myOpMode.hardwareMap.dcMotor.get(LeftLinearSlideName);
 //        RightLinearSlide = myOpMode.hardwareMap.dcMotor.get(RightLinearSlideName);
+//        LinearSlide = myOpMode.hardwareMap.dcMotor.get(LinearSlideName);
+        LinearSlide = myOpMode.hardwareMap.get(DcMotor.class, LinearSlideName);
 
         // For Claw Servo Hardware initialize:
-        claw = myOpMode.hardwareMap.servo.get(claw_servo_name);
+//        Claw_Servo = myOpMode.hardwareMap.servo.get(ClawServeName);
+        Claw_Servo = myOpMode.hardwareMap.get(Servo.class,ClawServeName);
+
+        // For Acive-Intake CRServo Hardware initialize:
+        Active_Intake_CRServo = myOpMode.hardwareMap.get(CRServo.class,ActiveIntakeName);
     }
 
     public void myRobot_HardwareConfig(){
@@ -126,6 +146,10 @@ public class ETAT_functions {
         imu.resetYaw();
 
 //        //Linear SLide
+        LinearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LinearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LinearSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 //        LeftLinearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //        RightLinearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //
@@ -134,14 +158,15 @@ public class ETAT_functions {
 //
 //        LeftLinearSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //        RightLinearSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+//
         //Claw Servo
-        claw.setPosition(CLAW_HOME);
+        Claw_Servo.setPosition(CLAW_HOME);
+
+        // Active-Intake CRServo
+        Active_Intake_CRServo.setPower(ACTIVE_INTAKE_STOP);
 
         //Set all the motor speed/power to 0
         set_myRobotAllMotorSpeedSame(0.0);
-
-
     }
 
     //-------------------Telemetry Functions------------------------
@@ -159,6 +184,109 @@ public class ETAT_functions {
     public void TelemetryUpdate(int sleeptime) {
         myOpMode.telemetry.update();
         myOpMode.sleep(sleeptime);
+    }
+
+
+    //Drive Train code Start===============================================================
+    public void Drivetrain(double Drive_button, double Turn_button, double Strafe_Button,
+                           double Drive_Speed, double Turn_Speed, double Strafe_Speed){
+        drive = (Drive_button * -1) * Drive_Speed;
+        turn = (Turn_button) * Turn_Speed;
+        strafe = (Strafe_Button) * Strafe_Speed;
+
+        FLspeed = drive + turn + strafe;
+        FRspeed = drive - turn - strafe;
+        BLspeed = drive + turn - strafe;
+        BRspeed = drive - turn + strafe;
+
+        // Scaling Drive Powers Proportionally
+        double maxF = Math.max((Math.abs(FLspeed)),(Math.abs(FRspeed)));
+        double maxB = Math.max((Math.abs(BLspeed)),(Math.abs(BRspeed)));
+        double maxFB_speed = Math.max(Math.abs(maxF),Math.abs(maxB));
+
+        if(maxFB_speed > 1){
+            FLspeed = FLspeed / maxFB_speed;
+            FRspeed = FRspeed / maxFB_speed;
+            BLspeed = BLspeed / maxFB_speed;
+            BRspeed = BRspeed / maxFB_speed;
+        }
+        set_myRobotSpeed(FLspeed, FRspeed, BLspeed, BRspeed);
+    }
+
+    // Linear Slider functions
+    public void setLinearSlide(String Direction, int Position, double Speed) {
+        if (Direction == "UP") {
+            LinearSlide.setTargetPosition(-Position);
+            LinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            LinearSlide.setPower(Speed);
+            while (myOpMode.opModeIsActive() && LinearSlide.isBusy()) {
+                myOpMode.idle();
+            }
+            LinearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            LinearSlide.setPower(0);
+        } else if (Direction == "DOWN") {
+            LinearSlide.setTargetPosition(Position);
+            LinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            LinearSlide.setPower(Speed);
+            while (myOpMode.opModeIsActive() && LinearSlide.isBusy()) {
+                myOpMode.idle();
+            }
+            LinearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            LinearSlide.setPower(0);
+        } else {
+            LinearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            LinearSlide.setPower(0);
+        }
+    }
+
+    public void setLinearSlidePosition(int Position, double Power) {
+        LeftLinearSlide.setTargetPosition(Position);
+        RightLinearSlide.setTargetPosition(Position);
+
+        LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        LeftLinearSlide.setPower(Power);
+        RightLinearSlide.setPower(Power);
+    }
+
+    public void setLinearSlidePower(double power) {
+        // If the motor is busy, don't allow this function to command the motor.
+        // However, if the motor is busy, update telemetry.
+        if( LeftLinearSlide.isBusy() && RightLinearSlide.isBusy())
+        {
+            // This function always gets called, so it makes sense for the telemetry
+            // to be here whenever this function isn't commanding the arm.
+            myOpMode.telemetry.addData("Current POS","LLS: %.0f, RLS: %.0f", LeftLinearSlide.getCurrentPosition(), RightLinearSlide.getCurrentPosition());
+            myOpMode.telemetry.addData("Target POS", "LLS: %.0f, RLS: %.0f", LeftLinearSlide.getTargetPosition(),RightLinearSlide.getTargetPosition());
+            myOpMode.telemetry.update();
+        }
+        else
+        {
+            // Only command the Linear slide if the firmware isn't currently using it.
+            LeftLinearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            RightLinearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            LeftLinearSlide.setPower(power);
+            RightLinearSlide.setPower(power);
+        }
+    }
+    //----------------------------------------------------
+    // Claw functions
+
+    //----------------------------------------------------
+    //----------------------------------------------------
+    // Active-Intake CRServo functions
+    public void setActiveIntake(String Operation) {
+        // Operation : IN  or OUT or STOP
+        if (myOpMode.opModeIsActive() && Operation == "IN")
+            Active_Intake_CRServo.setPower(ACTIVE_INTAKE_IN);
+
+        if (myOpMode.opModeIsActive() && Operation == "OUT")
+            Active_Intake_CRServo.setPower(ACTIVE_INTAKE_OUT);
+
+        if (myOpMode.opModeIsActive() && Operation == "STOP")
+            Active_Intake_CRServo.setPower(ACTIVE_INTAKE_STOP);
     }
 
     //-------------------IMU Functions------------------------
@@ -235,7 +363,6 @@ public class ETAT_functions {
         set_myRobotAllMotorSpeedSame(0);
     }
 
-
     // RelativeTurn : From where ever robot is facing turn from that point.
     public void RelativeTurn(double TargetDegrees){
         imu.resetYaw();
@@ -286,6 +413,8 @@ public class ETAT_functions {
         }
         set_myRobotAllMotorSpeedSame(0);
     }
+
+
 
     // Single use per object
     public class TurnPIDController {
@@ -372,42 +501,8 @@ public class ETAT_functions {
         return radians;
     }
     //----------------------------------------------------
-    // Linear Slider functions
 
-    public void setLinearSlidePosition(int Position, double Power) {
-        LeftLinearSlide.setTargetPosition(Position);
-        RightLinearSlide.setTargetPosition(Position);
 
-        LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        RightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        LeftLinearSlide.setPower(Power);
-        RightLinearSlide.setPower(Power);
-    }
-
-    public void setLinearSlidePower(double power) {
-        // If the motor is busy, don't allow this function to command the motor.
-        // However, if the motor is busy, update telemetry.
-        if( LeftLinearSlide.isBusy() && RightLinearSlide.isBusy())
-        {
-            // This function always gets called, so it makes sense for the telemetry
-            // to be here whenever this function isn't commanding the arm.
-            myOpMode.telemetry.addData("Current POS","LLS: %.0f, RLS: %.0f", LeftLinearSlide.getCurrentPosition(), RightLinearSlide.getCurrentPosition());
-            myOpMode.telemetry.addData("Target POS", "LLS: %.0f, RLS: %.0f", LeftLinearSlide.getTargetPosition(),RightLinearSlide.getTargetPosition());
-            myOpMode.telemetry.update();
-        }
-        else
-        {
-            // Only command the Linear slide if the firmware isn't currently using it.
-            LeftLinearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            RightLinearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-            LeftLinearSlide.setPower(power);
-            RightLinearSlide.setPower(power);
-        }
-    }
-    //----------------------------------------------------
-    // Claw functions
-
-    //----------------------------------------------------
 }
+
+

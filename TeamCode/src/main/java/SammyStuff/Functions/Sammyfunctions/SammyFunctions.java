@@ -1,20 +1,23 @@
-package SammyStuff.SammyOpVersions;
+package SammyStuff.Functions.Sammyfunctions;
+
+
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@SuppressWarnings("unused")
-public abstract class SammyLinOp extends LinearOpMode {
-
-    private LinearOpMode SammyLinOp;
-    public SammyLinOp(LinearOpMode opmode) {SammyLinOp = opmode;
+public class SammyFunctions {
+    public LinearOpMode SammyOpMode;
+    private ElapsedTime holdTimer = new ElapsedTime();
+    public SammyFunctions(LinearOpMode opMode) {
+        SammyOpMode = opMode;
     }
 
 
@@ -41,21 +44,20 @@ public abstract class SammyLinOp extends LinearOpMode {
     DcMotor fsls1;
     DcMotor fsls2;
 
-    abstract public void runOpMode() throws InterruptedException;
-
     public void HardwareMap() {
 
-        fl = hardwareMap.get(DcMotor.class, "fl");
-        fr = hardwareMap.get(DcMotor.class, "fr");
-        bl = hardwareMap.get(DcMotor.class, "bl");
-        br = hardwareMap.get(DcMotor.class, "br");
-        fle = hardwareMap.dcMotor.get("fl");
-        fre = hardwareMap.dcMotor.get("fr");
-        bme = hardwareMap.dcMotor.get("bl");
-        imu = hardwareMap.get(IMU.class, "imu");
-        servo1 = hardwareMap.get(Servo.class, "servo1");
-        fsls1 = hardwareMap.get(DcMotor.class, "fl");
-        fsls2 = hardwareMap.get(DcMotor.class, "fl");
+
+        fl = SammyOpMode.hardwareMap.get(DcMotor.class, "fl");
+        fr = SammyOpMode.hardwareMap.get(DcMotor.class, "fr");
+        bl = SammyOpMode.hardwareMap.get(DcMotor.class, "bl");
+        br = SammyOpMode.hardwareMap.get(DcMotor.class, "br");
+        fle = SammyOpMode.hardwareMap.dcMotor.get("fl");
+        fre = SammyOpMode.hardwareMap.dcMotor.get("fr");
+        bme = SammyOpMode.hardwareMap.dcMotor.get("bl");
+        imu = SammyOpMode.hardwareMap.get(IMU.class, "imu");
+        servo1 = SammyOpMode.hardwareMap.get(Servo.class, "servo1");
+        fsls1 = SammyOpMode.hardwareMap.get(DcMotor.class, "fl");
+        fsls2 = SammyOpMode.hardwareMap.get(DcMotor.class, "fl");
 
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -100,9 +102,9 @@ public abstract class SammyLinOp extends LinearOpMode {
 
     public void telemetryInit() {
 
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
-        telemetry.setMsTransmissionInterval(100);
+        SammyOpMode.telemetry.addData("Status", "Initialized");
+        SammyOpMode.telemetry.update();
+        SammyOpMode.telemetry.setMsTransmissionInterval(100);
     }
 
     public void telemetryAfterInit() {
@@ -132,7 +134,7 @@ public abstract class SammyLinOp extends LinearOpMode {
         displaySmallOnDS("BM-Odometry", BMOV);
 
 
-        telemetry.update();
+        SammyOpMode.telemetry.update();
 
     }
 
@@ -146,9 +148,9 @@ public abstract class SammyLinOp extends LinearOpMode {
     public void MoveChassis(DcMotor fl,DcMotor fr,DcMotor br,DcMotor bl) {
 
 
-        drive = -gamepad1.left_stick_y;
-        turn = gamepad1.right_stick_x;
-        strafe = gamepad1.left_stick_x;
+        drive = -SammyOpMode.gamepad1.left_stick_y;
+        turn = SammyOpMode.gamepad1.right_stick_x;
+        strafe = SammyOpMode.gamepad1.left_stick_x;
 
         flpwr = drive + turn + strafe;
         frpwr = drive - turn - strafe;
@@ -181,11 +183,11 @@ public abstract class SammyLinOp extends LinearOpMode {
     }
 
     public void displaySmallOnDS(String Heading, double Data) {
-        telemetry.addData(Heading, Data);
+        SammyOpMode.telemetry.addData(Heading, Data);
     }
 
     public void displayBigOnDS(String Heading) {
-        telemetry.addLine(Heading);
+        SammyOpMode.telemetry.addLine(Heading);
     }
 
 
@@ -234,6 +236,3 @@ public abstract class SammyLinOp extends LinearOpMode {
         fsls2.setPower(pwr);
     }
 }
-
-
-

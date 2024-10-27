@@ -5,41 +5,48 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import SammyStuff.SammyOpVersions.SammyLinOp;
+import SammyStuff.Functions.Sammyfunctions.SammyFunctions;
+
 
 @TeleOp(name = "8b")
 public class _8b extends LinearOpMode {
-    DcMotor fl = null;
-    DcMotor fr = null;
-    DcMotor br = null;
-    DcMotor bl = null;
-    double drive;
-    double turn;
-    double strafe;
-    double flpwr, frpwr, blpwr, brpwr;
-    double flc,frc,blc,brc;
-    @Override
-    public void runOpMode() throws InterruptedException {
+
+      DcMotor fl = null;
+      DcMotor fr = null;
+      DcMotor br = null;
+      DcMotor bl = null;
+      double drive;
+      double turn;
+      double strafe;
+      double flpwr, frpwr, blpwr, brpwr;
+      double flc, frc, blc, brc;
 
 
-        HardwareMap();
 
-        reverse();
-        telemetryInit();
-        DontUseEncoders();
+      @Override
+      public void runOpMode() throws InterruptedException {
+
+          HardwareMap();
+          telemetryInit();
+          DontUseEncoders();
 
 
-        waitForStart();
+          waitForStart();
 
 
-        while (opModeIsActive()) {
-            telemetryAfterInit();
-            teleOp();
+          while (opModeIsActive()) {
+              telemetryAfterInit();
+              teleOp();
+          }
 
-        }
-    }
 
-    public void HardwareMap() {
+      }
+
+
+
+
+
+        public void HardwareMap() {
         fl = hardwareMap.get(DcMotor.class, "fl");
         fr = hardwareMap.get(DcMotor.class, "fr");
         bl = hardwareMap.get(DcMotor.class, "bl");
@@ -82,29 +89,31 @@ public class _8b extends LinearOpMode {
         telemetry.update();
 
     }
-    public void teleOp(){
-        drive = -gamepad1.left_stick_y;
-        turn = gamepad1.right_stick_x;
-        strafe = gamepad1.left_stick_x;
+      public void teleOp() {
+          drive = -gamepad1.left_stick_y;
+          turn = gamepad1.right_stick_x;
+          strafe = gamepad1.left_stick_x;
 
 
-        flpwr = drive + turn + strafe;
-        frpwr = drive - turn - strafe;
-        blpwr = drive + turn - strafe;
-        brpwr = drive - turn + strafe;
+          flpwr = drive + turn + strafe;
+          frpwr = drive - turn - strafe;
+          blpwr = drive + turn - strafe;
+          brpwr = drive - turn + strafe;
 
-        double maxf = Math.max((Math.abs(flpwr)), (Math.abs(frpwr)));
-        double maxb = Math.max((Math.abs(blpwr)), (Math.abs(brpwr)));
-        double maxfb_pwr = Math.max((Math.abs(maxf)), (Math.abs(maxb)));
-        if (maxfb_pwr > 1) {
-            flpwr = flpwr / maxfb_pwr;
-            frpwr = frpwr / maxfb_pwr;
-            blpwr = blpwr / maxfb_pwr;
-            brpwr = brpwr / maxfb_pwr;
-            fl.setPower(flpwr);
-            fr.setPower(frpwr);
-            bl.setPower(blpwr);
-            br.setPower(brpwr);
-        }
-    }
-}
+          double maxf = Math.max((Math.abs(flpwr)), (Math.abs(frpwr)));
+          double maxb = Math.max((Math.abs(blpwr)), (Math.abs(brpwr)));
+          double maxfb_pwr = Math.max((Math.abs(maxf)), (Math.abs(maxb)));
+          if (maxfb_pwr > 1) {
+              flpwr = flpwr / maxfb_pwr;
+              frpwr = frpwr / maxfb_pwr;
+              blpwr = blpwr / maxfb_pwr;
+              brpwr = brpwr / maxfb_pwr;
+              fl.setPower(flpwr);
+              fr.setPower(frpwr);
+              bl.setPower(blpwr);
+              br.setPower(brpwr);
+          }
+      }
+  }
+
+
