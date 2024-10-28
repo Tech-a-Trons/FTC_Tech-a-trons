@@ -3,13 +3,14 @@
 
 
 
-| Functions          | Variables involved |
-|--------------------|--------------------|
-| hardwareConfig     | useEncoder         |
-| telemetryInit      | n/a                |
-| telemetryAfterInit |n/a|
-| MoveChassis|n/a|
-|imuInit|n/a|
+| Functions          | Variables involved  |
+|--------------------|---------------------|
+| hardwareConfig     | `boolean useEncoder` |
+| telemetryInit      | n/a                 |
+| telemetryAfterInit | n/a                 |
+| MoveChassis| n/a                 |
+|imuInit| n/a                 |
+|SetTargetPosChassis| `int flt, int frt, int blt, int brt`|
 
 
 
