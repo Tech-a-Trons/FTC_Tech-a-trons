@@ -1,10 +1,8 @@
 
 # SammyFunctions functions
 
-1.hardwareMap(boolean useEncoder);
-
-
-2.reverse();
+| 1.hardwareMap(boolean useEncoder); |
+|2.reverse();|
 
 
 
