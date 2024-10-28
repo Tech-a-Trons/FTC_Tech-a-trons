@@ -1,5 +1,5 @@
 
-#SammyFunctions functions
+# SammyOp functions
 
 1.hardwareMap(boolean useEncoder);
 
