@@ -13,30 +13,30 @@
 
 
 
-4.telemetryAfterInit();
+4. telemetryAfterInit();
 
 
-5.brake();
-
-
-
-6.teleOp();
+5. brake();
 
 
 
-7.imuInit();
+6. teleOp();
 
 
 
-8.SetTargetPosChassis(int flt, int frt, int blt, int brt);
+7. imuInit();
 
 
 
-9.setChassisPwr(double flp,double frp, double blp, double brp);
+8. SetTargetPosChassis(int flt, int frt, int blt, int brt);
 
 
 
-10.Movefsls(1&2)TargetPos(int TargetPos, double pwr);
+9. setChassisPwr(double flp,double frp, double blp, double brp);
+
+
+
+10. Movefsls(1&2)TargetPos(int TargetPos, double pwr);
 
 
 
