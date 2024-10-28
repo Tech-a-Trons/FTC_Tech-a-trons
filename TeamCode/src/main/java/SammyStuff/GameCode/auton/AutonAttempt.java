@@ -40,7 +40,7 @@ public class AutonAttempt extends LinearOpMode {
       @Override
     public void runOpMode() throws InterruptedException {
 
-        functions.HardwareMap();
+        functions.HardwareMap(true);
 
     waitForStart();
 

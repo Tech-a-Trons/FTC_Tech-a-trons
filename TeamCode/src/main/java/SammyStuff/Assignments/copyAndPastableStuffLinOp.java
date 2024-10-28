@@ -60,7 +60,7 @@ v v v v v
 //
 //        reverse();
 //        telemetryInit();
-//        use_encoder();
+//        useEncoder();
 //        DontUseEncoders();
 //        brake();
 //
@@ -87,7 +87,7 @@ v v v v v
 //        bl.setDirection(DcMotorSimple.Direction.REVERSE);
 //    }
 //
-//    public void use_encoder() {
+//    public void useEncoder() {
 //        fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

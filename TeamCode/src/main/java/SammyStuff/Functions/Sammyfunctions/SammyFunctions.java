@@ -6,7 +6,6 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -20,31 +19,32 @@ public class SammyFunctions {
         SammyOpMode = opMode;
     }
 
+    //chassis motors
+   public DcMotor fl,fr,br,bl;
+    //odometry
+    public DcMotor fle/* Front Left encoder*/,fre /* Front Right encoder*/,
+            bme /* Back Middle encoder*/;
+    // move chassis
+    public double drive,turn,strafe;
+    public double flpwr, frpwr, blpwr, brpwr;
+    public double flc,frc,blc,brc;
+    //Imu
+    public IMU imu;
+    //Telemetry
+    public double YawAngle = getYaw();
+    public double PitchAngle = getPitch();
+    public double RollAngle = getRoll();
+    public double FLOV /*Front Left Odomentry Value*/ = fle.getCurrentPosition();
+    public double FROV /*Front Right Odomentry Value*/= fre.getCurrentPosition();
+    public double BMOV /*Back Middle Odomentry Value*/ = bme.getCurrentPosition();
+    //servo
+    public Servo servo1;
+    public Servo servo2;
+    //LinearSlides
+    public DcMotor fsls1;
+    public DcMotor fsls2;
 
-    DcMotor fl;
-    DcMotor fr;
-    DcMotor br;
-    DcMotor bl;
-    DcMotor fle, fre,bme;
-    double drive;
-    double turn;
-    double strafe;
-    double flpwr, frpwr, blpwr, brpwr;
-    double flc,frc,blc,brc;
-    IMU imu;
-    double YawAngle = getYaw();
-    double PitchAngle = getPitch();
-    double RollAngle = getRoll();
-
-    double FLOV = fle.getCurrentPosition();
-    double FROV = fre.getCurrentPosition();
-    double BMOV = bme.getCurrentPosition();
-    Servo servo1;
-    Servo servo2;
-    DcMotor fsls1;
-    DcMotor fsls2;
-
-    public void HardwareMap() {
+    public void HardwareMap(boolean useEncoder) {
 
 
         fl = SammyOpMode.hardwareMap.get(DcMotor.class, "fl");
@@ -61,44 +61,38 @@ public class SammyFunctions {
 
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        if (useEncoder){
+            fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+            fle.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            bme.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            fre.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            fle.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            fre.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bme.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }else{
+            fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            fle.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fre.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            bme.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
     }
 
-
-    public void use_encoder() {
-
-        fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
-        fle.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        bme.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        fre.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        fle.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        fre.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        bme.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-    }
-
-    public void DontUseEncoders() {
-
-        fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        fle.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        fre.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bme.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-    }
 
     public void telemetryInit() {
 
