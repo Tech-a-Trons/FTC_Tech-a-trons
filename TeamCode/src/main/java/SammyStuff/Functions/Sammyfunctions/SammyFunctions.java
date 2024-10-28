@@ -44,7 +44,7 @@ public class SammyFunctions {
     public DcMotor fsls1;
     public DcMotor fsls2;
 
-    public void HardwareMap(boolean useEncoder) {
+    public void HardwareConfig(boolean useEncoder) {
 
 
         fl = SammyOpMode.hardwareMap.get(DcMotor.class, "fl");
@@ -90,6 +90,11 @@ public class SammyFunctions {
             fle.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             fre.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             bme.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
     }
 
@@ -132,12 +137,7 @@ public class SammyFunctions {
 
     }
 
-    public void brake() {
-        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    }
+
 
     public void MoveChassis(DcMotor fl,DcMotor fr,DcMotor br,DcMotor bl) {
 

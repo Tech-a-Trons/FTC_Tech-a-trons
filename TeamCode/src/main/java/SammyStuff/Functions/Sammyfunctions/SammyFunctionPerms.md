@@ -3,28 +3,19 @@
 
 
 
-| Functions     | Variables involved |
-|---------------|--------------------|
-| hardwareMap   | useEncoder         |
-| telemetryInit | n/a                |
-|telemetryAfterInit|n/a|
+| Functions          | Variables involved |
+|--------------------|--------------------|
+| hardwareConfig     | useEncoder         |
+| telemetryInit      | n/a                |
+| telemetryAfterInit |n/a|
+| MoveChassis|n/a|
+|imuInit|n/a|
 
 
 
 
 
-4. telemetryAfterInit();
 
-
-5. brake();
-
-
-
-6. teleOp();
-
-
-
-7. imuInit();
 
 
 
