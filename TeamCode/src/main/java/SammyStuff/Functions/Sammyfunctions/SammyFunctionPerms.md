@@ -66,7 +66,7 @@ This is the same functions as SammyLinOp, but SammyLinOp isnt working rn
 
 
 Copy and paste the stuff below to get access to all the commands
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 private SammyFunctions functions = new SammyFunctions(this);
 
 
@@ -91,4 +91,4 @@ private SammyFunctions functions = new SammyFunctions(this);
  //   Servo servo2;
  //   DcMotor fsls1;
  //   DcMotor fsls2;
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -62,7 +62,7 @@ Perms to use: vedu(all)
 
 
 Copy and paste the stuff below to get access to all the commands
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     DcMotor fl;
     DcMotor fr;
@@ -87,3 +87,4 @@ Copy and paste the stuff below to get access to all the commands
     DcMotor fsls1;
     DcMotor fsls2;
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
