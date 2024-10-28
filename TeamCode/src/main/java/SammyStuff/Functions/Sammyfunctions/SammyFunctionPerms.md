@@ -3,14 +3,16 @@
 
 
 
-| Functions          | Variables involved  |
-|--------------------|---------------------|
-| hardwareConfig     | `boolean useEncoder` |
-| telemetryInit      | n/a                 |
-| telemetryAfterInit | n/a                 |
-| MoveChassis| n/a                 |
-|imuInit| n/a                 |
-|SetTargetPosChassis| `int flt, int frt, int blt, int brt`|
+| Functions         | Variables involved                            |
+|-------------------|-----------------------------------------------|
+| hardwareConfig    | `boolean useEncoder`                          |
+| telemetryInit     | n/a                                           |
+| telemetryAfterInit | n/a                                           |
+| MoveChassis       | n/a                                           |
+| imuInit           | n/a                                           |
+| SetTargetPosChassis | `int flt, int frt, int blt, int brt`          |
+| setChassisPwr                  | `double flp,double frp, double blp, double brp` |
+|Movefsls(1&2)|
 
 
 
@@ -20,11 +22,7 @@
 
 
 
-8. SetTargetPosChassis(int flt, int frt, int blt, int brt);
 
-
-
-9. setChassisPwr(double flp,double frp, double blp, double brp);
 
 
 
