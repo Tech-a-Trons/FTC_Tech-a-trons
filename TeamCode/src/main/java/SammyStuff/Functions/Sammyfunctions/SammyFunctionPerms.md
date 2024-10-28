@@ -1,8 +1,14 @@
 
 # SammyFunctions functions
 
-| 1.hardwareMap(boolean useEncoder); |
-|2.reverse();|
+
+
+| Functions  | Variables involved |
+| ----------- | ----------- |
+| hardwareMap      |useEncoder       |
+| Paragraph   | Text        |
+
+2.reverse();
 
 
 
