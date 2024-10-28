@@ -3,16 +3,14 @@
 
 
 
-| Functions  | Variables involved |
-| ----------- | ----------- |
-| hardwareMap      |useEncoder       |
-| Paragraph   | Text        |
-
-2.reverse();
-
+| Functions     | Variables involved |
+|---------------|--------------------|
+| hardwareMap   | useEncoder         |
+| telemetryInit | n/a                |
+|telemetryAfterInit|n/a|
 
 
-3.telemetryInit();
+
 
 
 4.telemetryAfterInit();
