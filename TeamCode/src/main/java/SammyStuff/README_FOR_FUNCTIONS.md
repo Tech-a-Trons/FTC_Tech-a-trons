@@ -1,7 +1,7 @@
 # READ SAMMY OP PERMS
-go to [SammyOpPerms.md](S_OpVersions/S_OpPerms) 
+go to [S_OpPerms.md](S_OpVersions%2FS_OpPerms.md)
 ## OR
-go to [SammyFunctionPerms.md](Functions%2FSammyfunctions%2FSammyFunctionPerms.md) 
+go to  [S_FunctionPerms.md](Functions%2FS_functions%2FS_FunctionPerms.md)
 
 
 ### note that both of these contain the functions, but they have different ways of getting called
