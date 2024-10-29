@@ -1,4 +1,4 @@
-package SammyStuff.Assignments;/*This Class has been converted to SammyLinOp
+package SammyStuff.Assignments;/*This Class has been converted to S_LinOp
 I will leave it here for reference(idk)
 
 

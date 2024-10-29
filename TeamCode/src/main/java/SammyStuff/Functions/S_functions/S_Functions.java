@@ -1,4 +1,4 @@
-package SammyStuff.Functions.Sammyfunctions;
+package SammyStuff.Functions.S_functions;
 
 
 
@@ -12,10 +12,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-public class SammyFunctions {
+public class S_Functions {
     public LinearOpMode SammyOpMode;
     private ElapsedTime holdTimer = new ElapsedTime();
-    public SammyFunctions(LinearOpMode opMode) {
+    public S_Functions(LinearOpMode opMode) {
         SammyOpMode = opMode;
     }
 

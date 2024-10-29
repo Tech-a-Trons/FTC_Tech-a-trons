@@ -1,4 +1,4 @@
-package SammyStuff.SammyOpVersions;
+package SammyStuff.S_OpVersions;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
-public abstract class SammyLinOp extends LinearOpMode {
+public abstract class S_LinOp extends LinearOpMode {
     public LinearOpMode SammyLinOp;
 
 

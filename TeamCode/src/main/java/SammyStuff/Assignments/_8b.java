@@ -5,8 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import SammyStuff.Functions.Sammyfunctions.SammyFunctions;
-
 
 @TeleOp(name = "8b")
 public class _8b extends LinearOpMode {

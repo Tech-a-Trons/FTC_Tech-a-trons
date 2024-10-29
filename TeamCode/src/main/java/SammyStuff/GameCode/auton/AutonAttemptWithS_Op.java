@@ -4,16 +4,13 @@
 package SammyStuff.GameCode.auton;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import SammyStuff.Functions.Sammyfunctions.SammyFunctions;
-import SammyStuff.SammyOpVersions.SammyLinOp;
+import SammyStuff.S_OpVersions.S_LinOp;
 
 @Autonomous(name = "AutonAttempt")
-public class AutonAttemptWithSammyOp extends SammyLinOp {
+public class AutonAttemptWithS_Op extends S_LinOp {
 
 
 
@@ -41,7 +38,7 @@ public class AutonAttemptWithSammyOp extends SammyLinOp {
     //LinearSlides
     DcMotor fsls_1;
     DcMotor fsls_2;
-      @Override
+    @Override
     public void runOpMode() throws InterruptedException {
 
         HardwareMap(true);

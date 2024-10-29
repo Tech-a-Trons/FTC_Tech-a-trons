@@ -6,14 +6,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import SammyStuff.Functions.Sammyfunctions.SammyFunctions;
+import SammyStuff.Functions.S_functions.S_Functions;
 
 @Autonomous(name = "AutonAttempt")
 public class AutonAttempt extends LinearOpMode {
 
 
 
-    private SammyFunctions functions = new SammyFunctions(this);
+    private S_Functions functions = new S_Functions(this);
      //chassis motors
         DcMotor fl,fr,br,bl;
        //odometry

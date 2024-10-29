@@ -1,5 +1,5 @@
 # READ SAMMY OP PERMS
-go to [SammyOpPerms.md](SammyOpVersions/SammyOpPerms.md) 
+go to [SammyOpPerms.md](S_OpVersions/S_OpPerms) 
 ## OR
 go to [SammyFunctionPerms.md](Functions%2FSammyfunctions%2FSammyFunctionPerms.md) 
 
