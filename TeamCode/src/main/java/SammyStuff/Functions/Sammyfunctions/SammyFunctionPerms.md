@@ -5,26 +5,20 @@ This is the same functions as SammyLinOp, but SammyLinOp isnt working rn
 
 
 
-| Functions       | Variables involved                |
-|-----------------|-----------------------------------|
-| hardwareConfig  | `boolean useEncoder`              |
-| telemetryInit   | n/a                               |
-| telemetryAfterInit | n/a                               |
-| MoveChassis     | n/a                               |
-| imuInit         | n/a                               |
-| SetTargetPosChassis | `int flt, int frt, int blt, int brt` |
-| setChassisPwr                | `double flp,double frp, double blp, double brp` |
-|Movefsls(1&2| `int TrgetPos, double pwr`        |
+| Functions           | Variables involved                              |
+|---------------------|-------------------------------------------------|
+| hardwareConfig      | `boolean useEncoder`                            |
+| telemetryInit       | n/a                                             |
+| telemetryAfterInit  | n/a                                             |
+| MoveChassis         | n/a                                             |
+| imuInit             | n/a                                             |
+| SetTargetPosChassis | `int flt, int frt, int blt, int brt`            |
+| setChassisPwr       | `double flp,double frp, double blp, double brp` |
+| Movefsls(1&2)       | `int TrgetPos, double pwr`                      |
 
 
 
-	```
-{
-"firstName": "John",
-"lastName": "Smith",
-"age": 25
-}
-```
+		H~2~O
 
 
 
@@ -51,7 +45,7 @@ Perms to use: vedu(all)
 
 
 
-
+This is the same functions as SammyLinOp, but SammyLinOp isnt working rn
 
 
 
