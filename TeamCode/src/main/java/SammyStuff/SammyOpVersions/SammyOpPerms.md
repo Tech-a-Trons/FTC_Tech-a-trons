@@ -33,27 +33,29 @@ dont know if you need them. so just in case)
 
 
 
- //   DcMotor fl;
- //   DcMotor fr;
- //   DcMotor br;
- //   DcMotor bl;
- //   DcMotor fle, fre,bme;
- //   double drive;
- //   double turn;
- //   double strafe;
- //   double flpwr, frpwr, blpwr, brpwr;
- //   double flc,frc,blc,brc;
- //   IMU imu;
- //   double YawAngle = getYaw();
- //   double PitchAngle = getPitch();
- //   double RollAngle = getRoll();
- //   double FLOV = functions.fle.getCurrentPosition();
- //   double FROV = functions.fre.getCurrentPosition();
- //   double BMOV = functions.bme.getCurrentPosition();
- //  Servo servo1;
- //   Servo servo2;
- //   DcMotor fsls1;
- //   DcMotor fsls2;
+ // chassis motors
+    //    DcMotor fl,fr,br,bl;
+    //   //odometry
+    //    DcMotor fle/* Front Left encoder*/,fre /* Front Right encoder*/,bme /* Back Middle encoder*/;
+    //move chassis
+    //    double drive,turn,strafe;
+    //    double flpwr, frpwr, blpwr, brpwr;
+    //    double flc,frc,blc,brc;
+    //   //Imu
+    //    IMU imu;
+    //    Telemetry
+    //    double YawAngle = functions.getYaw();
+    //    double PitchAngle = functions.getPitch();
+    //    double RollAngle = functions.getRoll();
+    //    double FLOV /*Front Left Odomentry Value*/ = fle.getCurrentPosition();
+    //    double FROV /*Front Right Odomentry Value*/= fre.getCurrentPosition();
+    //    double BMOV /*Back Middle Odomentry Value*/ = bme.getCurrentPosition();
+    //   //servo
+    //    Servo servo1;
+    //    Servo servo2;
+    //
+    //    DcMotor fsls1;
+    //    DcMotor fsls2;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To use any of these functions, instead of extending LinearOpMode, extend SammyLinOp
