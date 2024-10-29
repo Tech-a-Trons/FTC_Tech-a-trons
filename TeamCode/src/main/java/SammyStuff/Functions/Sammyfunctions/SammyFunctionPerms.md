@@ -1,8 +1,6 @@
 
-# SammyFunctions functions[^1]
-	
-
-[^1]: This is the same functions as SammyLinOp, but SammyLinOp isnt working rn
+# SammyFunctions functions
+This is the same functions as SammyLinOp, but SammyLinOp isnt working rn
 
 
 
@@ -20,7 +18,13 @@
 
 
 
-
+	```
+{
+"firstName": "John",
+"lastName": "Smith",
+"age": 25
+}
+```
 
 
 
