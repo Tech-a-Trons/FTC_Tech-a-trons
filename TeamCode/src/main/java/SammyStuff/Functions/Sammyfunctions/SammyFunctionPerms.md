@@ -36,7 +36,11 @@
 
 
 
-Copy and paste the stuff below to get access to all the commands
+Copy and paste the stuff below to get access to 
+all the commands(variables are commented out because I
+dont know if you need them. so just in case)
+
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 private SammyFunctions functions = new SammyFunctions(this);
 
