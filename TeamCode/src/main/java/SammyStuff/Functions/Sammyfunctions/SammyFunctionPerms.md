@@ -14,26 +14,14 @@
 | SetTargetPosChassis | `int flt, int frt, int blt, int brt`            |
 | setChassisPwr       | `double flp,double frp, double blp, double brp` |
 | Movefsls(1&2)       | `int TrgetPos, double pwr`                      |
+| will add more later |                                                 |
 
 
 
 
-	
+# Perms[^1]
 
-
-
-will add more later
-
-
-
-
-
-
-
-
-
-
-Perms to use: vedu(all)
+[^1]: vedu(all)
 
 
 
@@ -43,7 +31,6 @@ Perms to use: vedu(all)
 
 
 
-This is the same functions as SammyLinOp, but SammyLinOp isnt working rn
 
 
 
