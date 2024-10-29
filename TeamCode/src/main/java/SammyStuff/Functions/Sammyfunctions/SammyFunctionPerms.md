@@ -1,8 +1,7 @@
 
 # SammyFunctions functions
-This is the same functions as SammyLinOp, but SammyLinOp isnt working rn
 
-
+	~these are the same functions as SammyLinOp but SammyLinOp is not currently working~
 
 
 | Functions           | Variables involved                              |
@@ -18,9 +17,8 @@ This is the same functions as SammyLinOp, but SammyLinOp isnt working rn
 
 
 
-		H~2~O
 
-
+	
 
 
 
