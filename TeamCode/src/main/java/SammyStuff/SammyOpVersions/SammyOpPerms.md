@@ -55,3 +55,5 @@ dont know if you need them. so just in case)
  //   DcMotor fsls1;
  //   DcMotor fsls2;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To use any of these functions, instead of extending LinearOpMode, extend SammyLinOp

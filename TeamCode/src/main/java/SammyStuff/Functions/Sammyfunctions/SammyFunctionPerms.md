@@ -67,4 +67,6 @@ private SammyFunctions functions = new SammyFunctions(this);
  //   DcMotor fsls2;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-to call any command type functions.(command that you want to enter)
+to call any command type:
+
+`functions.(command that you want to enter)`
