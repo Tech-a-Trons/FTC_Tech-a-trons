@@ -19,8 +19,8 @@
 
 
 
-# [Perms]
-[perms]: vedu(all)
+# Perms[^1]
+[^1]: vedu(all)
 
 
 
