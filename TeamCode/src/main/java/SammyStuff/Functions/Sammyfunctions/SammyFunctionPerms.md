@@ -1,5 +1,9 @@
 
-# SammyFunctions functions
+# SammyFunctions functions[^1]
+	
+
+[^1]: This is the same functions as SammyLinOp, but SammyLinOp isnt working rn
+
 
 
 
@@ -18,15 +22,6 @@
 
 
 
-
-
-
-
-
-
-
-
-10. Movefsls(1&2)TargetPos(int TargetPos, double pwr);
 
 
 
@@ -52,7 +47,6 @@ Perms to use: vedu(all)
 
 
 
-This is the same functions as SammyLinOp, but SammyLinOp isnt working rn
 
 
 
@@ -62,7 +56,7 @@ This is the same functions as SammyLinOp, but SammyLinOp isnt working rn
 
 Copy and paste the stuff below to get access to all the commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`private SammyFunctions functions = new SammyFunctions(this);
+private SammyFunctions functions = new SammyFunctions(this);
 
 
  //   DcMotor fl;
@@ -85,5 +79,5 @@ Copy and paste the stuff below to get access to all the commands
  //  Servo servo1;
  //   Servo servo2;
  //   DcMotor fsls1;
- //   DcMotor fsls2;`
+ //   DcMotor fsls2;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
