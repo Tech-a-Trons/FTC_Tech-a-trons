@@ -2,7 +2,7 @@
 # SammyOp functions
 
 
-| Functions           | Variables involved                              |
+| Functions           | Variables involved                              |Additional comments& notes|
 |---------------------|-------------------------------------------------|
 | hardwareConfig      | `boolean useEncoder`                            |
 | telemetryInit       | n/a                                             |
