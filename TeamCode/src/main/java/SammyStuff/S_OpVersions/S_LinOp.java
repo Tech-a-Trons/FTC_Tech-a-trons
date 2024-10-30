@@ -43,26 +43,26 @@ public abstract class S_LinOp extends LinearOpMode {
 
     abstract public void runOpMode() throws InterruptedException;
 
-    public void HardwareMap(boolean useEncoder) {
+    public void HardwareConfig(boolean useEncoder) {
 
 
         fl = hardwareMap.get(DcMotor.class, "fl");
         fr = hardwareMap.get(DcMotor.class, "fr");
         bl = hardwareMap.get(DcMotor.class, "bl");
         br = hardwareMap.get(DcMotor.class, "br");
-        fle =hardwareMap.dcMotor.get("fl");
+        fle = hardwareMap.dcMotor.get("fl");
         fre = hardwareMap.dcMotor.get("fr");
         bme = hardwareMap.dcMotor.get("bl");
         imu = hardwareMap.get(IMU.class, "imu");
-        servo1 = hardwareMap.get(Servo.class, "servo1");
+        servo1 =hardwareMap.get(Servo.class, "servo1");
         fsls1 = hardwareMap.get(DcMotor.class, "fl");
-        fsls2 =hardwareMap.get(DcMotor.class, "fl");
+        fsls2 = hardwareMap.get(DcMotor.class, "fl");
 
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
 
         if (useEncoder){
-            fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -89,12 +89,18 @@ public abstract class S_LinOp extends LinearOpMode {
             fle.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             fre.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             bme.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
     }
 
+
     public void telemetryInit() {
 
-        telemetry.addData("Status", "Initialized");
+       telemetry.addData("Status", "Initialized");
         telemetry.update();
         telemetry.setMsTransmissionInterval(100);
     }
@@ -130,14 +136,9 @@ public abstract class S_LinOp extends LinearOpMode {
 
     }
 
-    public void brake() {
-        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    }
 
-    public void MoveChassis(DcMotor fl,DcMotor fr,DcMotor br,DcMotor bl) {
+
+    public void MoveChassis() {
 
 
         drive = -gamepad1.left_stick_y;
@@ -228,6 +229,7 @@ public abstract class S_LinOp extends LinearOpMode {
         fsls2.setPower(pwr);
     }
 }
+
 
 
 
