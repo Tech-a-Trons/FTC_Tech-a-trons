@@ -2,23 +2,22 @@
 # SammyOp functions
 
 
-| Functions           | Variables involved                              |
-|---------------------|-------------------------------------------------|
-| hardwareConfig      | `boolean useEncoder`                            |
-| telemetryInit       | n/a                                             |
-| telemetryAfterInit  | n/a                                             |
-| MoveChassis         | n/a                                             |
-| imuInit             | n/a                                             |
-| SetTargetPosChassis | `int flt, int frt, int blt, int brt`            |
-| setChassisPwr       | `double flp,double frp, double blp, double brp` |
-| Movefsls(1&2)       | `int TrgetPos, double pwr`                      |
-| will add more later |                                                 |
+| Functions           | Variables involved                              | Additional comments and notes             |
+|---------------------|-------------------------------------------------|-------------------------------------------|
+| hardwareConfig      | `boolean useEncoder`                            | n/a                                       |
+| telemetryInit       | n/a                                             | n/a                                       |
+| telemetryAfterInit  | n/a                                             | n/a                                       |
+| MoveChassis         | n/a                                             | n/a                                       |
+| imuInit             | n/a                                             | n/a                                       |
+| SetTargetPosChassis | `int flt, int frt, int blt, int brt`            | n/a                                       |
+| setChassisPwr       | `double flp,double frp, double blp, double brp` | n/a                                       |
+| Movefsls(1&2)       | `int TrgetPos, double pwr`                      | use Movefsls and Movefsls2 to access both |
+| will add more later |                                                 |                                           |
 
 
 
 
 ## **Perms**: *vedu(all)*
-
 
 
 
