@@ -41,7 +41,7 @@ public class AutonAttemptWithS_Op extends S_LinOp {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        HardwareMap(true);
+        HardwareConfig(true);
 
     waitForStart();
 
