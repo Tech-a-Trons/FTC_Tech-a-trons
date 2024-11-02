@@ -11,7 +11,7 @@
 | imuInit             | n/a                                             | n/a                                       |
 | SetTargetPosChassis | `int flt, int frt, int blt, int brt`            | n/a                                       |
 | setChassisPwr       | `double flp,double frp, double blp, double brp` | n/a                                       |
-| Movefsls(1&2)       | `int TrgetPos, double pwr`                      | use Movefsls and Movefsls2 to access both |
+| Movefsls(1&2)       | `int TrgetPos, double pwr, String Direction`    | use Movefsls and Movefsls2 to access both |
 | will add more later |                                                 |                                           |
 
 

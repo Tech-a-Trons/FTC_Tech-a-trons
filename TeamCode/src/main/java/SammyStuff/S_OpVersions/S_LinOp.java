@@ -12,8 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 public abstract class S_LinOp extends LinearOpMode {
-    public LinearOpMode SammyLinOp;
-
+    public LinearOpMode S_LinOp;
 
 
     //chassis motors
@@ -28,12 +27,12 @@ public abstract class S_LinOp extends LinearOpMode {
     //Imu
     public IMU imu;
     //Telemetry
-    public double YawAngle = getYaw();
-    public double PitchAngle = getPitch();
-    public double RollAngle = getRoll();
-    public double FLOV /*Front Left Odomentry Value*/ = fle.getCurrentPosition();
-    public double FROV /*Front Right Odomentry Value*/= fre.getCurrentPosition();
-    public double BMOV /*Back Middle Odomentry Value*/ = bme.getCurrentPosition();
+//    public double YawAngle = getYaw();
+//    public double PitchAngle = getPitch();
+//    public double RollAngle = getRoll();
+//    public double FLOV /*Front Left Odomentry Value*/ = fle.getCurrentPosition();
+//    public double FROV /*Front Right Odomentry Value*/= fre.getCurrentPosition();
+//    public double BMOV /*Back Middle Odomentry Value*/ = bme.getCurrentPosition();
     //servo
     public Servo servo1;
     public Servo servo2;
@@ -54,15 +53,15 @@ public abstract class S_LinOp extends LinearOpMode {
         fre = hardwareMap.dcMotor.get("fr");
         bme = hardwareMap.dcMotor.get("bl");
         imu = hardwareMap.get(IMU.class, "imu");
-        servo1 =hardwareMap.get(Servo.class, "servo1");
+        servo1 = hardwareMap.get(Servo.class, "servo1");
         fsls1 = hardwareMap.get(DcMotor.class, "fl");
-        fsls2 = hardwareMap.get(DcMotor.class, "fl");
+        fsls2 = hardwareMap.get(DcMotor.class, "fr");
 
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
 
         if (useEncoder){
-                fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -101,8 +100,8 @@ public abstract class S_LinOp extends LinearOpMode {
     public void telemetryInit() {
 
        telemetry.addData("Status", "Initialized");
-        telemetry.update();
-        telemetry.setMsTransmissionInterval(100);
+       telemetry.update();
+       telemetry.setMsTransmissionInterval(100);
     }
 
     public void telemetryAfterInit() {
@@ -122,17 +121,17 @@ public abstract class S_LinOp extends LinearOpMode {
         displaySmallOnDS("BlPwr", blpwr);
         displaySmallOnDS("BrPwr", brpwr);
 
-        displayBigOnDS("-------IMU SENSOR DATA--------------------------------");
-        displaySmallOnDS("Yaw Angle: ", YawAngle);
-        displaySmallOnDS("Pitch Angle: ", PitchAngle);
-        displaySmallOnDS("Roll Angle: ", RollAngle);
-        displayBigOnDS("-------ODOMETRY DATA--------------------------------");
-        displaySmallOnDS("FL-Odometry: ", FLOV);
-        displaySmallOnDS("FR-Odometry", FROV);
-        displaySmallOnDS("BM-Odometry", BMOV);
+//        displayBigOnDS("-------IMU SENSOR DATA--------------------------------");
+//        displaySmallOnDS("Yaw Angle: ", YawAngle);
+//        displaySmallOnDS("Pitch Angle: ", PitchAngle);
+//        displaySmallOnDS("Roll Angle: ", RollAngle);
+//        displayBigOnDS("-------ODOMETRY DATA--------------------------------");
+//        displaySmallOnDS("FL-Odometry: ", FLOV);
+//        displaySmallOnDS("FR-Odometry", FROV);
+//        displaySmallOnDS("BM-Odometry", BMOV);
 
 
-        telemetry.update();
+       telemetry.update();
 
     }
 
@@ -184,23 +183,19 @@ public abstract class S_LinOp extends LinearOpMode {
     }
 
 
-    public double getYaw() {
-        assert imu != null;
-        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-    }
-
-
-    public double getPitch() {
-        assert imu != null;
-        return imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.DEGREES);
-    }
-
-
-    public double getRoll() {
-        assert imu != null;
-        return imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.DEGREES);
-    }
-
+    //    public double getYaw (){
+//        double pitch = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+//        return pitch;
+//    }
+//
+//    public double getPitch (){
+//        double pitch = imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.DEGREES);
+//        return pitch;
+//    }
+//    public double getRoll () {
+//        double roll = imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.DEGREES);
+//        return roll;
+//    }
     public void SetTargetPosChassis(int flt, int frt, int blt, int brt) {
         fl.setTargetPosition(flt);
         fr.setTargetPosition(frt);
@@ -217,18 +212,58 @@ public abstract class S_LinOp extends LinearOpMode {
     }
 
 
-    public void Movefsls1TargetPos(int TargetPos, double pwr) {
-        fsls1.setTargetPosition(TargetPos);
-        fsls1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        fsls1.setPower(pwr);
+    public void Movefsls1(int TargetPos, double pwr, String Direction) {
+        if (Direction == "up") {
+            fsls1.setTargetPosition(-TargetPos);
+            fsls1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            fsls1.setPower(pwr);
+            while (opModeIsActive() && fsls1.isBusy()) {
+                idle();
+            }
+            fsls1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fsls1.setPower(0);
+        } else if (Direction == "down") {
+            fsls1.setTargetPosition(TargetPos);
+            fsls1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            fsls1.setPower(pwr);
+            while (opModeIsActive() && fsls1.isBusy()) {
+               idle();
+            }
+            fsls1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fsls1.setPower(0);
+        } else {
+            fsls1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fsls1.setPower(0);
+        }
     }
 
 
-    public void Movefsls2TargetPos(int TargetPos, double pwr) {
-        fsls2.setTargetPosition(TargetPos);
-        fsls2.setPower(pwr);
+    public void Movefsls2(int TargetPos, double pwr, String Direction) {
+        if (Direction == "up") {
+            fsls2.setTargetPosition(-TargetPos);
+            fsls2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            fsls2.setPower(pwr);
+            while (opModeIsActive() && fsls2.isBusy()) {
+                idle();
+            }
+            fsls2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fsls2.setPower(0);
+        } else if (Direction == "down") {
+            fsls2.setTargetPosition(TargetPos);
+            fsls2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            fsls2.setPower(pwr);
+            while (opModeIsActive() && fsls2.isBusy()) {
+                idle();
+            }
+            fsls2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fsls2.setPower(0);
+        } else {
+            fsls2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fsls2.setPower(0);
+        }
     }
 }
+
 
 
 
