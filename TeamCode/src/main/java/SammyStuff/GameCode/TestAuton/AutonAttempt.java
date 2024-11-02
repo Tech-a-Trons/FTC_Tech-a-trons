@@ -38,6 +38,8 @@ public class AutonAttempt extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         functions.HardwareConfig(true);
+        functions.imuInit();
+
 
     waitForStart();
 

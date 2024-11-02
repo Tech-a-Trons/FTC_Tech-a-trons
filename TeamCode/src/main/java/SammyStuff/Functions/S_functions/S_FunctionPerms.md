@@ -7,11 +7,13 @@
 
 | Functions           | Variables involved                              | Additional comments and notes             |
 |---------------------|-------------------------------------------------|-------------------------------------------|
+| init                |
 | hardwareConfig      | `boolean useEncoder`                            | n/a                                       |
 | telemetryInit       | n/a                                             | n/a                                       |
+| imuInit             | n/a                                             | n/a                                       |
+| AfterInit           |
 | telemetryAfterInit  | n/a                                             | n/a                                       |
 | MoveChassis         | n/a                                             | n/a                                       |
-| imuInit             | n/a                                             | n/a                                       |
 | SetTargetPosChassis | `int flt, int frt, int blt, int brt`            | n/a                                       |
 | setChassisPwr       | `double flp,double frp, double blp, double brp` | n/a                                       |
 | Movefsls(1&2)       | `int TrgetPos, double pwr, String Direction`    | use Movefsls and Movefsls2 to access both |

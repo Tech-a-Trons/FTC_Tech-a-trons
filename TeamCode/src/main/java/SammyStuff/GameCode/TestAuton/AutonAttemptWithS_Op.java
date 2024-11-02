@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import SammyStuff.S_OpVersions.S_LinOp;
 
-@Autonomous(name = "AutonAttempt")
+@Autonomous(name = "AutonAttemptS_LinOp")
 public class AutonAttemptWithS_Op extends S_LinOp {
 //
 //
