@@ -2,17 +2,21 @@
 # SammyOp functions
 
 
-| Functions           | Variables involved                              | Additional comments and notes             |
-|---------------------|-------------------------------------------------|-------------------------------------------|
-| hardwareConfig      | `boolean useEncoder`                            | n/a                                       |
-| telemetryInit       | n/a                                             | n/a                                       |
-| telemetryAfterInit  | n/a                                             | n/a                                       |
-| MoveChassis         | n/a                                             | n/a                                       |
-| imuInit             | n/a                                             | n/a                                       |
-| SetTargetPosChassis | `int flt, int frt, int blt, int brt`            | n/a                                       |
-| setChassisPwr       | `double flp,double frp, double blp, double brp` | n/a                                       |
-| Movefsls(1&2)       | `int TrgetPos, double pwr, String Direction`    | use Movefsls and Movefsls2 to access both |
-| will add more later |                                                 |                                           |
+| Functions                  | Variables involved                                                                   | Additional comments and notes                                                        |
+|----------------------------|--------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| init                       |
+| hardwareConfig             | `boolean useEncoder`                                                                 | n/a                                                                                  |
+| telemetryInit              | n/a                                                                                  | n/a                                                                                  |
+| imuInit                    | n/a                                                                                  | n/a                                                                                  |
+| AfterInit                  |
+| telemetryAfterInit         | n/a                                                                                  | n/a                                                                                  |
+| MoveChassis                | n/a                                                                                  | n/a                                                                                  |
+| SetTargetPosChassis        | `int flt, double flp, int frt, double frp, int blt, double blp, int brt, double brp` | n/a                                                                                  |
+| Movefsls(1&2)              | `int TrgetPos, double pwr, String Direction`                                         | use Movefsls1 and Movefsls2 to access both                                           |
+| DefaultSlideAndClaw        | n/a                                                                                  | It might bug out if you use it when its already at default during your teleOp period |
+| LiftArmAndOpenClawSpecimin | n/a                                                                                  | n/a                                                                                  |
+| will add more later        |                                                                                      |                                                                                      |
+
 
 
 

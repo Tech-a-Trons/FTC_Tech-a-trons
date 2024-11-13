@@ -10,8 +10,6 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-
 public class S_Functions {
     public LinearOpMode SammyOpMode;
     public S_Functions(LinearOpMode opMode) {
@@ -37,11 +35,12 @@ public class S_Functions {
 //    public double FROV /*Front Right Odomentry Value*/= fre.getCurrentPosition();
 //    public double BMOV /*Back Middle Odomentry Value*/ = bme.getCurrentPosition();
     //servo
-    public Servo servo1;
+    public Servo claw;
     public Servo servo2;
     //LinearSlides
     public DcMotor fsls1;
     public DcMotor fsls2;
+    int LsDefaultPos = 0;
 
     public void HardwareConfig(boolean useEncoder) {
 
@@ -54,7 +53,7 @@ public class S_Functions {
         fre = SammyOpMode.hardwareMap.dcMotor.get("fr");
         bme = SammyOpMode.hardwareMap.dcMotor.get("bl");
         imu = SammyOpMode.hardwareMap.get(IMU.class, "imu");
-        servo1 = SammyOpMode.hardwareMap.get(Servo.class, "servo1");
+        claw = SammyOpMode.hardwareMap.get(Servo.class, "claw");
         fsls1 = SammyOpMode.hardwareMap.get(DcMotor.class, "fl");
         fsls2 = SammyOpMode.hardwareMap.get(DcMotor.class, "fr");
 
@@ -197,20 +196,20 @@ public class S_Functions {
 //        double roll = imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.DEGREES);
 //        return roll;
 //    }
-    public void SetTargetPosChassis(int flt, int frt, int blt, int brt) {
-        fl.setTargetPosition(flt);
-        fr.setTargetPosition(frt);
-        bl.setTargetPosition(blt);
-        br.setTargetPosition(brt);
-    }
-
-    public void setChassisPwr(double flp, double frp, double blp, double brp) {
-        fl.setPower(flp);
-        bl.setPower(blp);
-        fr.setPower(frp);
-        br.setPower(brp);
-
-    }
+public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,double blp, int brt,double brp) {
+    fl.setTargetPosition(flt);
+    fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    fr.setTargetPosition(frt);
+    fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    bl.setTargetPosition(blt);
+    bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    br.setTargetPosition(brt);
+    br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    fl.setPower(flp);
+    bl.setPower(blp);
+    fr.setPower(frp);
+    br.setPower(brp);
+}
 
 
     public void Movefsls1(int TargetPos, double pwr, String Direction) {
@@ -262,5 +261,41 @@ public class S_Functions {
             fsls2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             fsls2.setPower(0);
         }
+    }
+    public void openClaw() {
+    claw.setPosition(1000);
+    }
+
+    public void closeClaw(){
+        claw.setPosition(0);
+    }
+
+    public void LiftSlidesAndOpenClawSpecimin(){
+        Movefsls1(2000,0.3,"up");
+        Movefsls2(2000,0.3,"up");
+        SammyOpMode.sleep(1000);
+        openClaw();
+
+
+    }
+    public void DefaultSlideAndClaw(){
+        Movefsls1(0,0.3,"down");
+        Movefsls2(0,0.3,"down");
+        closeClaw();
+    }
+
+    public void MoveLsUp(){
+        Movefsls1(LsDefaultPos+1000,0.3,"up");
+        Movefsls2(LsDefaultPos+1000,0.3,"up");
+    }
+    public void MoveLsDown(){
+        Movefsls1(LsDefaultPos+1000,0.3,"down");
+        Movefsls2(LsDefaultPos+1000,0.3,"down");
+    }
+    public void PlaceInLowBasket(){
+        Movefsls1(2000,0.3,"up");
+        Movefsls2(2000,0.3,"up");
+        SammyOpMode.sleep(500);
+
     }
 }

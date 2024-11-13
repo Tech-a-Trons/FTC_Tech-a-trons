@@ -39,9 +39,14 @@ public class AutonAttempt extends LinearOpMode {
 
         functions.HardwareConfig(true);
         functions.imuInit();
+        functions.telemetryInit();
+        waitForStart();
+        functions.telemetryAfterInit();
+        functions.SetTargetPosChassis(1000,1,1000,1, 1000,1,1000,1);
 
 
-    waitForStart();
+
+
 
     }
 }
