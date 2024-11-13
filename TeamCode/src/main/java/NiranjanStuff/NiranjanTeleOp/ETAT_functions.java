@@ -1,4 +1,4 @@
-package NiranjanStuff.NiranjanTeleop;
+package NiranjanStuff.NiranjanTeleOp;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -398,7 +398,7 @@ public class ETAT_functions {
     }
 
     void turnToPID(double targetAngle) {
-        ETAT_functions.TurnPIDController pid = new ETAT_functions.TurnPIDController(targetAngle, 0.01, 0, 0.003);
+        TurnPIDController pid = new TurnPIDController(targetAngle, 0.01, 0, 0.003);
         myOpMode.telemetry.setMsTransmissionInterval(50);
         // Checking lastSlope to make sure that it's not oscillating when it quits
         while (Math.abs(targetAngle - getAbsoluteAngle()) > 0.5 || pid.getLastSlope() > 0.75) {

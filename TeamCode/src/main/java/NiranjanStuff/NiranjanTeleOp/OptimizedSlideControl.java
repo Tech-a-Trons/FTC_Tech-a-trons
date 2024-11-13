@@ -1,4 +1,4 @@
-package NiranjanStuff.NiranjanTeleop;
+package NiranjanStuff.NiranjanTeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
