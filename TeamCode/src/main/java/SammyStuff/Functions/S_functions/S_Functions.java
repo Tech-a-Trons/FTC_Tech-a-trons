@@ -47,17 +47,17 @@ public class S_Functions {
     public void HardwareConfig(boolean useEncoder) {
 
 
-        fl = hardwareMap.get(DcMotor.class, "fl");
-        fr = hardwareMap.get(DcMotor.class, "fr");
-        bl = hardwareMap.get(DcMotor.class, "bl");
-        br = hardwareMap.get(DcMotor.class, "br");
-        fle = hardwareMap.dcMotor.get("fl");
-        fre = hardwareMap.dcMotor.get("fr");
-        bme = hardwareMap.dcMotor.get("bl");
-        imu = hardwareMap.get(IMU.class, "imu");
-        claw = hardwareMap.get(Servo.class, "claw");
-        fsls1 = hardwareMap.get(DcMotor.class, "fl");
-        fsls2 = hardwareMap.get(DcMotor.class, "fr");
+        fl = SammyOpMode.hardwareMap.get(DcMotor.class, "fl");
+        fr = SammyOpMode.hardwareMap.get(DcMotor.class, "fr");
+        bl = SammyOpMode.hardwareMap.get(DcMotor.class, "bl");
+        br = SammyOpMode.hardwareMap.get(DcMotor.class, "br");
+        fle = SammyOpMode.hardwareMap.dcMotor.get("fl");
+        fre = SammyOpMode.hardwareMap.dcMotor.get("fr");
+        bme =SammyOpMode.hardwareMap.dcMotor.get("bl");
+        imu = SammyOpMode.hardwareMap.get(IMU.class, "imu");
+        claw = SammyOpMode.hardwareMap.get(Servo.class, "claw");
+        fsls1 = SammyOpMode.hardwareMap.get(DcMotor.class, "fl");
+        fsls2 = SammyOpMode.hardwareMap.get(DcMotor.class, "fr");
 
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -101,9 +101,9 @@ public class S_Functions {
 
     public void telemetryInit() {
 
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
-        telemetry.setMsTransmissionInterval(100);
+        SammyOpMode.telemetry.addData("Status", "Initialized");
+        SammyOpMode.telemetry.update();
+        SammyOpMode.telemetry.setMsTransmissionInterval(100);
     }
 
     public void telemetryAfterInit() {
@@ -133,7 +133,7 @@ public class S_Functions {
 //        displaySmallOnDS("BM-Odometry", BMOV);
 
 
-        telemetry.update();
+        SammyOpMode.telemetry.update();
 
     }
 
@@ -142,9 +142,9 @@ public class S_Functions {
     public void MoveChassis() {
 
 
-        drive = -gamepad1.left_stick_y;
-        turn = gamepad1.right_stick_x;
-        strafe = gamepad1.left_stick_x;
+        drive = -SammyOpMode.gamepad1.left_stick_y;
+        turn = SammyOpMode.gamepad1.right_stick_x;
+        strafe = SammyOpMode.gamepad1.left_stick_x;
 
         flpwr = drive + turn + strafe;
         frpwr = drive - turn - strafe;
@@ -177,11 +177,11 @@ public class S_Functions {
     }
 
     public void displaySmallOnDS(String Heading, double Data) {
-        telemetry.addData(Heading, Data);
+        SammyOpMode.telemetry.addData(Heading, Data);
     }
 
     public void displayBigOnDS(String Heading) {
-        telemetry.addLine(Heading);
+        SammyOpMode.telemetry.addLine(Heading);
     }
 
 
@@ -219,8 +219,8 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
             fsls1.setTargetPosition(-TargetPos);
             fsls1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fsls1.setPower(pwr);
-            while (opModeIsActive() && fsls1.isBusy()) {
-                idle();
+            while (SammyOpMode.opModeIsActive() && fsls1.isBusy()) {
+                SammyOpMode.idle();
             }
             fsls1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             fsls1.setPower(0);
@@ -228,8 +228,8 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
             fsls1.setTargetPosition(TargetPos);
             fsls1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fsls1.setPower(pwr);
-            while (opModeIsActive() && fsls1.isBusy()) {
-                idle();
+            while (SammyOpMode.opModeIsActive() && fsls1.isBusy()) {
+                SammyOpMode.idle();
             }
             fsls1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             fsls1.setPower(0);
@@ -245,8 +245,8 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
             fsls2.setTargetPosition(-TargetPos);
             fsls2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fsls2.setPower(pwr);
-            while (opModeIsActive() && fsls2.isBusy()) {
-                idle();
+            while (SammyOpMode.opModeIsActive() && fsls2.isBusy()) {
+                SammyOpMode.idle();
             }
             fsls2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             fsls2.setPower(0);
@@ -254,8 +254,10 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
             fsls2.setTargetPosition(TargetPos);
             fsls2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fsls2.setPower(pwr);
-            while (opModeIsActive() && fsls2.isBusy()) {
-                idle();
+            SammyOpMode.idle();
+
+            while (SammyOpMode.opModeIsActive() && fsls2.isBusy()) {
+                SammyOpMode.idle();
             }
             fsls2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             fsls2.setPower(0);
@@ -275,7 +277,7 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
     public void LiftSlidesAndOpenClawSpecimin(){
         Movefsls1(2000,0.3,"up");
         Movefsls2(2000,0.3,"up");
-        sleep(1000);
+        SammyOpMode.sleep(1000);
         openClaw();
 
 
@@ -297,7 +299,7 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
     public void PlaceInLowBasket(){
         Movefsls1(2000,0.3,"up");
         Movefsls2(2000,0.3,"up");
-        sleep(500);
+        SammyOpMode.sleep(500);
 
     }
 }
