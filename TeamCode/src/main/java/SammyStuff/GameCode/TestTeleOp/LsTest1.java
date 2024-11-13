@@ -8,7 +8,7 @@ public class LsTest1 extends LinearOpMode {
 
     DcMotor fsls1;// four stage linear slide 1
     DcMotor fsls2;// four stage linear slide 2
-    int LsDefaultPos = 0;
+    int LsPos = 0;
     @Override
     public void runOpMode() throws InterruptedException {
         fsls1 = hardwareMap.get(DcMotor.class, "fl");
@@ -79,22 +79,22 @@ public class LsTest1 extends LinearOpMode {
 
     public void MoveLsUp(){
 
-        if(LsDefaultPos >= 0 && LsDefaultPos <=4000) {
-            LsDefaultPos = LsDefaultPos+1000;
-            Movefsls1(LsDefaultPos, 0.3, "up");
-            Movefsls2(LsDefaultPos, 0.3, "up");
-            telemetry.addData("Ls stage",LsDefaultPos/1000);
+        if(LsPos >= 0 && LsPos <=4000) {
+            LsPos = LsPos +1000;
+            Movefsls1(LsPos, 0.3, "up");
+            Movefsls2(LsPos, 0.3, "up");
+            telemetry.addData("Ls stage", LsPos /1000);
             telemetry.update();
         }else{
             idle();
         }
     }
     public void MoveLsDown(){
-        if (LsDefaultPos>=0&&LsDefaultPos<=4000) {
-            LsDefaultPos = LsDefaultPos - 1000;
-            Movefsls1(LsDefaultPos, 0.3, "down");
-            Movefsls2(LsDefaultPos, 0.3, "down");
-            telemetry.addData("Ls stage",LsDefaultPos/1000);
+        if (LsPos >=0&& LsPos <=4000) {
+            LsPos = LsPos - 1000;
+            Movefsls1(LsPos, 0.3, "down");
+            Movefsls2(LsPos, 0.3, "down");
+            telemetry.addData("Ls stage", LsPos /1000);
             telemetry.update();
         }else{
             idle();
