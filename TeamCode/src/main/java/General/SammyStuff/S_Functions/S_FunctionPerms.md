@@ -1,7 +1,7 @@
 
 # SammyFunctions functions
 
-	~these are the same functions as SammyLinOp but SammyLinOp is not currently working~
+	these are the same functions as SammyLinOp but SammyLinOp is not currently working
 
 
 
