@@ -1,15 +1,13 @@
-package General.SammyStuff.Functions.S_functions;
+package General.SammyStuff.S_Functions;
 
 
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class S_Functions {
@@ -300,6 +298,6 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
         Movefsls1(2000,0.3,"up");
         Movefsls2(2000,0.3,"up");
         SammyOpMode.sleep(500);
-
+        claw.setPosition(1000);
     }
 }

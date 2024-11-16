@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import General.SammyStuff.Functions.S_functions.S_Functions;
+import General.SammyStuff.S_Functions.S_Functions;
 
 @TeleOp(name = "bothSlidesTest")
 public class BothSlidesTest extends LinearOpMode {

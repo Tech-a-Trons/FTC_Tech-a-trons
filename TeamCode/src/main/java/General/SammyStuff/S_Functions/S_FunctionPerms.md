@@ -18,8 +18,10 @@
 | Movefsls(1&2)              | `int TrgetPos, double pwr, String Direction`                                         | use Movefsls1 and Movefsls2 to access both                                           |
 | DefaultSlideAndClaw        | n/a                                                                                  | It might bug out if you use it when its already at default during your teleOp period |
 | LiftArmAndOpenClawSpecimin | n/a                                                                                  | n/a                                                                                  |
+| MoveLsUp                   | n/a                                                                                  | used to move slides up one stage(sorry for making that unclear)                      |
+| MoveLsdown                 | n/a                                                                                  | used to move slides down one stage(sorry for making that unclear)                    |
+| PlaceInLowBasket           | n/a                                                                                  | n/a                                                                                  |
 | will add more later        |                                                                                      |                                                                                      |
-
 
 
 

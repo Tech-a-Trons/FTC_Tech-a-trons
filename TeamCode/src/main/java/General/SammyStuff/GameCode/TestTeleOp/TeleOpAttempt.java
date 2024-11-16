@@ -2,7 +2,7 @@ package General.SammyStuff.GameCode.TestTeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import General.SammyStuff.Functions.S_functions.S_Functions;
+import General.SammyStuff.S_Functions.S_Functions;
 
 public class TeleOpAttempt extends LinearOpMode {
     private S_Functions functions = new S_Functions(this);
