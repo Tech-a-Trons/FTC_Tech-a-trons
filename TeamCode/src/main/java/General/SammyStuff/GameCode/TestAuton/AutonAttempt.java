@@ -33,7 +33,7 @@ public class AutonAttempt extends LinearOpMode {
 //        Servo servo2;
 //
 //        DcMotor fsls1;
-//        DcMotor fsls2;
+//        DcMotor fslsRight;
 //      @Override
     public void runOpMode() throws InterruptedException {
 

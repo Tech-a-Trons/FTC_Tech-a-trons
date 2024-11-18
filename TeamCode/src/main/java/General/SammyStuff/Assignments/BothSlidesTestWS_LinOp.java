@@ -31,7 +31,7 @@ public class BothSlidesTestWS_LinOp extends S_LinOp {
 //        Servo servo2;
 //
 //        DcMotor fsls1;
-//        DcMotor fsls2;
+//        DcMotor fslsRight;
     @Override
     public void runOpMode() throws InterruptedException {
     HardwareConfig(true);

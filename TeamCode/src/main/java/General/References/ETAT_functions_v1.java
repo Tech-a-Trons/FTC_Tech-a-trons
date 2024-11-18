@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -18,7 +19,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 //@Disabled
-public class ETAT_functions {
+public class ETAT_functions_v1 {
     private final LinearOpMode myOpMode;
     public IMU imu;
     private final ElapsedTime holdTimer = new ElapsedTime();  // User for any motion requiring a hold time or timeout.
@@ -30,9 +31,12 @@ public class ETAT_functions {
     private DcMotor BackRight = null;     //  control the right back drive wheel
 
     //private DcMotor driveEncoder;
-    public DcMotor FrontLeftEncoder;        //  the left Axial (front/back) Odometry Module
-    public DcMotor FrontRightEncoder;       //  the right Axial (front/back) Odometry Module
-    public DcMotor BackMiddleEncoder;            //  the Lateral (left/right) Odometry Module
+//    public DcMotor FrontLeftEncoder;        //  the left Axial (front/back) Odometry Module
+//    public DcMotor FrontRightEncoder;       //  the right Axial (front/back) Odometry Module
+//    public DcMotor BackMiddleEncoder;            //  the Lateral (left/right) Odometry Module
+    public DcMotor LeftEncoder;        //  the left Axial (front/back) Odometry Module
+    public DcMotor RightEncoder;       //  the right Axial (front/back) Odometry Module
+    public DcMotor MiddleEncoder;            //  the Lateral (left/right) Odometry Module
 
     // For Drive Train
     double drive; // drive: left joystick y-axis
@@ -48,10 +52,6 @@ public class ETAT_functions {
     // For Claw Servo
     public Servo Claw_Servo = null;
     public final static double CLAW_HOME = 0.0;
-//    public final static double CLAW_MIN_RANGE = 0.0;
-//    public final static double CLAW_MAX_RANGE = 0.5;
-//    public final static double CLAW_CLOSE = 0.0;
-//    public final static double CLAW_OPEN = 0.2;
 
     // For Active-Intake CR Servo
     public CRServo Active_Intake_CRServo = null;
@@ -63,7 +63,7 @@ public class ETAT_functions {
     public DcMotor armMotor = null;
 
     // Robot Constructor
-    public ETAT_functions(LinearOpMode opmode) {
+    public ETAT_functions_v1(LinearOpMode opmode) {
         myOpMode = opmode;
     }
 
@@ -81,10 +81,11 @@ public class ETAT_functions {
     }
 
     public void myRobot_HardwareMap(String frName, String brName, String flName, String blName,
-                                    String FrontLeftEncoderName, String FrontRightEncoderName,
-                                    String BackMiddleEncoderName, String IMUname,
+//                                    String FrontLeftEncoderName, String FrontRightEncoderName,
+                                    String LeftEncoderName, String RightEncoderName,
+//                                    String BackMiddleEncoderName, String IMUname,
+                                    String MiddleEncoderName, String IMUname,
                                     String LeftLinearSlideName, String RightLinearSlideName,
-                                    //String LinearSlideName,
                                     String ClawServeName,
                                     String ActiveIntakeName,
                                     String ArmName){
@@ -93,24 +94,21 @@ public class ETAT_functions {
         FrontLeft = myOpMode.hardwareMap.dcMotor.get(flName);
         BackLeft = myOpMode.hardwareMap.dcMotor.get(blName);
 
-        FrontLeftEncoder = myOpMode.hardwareMap.dcMotor.get(FrontLeftEncoderName);
-        FrontRightEncoder = myOpMode.hardwareMap.dcMotor.get(FrontRightEncoderName);
-        BackMiddleEncoder = myOpMode.hardwareMap.dcMotor.get(BackMiddleEncoderName);
+//        FrontLeftEncoder = myOpMode.hardwareMap.dcMotor.get(FrontLeftEncoderName);
+//        FrontRightEncoder = myOpMode.hardwareMap.dcMotor.get(FrontRightEncoderName);
+//        BackMiddleEncoder = myOpMode.hardwareMap.dcMotor.get(BackMiddleEncoderName);
+        LeftEncoder = myOpMode.hardwareMap.dcMotor.get(LeftEncoderName);
+        RightEncoder = myOpMode.hardwareMap.dcMotor.get(RightEncoderName);
+        MiddleEncoder = myOpMode.hardwareMap.dcMotor.get(MiddleEncoderName);
 
         // IMU Hardware initialize: Get the IMU from the configuration using hardwareMap. PLEASE UPDATE THIS VALUE TO MATCH YOUR CONFIGURATION
         imu = myOpMode.hardwareMap.get(IMU.class,IMUname);
 
 //        // Linear slide Hardware initialize:
-//        LeftLinearSlide = myOpMode.hardwareMap.dcMotor.get(LeftLinearSlideName);
-//        RightLinearSlide = myOpMode.hardwareMap.dcMotor.get(RightLinearSlideName);
-//        LinearSlide = myOpMode.hardwareMap.dcMotor.get(LinearSlideName);
-
-//        LinearSlide = myOpMode.hardwareMap.get(DcMotor.class, LinearSlideName);
         LeftLinearSlide = myOpMode.hardwareMap.get(DcMotor.class, LeftLinearSlideName);
         RightLinearSlide = myOpMode.hardwareMap.get(DcMotor.class, RightLinearSlideName);
 
         // For Claw Servo Hardware initialize:
-//        Claw_Servo = myOpMode.hardwareMap.servo.get(ClawServeName);
         Claw_Servo = myOpMode.hardwareMap.get(Servo.class,ClawServeName);
 
         // For Acive-Intake CRServo Hardware initialize:
@@ -131,13 +129,20 @@ public class ETAT_functions {
         FrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        FrontLeftEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        FrontRightEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BackMiddleEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        FrontLeftEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        FrontRightEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        BackMiddleEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//
+//        FrontLeftEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        FrontRightEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        BackMiddleEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LeftEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RightEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        MiddleEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        FrontLeftEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        FrontRightEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BackMiddleEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LeftEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RightEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        MiddleEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         FrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -150,31 +155,32 @@ public class ETAT_functions {
         BackRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
         //IMU sensor Hardware Configuration (Such as REV controlHub orientation)
+//        imu.initialize(
+//                new IMU.Parameters(new RevHubOrientationOnRobot(
+//                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
+//                        RevHubOrientationOnRobot.UsbFacingDirection.RIGHT))
+//        );
         imu.initialize(
                 new IMU.Parameters(new RevHubOrientationOnRobot(
-                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                        RevHubOrientationOnRobot.UsbFacingDirection.RIGHT))
+                        RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+                        RevHubOrientationOnRobot.UsbFacingDirection.UP))
         );
 
         //IMU reset.
         imu.resetYaw();
 
-//        //Linear SLide
-//        LinearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        LinearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        LinearSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //Linear SLide
+        LeftLinearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightLinearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         LeftLinearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RightLinearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        LeftLinearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightLinearSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         LeftLinearSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         RightLinearSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        ((DcMotorEx) LeftLinearSlide).setCurrentAlert(5, CurrentUnit.AMPS);
-        ((DcMotorEx) RightLinearSlide).setCurrentAlert(5, CurrentUnit.AMPS);
+//        ((DcMotorEx) LeftLinearSlide).setCurrentAlert(5, CurrentUnit.AMPS);
+//        ((DcMotorEx) RightLinearSlide).setCurrentAlert(5, CurrentUnit.AMPS);
 
         //Claw Servo
         Claw_Servo.setPosition(CLAW_HOME);
@@ -184,10 +190,11 @@ public class ETAT_functions {
 
         // For Arm
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        ((DcMotorEx) armMotor).setCurrentAlert(5, CurrentUnit.AMPS);
+//        ((DcMotorEx) armMotor).setCurrentAlert(5, CurrentUnit.AMPS);
         armMotor.setTargetPosition(0);
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armMotor.setPower(0);
 
         //Set all the motor speed/power to 0
         set_myRobotAllMotorSpeedSame(0.0);
@@ -238,9 +245,9 @@ public class ETAT_functions {
     }
 
     // Linear Slider functions
-    public void setLinearSlide(String Direction, int Position, double Speed) {
+    public void setLinearSlide(String Direction, int TargetPosition, double Speed) {
         if (Direction == "UP") {
-            LinearSlide.setTargetPosition(-Position);
+            LinearSlide.setTargetPosition(-TargetPosition);
             LinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             LinearSlide.setPower(Speed);
             while (myOpMode.opModeIsActive() && LinearSlide.isBusy()) {
@@ -249,7 +256,7 @@ public class ETAT_functions {
             //LinearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             LinearSlide.setPower(0);
         } else if (Direction == "DOWN") {
-            LinearSlide.setTargetPosition(Position);
+            LinearSlide.setTargetPosition(TargetPosition);
             LinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             LinearSlide.setPower(Speed);
             while (myOpMode.opModeIsActive() && LinearSlide.isBusy()) {
@@ -263,10 +270,10 @@ public class ETAT_functions {
         }
     }
 
-    public void set_Left_Right_LinearSlide(String Direction, int Position, double Speed) {
+    public void set_Left_Right_LinearSlide_v1(String Direction, int TargetPosition, double Speed) {
         if (Direction == "UP") {
-            LeftLinearSlide.setTargetPosition(-Position);
-            RightLinearSlide.setTargetPosition(-Position);
+            LeftLinearSlide.setTargetPosition(-TargetPosition);
+            RightLinearSlide.setTargetPosition(-TargetPosition);
 
             LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             RightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -283,8 +290,8 @@ public class ETAT_functions {
             RightLinearSlide.setPower(0);
 
         } else if (Direction == "DOWN") {
-            LeftLinearSlide.setTargetPosition(Position);
-            RightLinearSlide.setTargetPosition(Position);
+            LeftLinearSlide.setTargetPosition(TargetPosition);
+            RightLinearSlide.setTargetPosition(TargetPosition);
 
             LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             RightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -307,13 +314,169 @@ public class ETAT_functions {
         }
     }
 
-    public void setVelocity_Left_Right_LinearSlide_ver1(String Direction, int Position, double Speed) {
+    public void set_Left_Right_LinearSlide_v2(String Direction, int TargetPosition, double Speed) {
+        if (Direction == "UP") {
+            LeftLinearSlide.setTargetPosition(-TargetPosition);
+            RightLinearSlide.setTargetPosition(-TargetPosition);
+
+            LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            RightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            LeftLinearSlide.setPower(Speed);
+            RightLinearSlide.setPower(Speed);
+
+            while (myOpMode.opModeIsActive() && LeftLinearSlide.isBusy() && RightLinearSlide.isBusy()) {
+                myOpMode.idle();
+            }
+//            LeftLinearSlide.setPower(0);
+//            RightLinearSlide.setPower(0);
+
+        } else if (Direction == "DOWN") {
+            LeftLinearSlide.setTargetPosition(TargetPosition);
+            RightLinearSlide.setTargetPosition(TargetPosition);
+
+            LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            RightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            LeftLinearSlide.setPower(Speed);
+            RightLinearSlide.setPower(Speed);
+
+            while (myOpMode.opModeIsActive() && LeftLinearSlide.isBusy() && RightLinearSlide.isBusy()) {
+                myOpMode.idle();
+            }
+//            LeftLinearSlide.setPower(0);
+//            RightLinearSlide.setPower(0);
+        } else {
+            LeftLinearSlide.setPower(0);
+            RightLinearSlide.setPower(0);
+        }
+    }
+
+    // Logic did not work, --> Don't use the set_Left_Right_LinearSlide_Sync_v1 function.
+    private static final double LIFT_SYNC_KP = 0.001;               //this value needs to be tuned
+    private static final double LIFT_POSITION_TOLERANCE = 5;        //this value needs to be tuned
+    public void set_Left_Right_LinearSlide_Sync_v1(String Direction, int TargetPosition, double Speed) {
+        if (Direction == "UP") {
+            LeftLinearSlide.setTargetPosition(-TargetPosition);
+            RightLinearSlide.setTargetPosition(-TargetPosition);
+
+            LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);  // Motor1
+            RightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION); // Motor2
+
+            boolean isOnTarget = false;
+            while (!isOnTarget)
+            {
+                double differentiatePower = (RightLinearSlide.getCurrentPosition() - LeftLinearSlide.getCurrentPosition())*LIFT_SYNC_KP;
+                LeftLinearSlide.setPower(Range.clip(Speed + differentiatePower, -1.0, 1.0));
+                RightLinearSlide.setPower(Range.clip(Speed - differentiatePower, -1.0, 1.0));
+                isOnTarget = Math.abs(TargetPosition - LeftLinearSlide.getCurrentPosition()) <= LIFT_POSITION_TOLERANCE &&
+                        Math.abs(TargetPosition - RightLinearSlide.getCurrentPosition()) <= LIFT_POSITION_TOLERANCE;
+                myOpMode.idle();
+            }
+            LeftLinearSlide.setPower(0.0);
+            RightLinearSlide.setPower(0.0);
+        }
+        if (Direction == "DOWN") {
+            LeftLinearSlide.setTargetPosition(TargetPosition);
+            RightLinearSlide.setTargetPosition(TargetPosition);
+
+            LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);  // Motor1
+            RightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION); // Motor2
+
+            boolean isOnTarget = false;
+            while (!isOnTarget)
+            {
+                double differentiatePower = (RightLinearSlide.getCurrentPosition() - LeftLinearSlide.getCurrentPosition())*LIFT_SYNC_KP;
+                LeftLinearSlide.setPower(Range.clip(Speed + differentiatePower, -1.0, 1.0));
+                RightLinearSlide.setPower(Range.clip(Speed - differentiatePower, -1.0, 1.0));
+                isOnTarget = Math.abs(TargetPosition - LeftLinearSlide.getCurrentPosition()) <= LIFT_POSITION_TOLERANCE &&
+                        Math.abs(TargetPosition - RightLinearSlide.getCurrentPosition()) <= LIFT_POSITION_TOLERANCE;
+                myOpMode.idle();
+            }
+            LeftLinearSlide.setPower(0.0);
+            RightLinearSlide.setPower(0.0);
+        }
+    }
+
+    // Logic worked. very stable.
+    public void set_Left_Right_LinearSlide_Height_Sync_Control_v1(String Direction, int TargetPosition, double Speed) {
+        if (Direction == "UP") {
+            LeftLinearSlide.setTargetPosition(TargetPosition);
+            RightLinearSlide.setTargetPosition(-TargetPosition);
+
+            LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            RightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            double Height_Control = LeftLinearSlide.getTargetPosition() - LeftLinearSlide.getCurrentPosition();
+            double Sync_Control = LeftLinearSlide.getCurrentPosition() - RightLinearSlide.getCurrentPosition();
+
+            double LeftLinearSlidePower = Height_Control;
+            double RightLinearSlidePower = Height_Control + Sync_Control;
+
+            double max_pwr = Math.max((Math.abs(LeftLinearSlidePower)),(Math.abs(RightLinearSlidePower)));
+            if(max_pwr > 1){
+                LeftLinearSlidePower = LeftLinearSlidePower / max_pwr;
+                RightLinearSlidePower = RightLinearSlidePower / max_pwr;
+            }
+            LeftLinearSlide.setPower(LeftLinearSlidePower);
+            RightLinearSlide.setPower(RightLinearSlidePower);
+        }
+        if (Direction == "DOWN") {
+            LeftLinearSlide.setTargetPosition(TargetPosition);
+            RightLinearSlide.setTargetPosition(TargetPosition);
+
+            LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            RightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            double Height_Control = LeftLinearSlide.getTargetPosition() - LeftLinearSlide.getCurrentPosition();
+            double Sync_Control = LeftLinearSlide.getCurrentPosition() - RightLinearSlide.getCurrentPosition();
+
+            double LeftLinearSlidePower = Height_Control;
+            double RightLinearSlidePower = Height_Control + Sync_Control;
+
+            double max_pwr = Math.max((Math.abs(LeftLinearSlidePower)),(Math.abs(RightLinearSlidePower)));
+            if(max_pwr > 1){
+                LeftLinearSlidePower = LeftLinearSlidePower / max_pwr;
+                RightLinearSlidePower = RightLinearSlidePower / max_pwr;
+            }
+            LeftLinearSlide.setPower(LeftLinearSlidePower);
+            RightLinearSlide.setPower(RightLinearSlidePower);
+        }
+    }
+
+
+    public void set_Left_LinearSlide_v1(String Direction, int TargetPosition, double Speed) {
+        if (Direction == "UP") {
+            LeftLinearSlide.setTargetPosition(-TargetPosition);
+            LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            LeftLinearSlide.setPower(Speed);
+
+            while (myOpMode.opModeIsActive() && LeftLinearSlide.isBusy()) {
+                myOpMode.idle();
+            }
+            LeftLinearSlide.setPower(0);
+
+        } else if (Direction == "DOWN") {
+            LeftLinearSlide.setTargetPosition(TargetPosition);
+            LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            LeftLinearSlide.setPower(Speed);
+
+            while (myOpMode.opModeIsActive() && LeftLinearSlide.isBusy()) {
+                myOpMode.idle();
+            }
+            LeftLinearSlide.setPower(0);
+        } else {
+            LeftLinearSlide.setPower(0);
+        }
+    }
+
+    public void setVelocity_Left_Right_LinearSlide_ver1(String Direction, int TargetPosition, double Speed) {
         double fast_ls_speed = abs(Speed / 100) * 80;
         double slow_ls_speed = abs(Speed - fast_ls_speed);
 
         if (Direction == "UP") {
             int fast_LS_Position = 80;
-            int LS_Position_80 = (abs(LeftLinearSlide.getCurrentPosition() - Position))/100 * fast_LS_Position;
+            int LS_Position_80 = (abs(LeftLinearSlide.getCurrentPosition() - TargetPosition))/100 * fast_LS_Position;
 
             LeftLinearSlide.setTargetPosition((int) (-LS_Position_80));
             RightLinearSlide.setTargetPosition((int) (-LS_Position_80));
@@ -328,8 +491,8 @@ public class ETAT_functions {
                 myOpMode.idle();
             }
 
-            LeftLinearSlide.setTargetPosition((int) (-Position));
-            RightLinearSlide.setTargetPosition((int) (-Position));
+            LeftLinearSlide.setTargetPosition((int) (-TargetPosition));
+            RightLinearSlide.setTargetPosition((int) (-TargetPosition));
 
             ((DcMotorEx) LeftLinearSlide).setVelocity(slow_ls_speed);  //2100
             ((DcMotorEx) RightLinearSlide).setVelocity(slow_ls_speed);  //2100
@@ -346,7 +509,7 @@ public class ETAT_functions {
 
         } else if (Direction == "DOWN") {
             int fast_LS_Position = 20;
-            int LS_Position_80 = (abs(LeftLinearSlide.getCurrentPosition() - Position))/100 * fast_LS_Position;
+            int LS_Position_80 = (abs(LeftLinearSlide.getCurrentPosition() - TargetPosition))/100 * fast_LS_Position;
 
             LeftLinearSlide.setTargetPosition((int) (-LS_Position_80));
             RightLinearSlide.setTargetPosition((int) (-LS_Position_80));
@@ -361,8 +524,8 @@ public class ETAT_functions {
                 myOpMode.idle();
             }
 
-            LeftLinearSlide.setTargetPosition((int) (-Position));
-            RightLinearSlide.setTargetPosition((int) (-Position));
+            LeftLinearSlide.setTargetPosition((int) (-TargetPosition));
+            RightLinearSlide.setTargetPosition((int) (-TargetPosition));
 
             ((DcMotorEx) LeftLinearSlide).setVelocity(slow_ls_speed);  //2100
             ((DcMotorEx) RightLinearSlide).setVelocity(slow_ls_speed);  //2100
@@ -391,10 +554,10 @@ public class ETAT_functions {
         }
     }
 
-    public void setVelocity_Left_Right_LinearSlide_ver2(String Direction, int Position, double Speed) {
+    public void setVelocity_Left_Right_LinearSlide_ver2(String Direction, int TargetPosition, double Speed) {
         if (Direction == "UP") {
-            LeftLinearSlide.setTargetPosition((int) (Position));
-            RightLinearSlide.setTargetPosition((int) (Position));
+            LeftLinearSlide.setTargetPosition((int) (TargetPosition));
+            RightLinearSlide.setTargetPosition((int) (TargetPosition));
 
             ((DcMotorEx) LeftLinearSlide).setVelocity(Speed);  //2100
             ((DcMotorEx) RightLinearSlide).setVelocity(Speed);  //2100
@@ -403,8 +566,8 @@ public class ETAT_functions {
             RightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         } else if (Direction == "DOWN") {
-            LeftLinearSlide.setTargetPosition((int) (Position));
-            RightLinearSlide.setTargetPosition((int) (Position));
+            LeftLinearSlide.setTargetPosition((int) (TargetPosition));
+            RightLinearSlide.setTargetPosition((int) (TargetPosition));
 
             ((DcMotorEx) LeftLinearSlide).setVelocity(Speed);  //2100
             ((DcMotorEx) RightLinearSlide).setVelocity(Speed);  //2100
@@ -425,9 +588,9 @@ public class ETAT_functions {
 
 
 
-    public void setLinearSlidePosition(int Position, double Power) {
-        LeftLinearSlide.setTargetPosition(Position);
-        RightLinearSlide.setTargetPosition(Position);
+    public void setLinearSlidePosition(int TargetPosition, double Power) {
+        LeftLinearSlide.setTargetPosition(TargetPosition);
+        RightLinearSlide.setTargetPosition(TargetPosition);
 
         LeftLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         RightLinearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -542,17 +705,18 @@ public class ETAT_functions {
         myOpMode.telemetry.update();
     }
 
-    public void setArm_version2(String Direction, int Position, double Speed) {
+    public void setArm_version2(String Direction, int TargetPosition, double Speed) {
         final double ARM_COLLAPSED_INTO_ROBOT  = 0;
         double armPosition = (int)ARM_COLLAPSED_INTO_ROBOT;
 
         if (Direction == "HOME") {
-            armMotor.setTargetPosition((int) (Position));
-            ((DcMotorEx) armMotor).setVelocity(Speed);  //2100
+            armMotor.setTargetPosition((int) (TargetPosition));
+            ((DcMotorEx) armMotor).setVelocity(Speed);  // 3
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-//        else if (Direction == "PICKUP") {
-//            armPosition= Math.abs((Position/100)* 95);
+
+//        if (Direction == "PICKUP") {
+//            armPosition= Math.abs((TargetPosition/100)* 95);
 //            armMotor.setTargetPosition((int) (armPosition));
 //            ((DcMotorEx) armMotor).setVelocity(Speed);  //2100
 //            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -560,24 +724,32 @@ public class ETAT_functions {
 //                myOpMode.idle();
 //            }
 //
-//            armMotor.setTargetPosition((int) (Position));
+//            armMotor.setTargetPosition((int) (TargetPosition));
 //            ((DcMotorEx) armMotor).setVelocity(Speed/2);  //2100
 //            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-////            while (armMotor.isBusy()){
-////                myOpMode.idle();
-////            }
+//////            while (armMotor.isBusy()){
+//////                myOpMode.idle();
+//////            }
 //        }
-        else if (Direction == "PICKUP") {
+
+        if (Direction == "PICKUP") {
 //            armPosition= Math.abs((Position/100)* 95);
-            armMotor.setTargetPosition((int) (Position));
+            armMotor.setTargetPosition((int) (TargetPosition));
             ((DcMotorEx) armMotor).setVelocity(Speed);  //2100
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-        else if (Direction == "DROP_or_CLIP") {
-            armMotor.setTargetPosition((int) (Position));
+//        else if (Direction == "DROP_or_CLIP") {
+//            armMotor.setTargetPosition((int) (TargetPosition));
+//            ((DcMotorEx) armMotor).setVelocity(Speed);  //2100
+//            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        }
+
+        if (Direction == "DROP_or_CLIP") {
+            armMotor.setTargetPosition((int) (TargetPosition));
             ((DcMotorEx) armMotor).setVelocity(Speed);  //2100
             armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
+
 
         if (((DcMotorEx) armMotor).isOverCurrent()){
             myOpMode.telemetry.addLine("MOTOR EXCEEDED CURRENT LIMIT!: LeftLinearSlide");
@@ -739,7 +911,7 @@ public class ETAT_functions {
     }
 
     void turnToPID(double targetAngle) {
-        ETAT_functions.TurnPIDController pid = new ETAT_functions.TurnPIDController(targetAngle, 0.01, 0, 0.003);
+        ETAT_functions_v1.TurnPIDController pid = new ETAT_functions_v1.TurnPIDController(targetAngle, 0.01, 0, 0.003);
         myOpMode.telemetry.setMsTransmissionInterval(50);
         // Checking lastSlope to make sure that it's not oscillating when it quits
         while (abs(targetAngle - getAbsoluteAngle()) > 0.5 || pid.getLastSlope() > 0.75) {
@@ -754,8 +926,6 @@ public class ETAT_functions {
         }
         set_myRobotAllMotorSpeedSame(0);
     }
-
-
 
     // Single use per object
     public class TurnPIDController {

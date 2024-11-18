@@ -4,6 +4,7 @@ package General.SammyStuff.S_Functions;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -36,11 +37,12 @@ public class S_Functions {
 //    public double BMOV /*Back Middle Odomentry Value*/ = bme.getCurrentPosition();
     //servo
     public Servo claw;
-    public Servo servo2;
+    public CRServo ActiveIntake;
     //LinearSlides
-    public DcMotor fsls1;
-    public DcMotor fsls2;
-    int LsDefaultPos = 0;
+    public DcMotor fslsLeft;
+    public DcMotor fslsRight;
+    public DcMotor arm;
+    int LsPos = 0;
 
     public void HardwareConfig(boolean useEncoder) {
 
@@ -49,17 +51,23 @@ public class S_Functions {
         fr = SammyOpMode.hardwareMap.get(DcMotor.class, "fr");
         bl = SammyOpMode.hardwareMap.get(DcMotor.class, "bl");
         br = SammyOpMode.hardwareMap.get(DcMotor.class, "br");
+        arm = SammyOpMode.hardwareMap.get(DcMotor.class,"arm");
         fle = SammyOpMode.hardwareMap.dcMotor.get("fl");
         fre = SammyOpMode.hardwareMap.dcMotor.get("fr");
         bme =SammyOpMode.hardwareMap.dcMotor.get("bl");
         imu = SammyOpMode.hardwareMap.get(IMU.class, "imu");
         claw = SammyOpMode.hardwareMap.get(Servo.class, "claw");
-        fsls1 = SammyOpMode.hardwareMap.get(DcMotor.class, "fl");
-        fsls2 = SammyOpMode.hardwareMap.get(DcMotor.class, "fr");
+        ActiveIntake = SammyOpMode.hardwareMap.get(CRServo.class, "activeintake");
+        fslsLeft = SammyOpMode.hardwareMap.get(DcMotor.class, "lsl");
+        fslsRight = SammyOpMode.hardwareMap.get(DcMotor.class, "Lsr");
 
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         if (useEncoder){
             fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -89,11 +97,8 @@ public class S_Functions {
             fre.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             bme.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-            fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
+
     }
 
 
@@ -212,58 +217,45 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
 }
 
 
-    public void Movefsls1(int TargetPos, double pwr, String Direction) {
+    public void MoveBothfsls(int TargetPos, double pwr, String Direction) {
         if (Direction == "up") {
-            fsls1.setTargetPosition(-TargetPos);
-            fsls1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            fsls1.setPower(pwr);
-            while (SammyOpMode.opModeIsActive() && fsls1.isBusy()) {
+            fslsLeft.setTargetPosition(-TargetPos);
+            fslsRight.setTargetPosition(-TargetPos);
+            fslsRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            fslsLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            fslsRight.setPower(pwr);
+            fslsLeft.setPower(pwr);
+            while (SammyOpMode.opModeIsActive() && fslsLeft.isBusy()) {
                 SammyOpMode.idle();
             }
-            fsls1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            fsls1.setPower(0);
+            fslsLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fslsRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fslsRight.setPower(0);
+            fslsLeft.setPower(0);
         } else if (Direction == "down") {
-            fsls1.setTargetPosition(TargetPos);
-            fsls1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            fsls1.setPower(pwr);
-            while (SammyOpMode.opModeIsActive() && fsls1.isBusy()) {
+            fslsLeft.setTargetPosition(TargetPos);
+            fslsRight.setTargetPosition(TargetPos);
+            fslsLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            fslsRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            fslsLeft.setPower(pwr);
+            fslsRight.setPower(pwr);
+            while (SammyOpMode.opModeIsActive() && fslsLeft.isBusy()) {
                 SammyOpMode.idle();
             }
-            fsls1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            fsls1.setPower(0);
+            fslsLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fslsRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fslsRight.setPower(0);
+            fslsLeft.setPower(0);
         } else {
-           fsls1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            fsls1.setPower(0);
+           fslsLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fslsRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            fslsRight.setPower(0);
+            fslsLeft.setPower(0);
         }
     }
 
 
-    public void Movefsls2(int TargetPos, double pwr, String Direction) {
-        if (Direction == "up") {
-            fsls2.setTargetPosition(-TargetPos);
-            fsls2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            fsls2.setPower(pwr);
-            while (SammyOpMode.opModeIsActive() && fsls2.isBusy()) {
-                SammyOpMode.idle();
-            }
-            fsls2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            fsls2.setPower(0);
-        } else if (Direction == "down") {
-            fsls2.setTargetPosition(TargetPos);
-            fsls2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            fsls2.setPower(pwr);
-            SammyOpMode.idle();
 
-            while (SammyOpMode.opModeIsActive() && fsls2.isBusy()) {
-                SammyOpMode.idle();
-            }
-            fsls2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            fsls2.setPower(0);
-        } else {
-            fsls2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            fsls2.setPower(0);
-        }
-    }
     public void openClaw() {
     claw.setPosition(1000);
     }
@@ -273,30 +265,29 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
     }
 
     public void LiftSlidesAndOpenClawSpecimin(){
-        Movefsls1(2000,0.3,"up");
-        Movefsls2(2000,0.3,"up");
+        MoveBothfsls(2000,0.3,"up");
         SammyOpMode.sleep(1000);
         openClaw();
 
 
     }
     public void DefaultSlideAndClaw(){
-        Movefsls1(0,0.3,"down");
-        Movefsls2(0,0.3,"down");
+        MoveBothfsls(0,0.3,"down");
+
         closeClaw();
     }
 
     public void MoveLsUp(){
-        Movefsls1(LsDefaultPos+1000,0.3,"up");
-        Movefsls2(LsDefaultPos+1000,0.3,"up");
+        MoveBothfsls(LsPos +1000,0.3,"up");
+
     }
     public void MoveLsDown(){
-        Movefsls1(LsDefaultPos+1000,0.3,"down");
-        Movefsls2(LsDefaultPos+1000,0.3,"down");
+        MoveBothfsls(LsPos +1000,0.3,"down");
+
     }
     public void PlaceInLowBasket(){
-        Movefsls1(2000,0.3,"up");
-        Movefsls2(2000,0.3,"up");
+        MoveBothfsls(2000,0.3,"up");
+
         SammyOpMode.sleep(500);
         claw.setPosition(1000);
     }
