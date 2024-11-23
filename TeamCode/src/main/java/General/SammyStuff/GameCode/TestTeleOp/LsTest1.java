@@ -26,37 +26,34 @@ public class LsTest1 extends LinearOpMode {
     }
 
     public void MoveBothfsls(int TargetPos, double pwr, String Direction) {
-        if (Direction == "up") {
+        if (Direction.equals("up") ) {
             fslsLeft.setTargetPosition(-TargetPos);
             fslsRight.setTargetPosition(-TargetPos);
             fslsRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fslsLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fslsRight.setPower(pwr);
             fslsLeft.setPower(pwr);
-            while (opModeIsActive() && fslsLeft.isBusy()) {
+            while (opModeIsActive() && fslsLeft.isBusy() && fslsRight.isBusy()) {
                idle();
             }
-            fslsLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            fslsRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             fslsRight.setPower(0);
             fslsLeft.setPower(0);
-        } else if (Direction == "down") {
+            sleep(500);
+        } else if (Direction.equals("down") ) {
             fslsLeft.setTargetPosition(TargetPos);
             fslsRight.setTargetPosition(TargetPos);
             fslsLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fslsRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fslsLeft.setPower(pwr);
             fslsRight.setPower(pwr);
-            while (opModeIsActive() && fslsLeft.isBusy()) {
+            while (opModeIsActive() && fslsLeft.isBusy() && fslsRight.isBusy()) {
                 idle();
             }
-            fslsLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            fslsRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             fslsRight.setPower(0);
             fslsLeft.setPower(0);
+            sleep(500);
         } else {
-            fslsLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            fslsRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
             fslsRight.setPower(0);
             fslsLeft.setPower(0);
         }

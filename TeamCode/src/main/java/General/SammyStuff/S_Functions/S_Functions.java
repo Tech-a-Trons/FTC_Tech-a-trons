@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -44,8 +45,10 @@ public class S_Functions {
     public DcMotor arm;
     int LsPos = 0;
 
-    public void HardwareConfig(boolean useEncoder) {
 
+
+    public void HardwareConfig(boolean useEncoder) {
+    
 
         fl = SammyOpMode.hardwareMap.get(DcMotor.class, "fl");
         fr = SammyOpMode.hardwareMap.get(DcMotor.class, "fr");
