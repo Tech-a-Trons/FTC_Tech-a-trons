@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp (name = "ETAT_TeleOp_V1", group = "ETAT")
 public class ETAT_TeleOp_V1 extends LinearOpMode {
     // get an instance of the "ETAT_functions" class.
-    private final ETAT_functions ETAT_Robot_functions = new ETAT_functions(this);
+    private final ETAT_functions_v1 ETAT_Robot_functions = new ETAT_functions_v1(this);
 
     //Hardware Map Names for drive motors and odometry wheels.
     String frName = "fr", brName = "br", flName = "fl", blName = "bl";
@@ -94,11 +94,11 @@ public class ETAT_TeleOp_V1 extends LinearOpMode {
             // For Linear Slide Code start==========================================================
             if(gamepad1.dpad_up) {
 //                ETAT_Robot_functions.setLinearSlide("UP", 3500, 0.3);
-                ETAT_Robot_functions.set_Left_Right_LinearSlide("UP", 2600, 0.7);
+                ETAT_Robot_functions.set_Left_Right_LinearSlide_v2("UP", 2600, 0.7);
             }
             if(gamepad1.dpad_down) {
 //                ETAT_Robot_functions.setLinearSlide("DOWN", 0, 0.3);
-                ETAT_Robot_functions.set_Left_Right_LinearSlide("DOWN", 3, 0.7);
+                ETAT_Robot_functions.set_Left_Right_LinearSlide_v2("DOWN", 3, 0.7);
             }
             // For Linear Slide Code end
 
