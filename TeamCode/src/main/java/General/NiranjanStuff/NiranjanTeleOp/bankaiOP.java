@@ -4,11 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
-import General.References.ETAT_functions;
+import General.References.ETAT_functions_v1;
 
 @TeleOp(name = "BankaiTeleOp", group = "ETAT")
 public class bankaiOP extends LinearOpMode {
-    private final ETAT_functions ETAT_Robot_functions = new ETAT_functions(this);
+    private final ETAT_functions_v1 ETAT_Robot_functions = new ETAT_functions_v1(this);
 
     // Hardware Map Names
     String frName = "fr", brName = "br", flName = "fl", blName = "bl";
@@ -63,10 +63,10 @@ public class bankaiOP extends LinearOpMode {
 
             // Linear Slide Code
             if (gamepad1.dpad_up) {
-                ETAT_Robot_functions.set_Left_Right_LinearSlide("UP", 2600, 0.7);
+                ETAT_Robot_functions.set_Left_Right_LinearSlide_v2("UP", 2600, 0.7);
             }
             if (gamepad1.dpad_down) {
-                ETAT_Robot_functions.set_Left_Right_LinearSlide("DOWN", 3, 0.7);
+                ETAT_Robot_functions.set_Left_Right_LinearSlide_v2("DOWN", 3, 0.7);
             }
 
             // Claw Code
@@ -94,14 +94,14 @@ public class bankaiOP extends LinearOpMode {
                     clawOperation = CLAW_OPEN;
                     clawOperation = Range.clip(clawOperation, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
                     ETAT_Robot_functions.Claw_Servo.setPosition(clawOperation);
-                    ETAT_Robot_functions.set_Left_Right_LinearSlide("DOWN",3,0.7);
+                    ETAT_Robot_functions.set_Left_Right_LinearSlide_v2("DOWN",3,0.7);
                 }
                 if (gamepad1.right_bumper){ //open claw after
                     ETAT_Robot_functions.setArm_version2("DROP_or_CLIP",655,250);
                     clawOperation = CLAW_CLOSE;
                     clawOperation = Range.clip(clawOperation, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
                     ETAT_Robot_functions.Claw_Servo.setPosition(clawOperation);
-                    ETAT_Robot_functions.set_Left_Right_LinearSlide("UP",2600,0.7);
+                    ETAT_Robot_functions.set_Left_Right_LinearSlide_v2("UP",2600,0.7);
 
                 }
                 if (gamepad1.dpad_right){ //no claw adjustment
@@ -109,7 +109,7 @@ public class bankaiOP extends LinearOpMode {
                     clawOperation = CLAW_CLOSE;
                     clawOperation = Range.clip(clawOperation, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
                     ETAT_Robot_functions.Claw_Servo.setPosition(clawOperation);
-                    ETAT_Robot_functions.set_Left_Right_LinearSlide("DOWN",3,0.7);
+                    ETAT_Robot_functions.set_Left_Right_LinearSlide_v2("DOWN",3,0.7);
 
                 }
                 // Active Intake Code
