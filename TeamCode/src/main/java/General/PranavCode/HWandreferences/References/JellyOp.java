@@ -27,7 +27,7 @@ public class JellyOp extends LinearOpMode {
         
         waitForStart();
 
-       lin1.setPower(0.25);
+        lin1.setPower(0.25);
 
         while (opModeIsActive() && lin1.isBusy()) {
             idle();
