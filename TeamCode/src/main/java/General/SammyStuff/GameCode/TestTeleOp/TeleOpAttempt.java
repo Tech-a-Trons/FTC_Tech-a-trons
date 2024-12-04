@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import General.SammyStuff.S_Functions.S_Functions;
 
 public class TeleOpAttempt extends LinearOpMode {
-    private S_Functions functions = new S_Functions(this);
+    private final S_Functions functions = new S_Functions(this);
 
     @Override
     public void runOpMode() throws InterruptedException {

@@ -6,15 +6,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name = "WEWOO")
 public class wewoo extends OpMode {
-    DcMotor WEWOO;
+    DcMotor motor;
     @Override
     public void init() {
-    WEWOO = hardwareMap.get(DcMotor.class, "WEWOO");
+        motor = hardwareMap.get
+                (DcMotor.class, "WEWOO");
     }
 
     @Override
     public void loop() {
 
-        WEWOO.setPower(1);
+        motor.setPower(1);
     }
 }

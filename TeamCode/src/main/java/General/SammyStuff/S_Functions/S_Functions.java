@@ -12,6 +12,8 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 public class S_Functions {
     public LinearOpMode SammyOpMode;
     public S_Functions(LinearOpMode opMode) {
@@ -145,32 +147,7 @@ public class S_Functions {
 
 
 
-    public void MoveChassis() {
 
-
-        drive = -SammyOpMode.gamepad1.left_stick_y;
-        turn = SammyOpMode.gamepad1.right_stick_x;
-        strafe = SammyOpMode.gamepad1.left_stick_x;
-
-        flpwr = drive + turn + strafe;
-        frpwr = drive - turn - strafe;
-        blpwr = drive + turn - strafe;
-        brpwr = drive - turn + strafe;
-
-        double maxf = Math.max((Math.abs(flpwr)), (Math.abs(frpwr)));
-        double maxb = Math.max((Math.abs(blpwr)), (Math.abs(brpwr)));
-        double maxfb_pwr = Math.max((Math.abs(maxf)), (Math.abs(maxb)));
-        if (maxfb_pwr > 1) {
-            flpwr /= maxfb_pwr;
-            frpwr /= maxfb_pwr;
-            blpwr /= maxfb_pwr;
-            brpwr /= maxfb_pwr;
-            fl.setPower(flpwr);
-            fr.setPower(frpwr);
-            bl.setPower(blpwr);
-            br.setPower(brpwr);
-        }
-    }
 
     public void imuInit() {
         imu.initialize(
@@ -191,19 +168,19 @@ public class S_Functions {
     }
 
 
-//    public double getYaw (){
-//        double pitch = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-//        return pitch;
-//    }
-//
-//    public double getPitch (){
-//        double pitch = imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.DEGREES);
-//        return pitch;
-//    }
-//    public double getRoll () {
-//        double roll = imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.DEGREES);
-//        return roll;
-//    }
+    public double getYaw (){
+        double pitch = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+        return pitch;
+    }
+
+    public double getPitch (){
+        double pitch = imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.DEGREES);
+        return pitch;
+    }
+    public double getRoll () {
+        double roll = imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.DEGREES);
+        return roll;
+    }
 public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,double blp, int brt,double brp) {
     fl.setTargetPosition(flt);
     fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -260,7 +237,7 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
 
 
     public void openClaw() {
-    claw.setPosition(1000);
+    claw.setPosition(1);
     }
 
     public void closeClaw(){

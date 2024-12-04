@@ -6,17 +6,17 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous (name = "Sammy_motor_thingy_lin_no_encoder_:)")
 public class lineartut extends LinearOpMode {
-    DcMotor WEEWOOO;
+    DcMotor motor;
     public void runOpMode() throws InterruptedException {
-        WEEWOOO= hardwareMap.get(DcMotor.class, "motor1");
+        motor= hardwareMap.get(DcMotor.class, "motor1");
 
 
 
 
         waitForStart();
-        WEEWOOO.setPower(1);
-        sleep(219999999);
-        WEEWOOO.setPower(0);
+        motor.setPower(1);
+        sleep(1000);
+        motor.setPower(0);
 
     }
 }
