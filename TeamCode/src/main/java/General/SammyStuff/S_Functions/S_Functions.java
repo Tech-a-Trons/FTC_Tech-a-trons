@@ -2,12 +2,13 @@ package General.SammyStuff.S_Functions;
 
 
 
+import androidx.annotation.NonNull;
+
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -44,9 +45,14 @@ public class S_Functions {
     //LinearSlides
     public DcMotor fslsLeft;
     public DcMotor fslsRight;
-    public DcMotor arm;
-    int LsPos = 0;
+    double LsTickPerMM = 537.7/120;
+    double highBasket = 483 * LsTickPerMM;
+    double lowBasket = 241.5 * LsTickPerMM;
+    double LsPos =  0;
 
+
+   //arm
+    public DcMotor arm;
 
 
     public void HardwareConfig(boolean useEncoder) {
@@ -56,7 +62,6 @@ public class S_Functions {
         fr = SammyOpMode.hardwareMap.get(DcMotor.class, "fr");
         bl = SammyOpMode.hardwareMap.get(DcMotor.class, "bl");
         br = SammyOpMode.hardwareMap.get(DcMotor.class, "br");
-        arm = SammyOpMode.hardwareMap.get(DcMotor.class,"arm");
         fle = SammyOpMode.hardwareMap.dcMotor.get("fl");
         fre = SammyOpMode.hardwareMap.dcMotor.get("fr");
         bme =SammyOpMode.hardwareMap.dcMotor.get("bl");
@@ -65,7 +70,7 @@ public class S_Functions {
         ActiveIntake = SammyOpMode.hardwareMap.get(CRServo.class, "activeintake");
         fslsLeft = SammyOpMode.hardwareMap.get(DcMotor.class, "lsl");
         fslsRight = SammyOpMode.hardwareMap.get(DcMotor.class, "Lsr");
-
+        arm = SammyOpMode.hardwareMap.get(DcMotor.class,"arm");
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -121,21 +126,21 @@ public class S_Functions {
         brc = br.getCurrentPosition();
         blc = bl.getCurrentPosition();
 
-        displayBigOnDS("-------Telemetry activated--------------------------------");
-        displaySmallOnDS("FlPos: ", flc);
-        displaySmallOnDS("FrPos: ", frc);
-        displaySmallOnDS("BlPos: ", blc);
-        displaySmallOnDS("BrPos: ", brc);
-        displaySmallOnDS("FlPwr", flpwr);
-        displaySmallOnDS("FrPwr", frpwr);
-        displaySmallOnDS("BlPwr", blpwr);
-        displaySmallOnDS("BrPwr", brpwr);
+        displayHeadingsOnDS("-------Telemetry activated--------------------------------");
+        displayInfoOnDS("FlPos: ", flc);
+        displayInfoOnDS("FrPos: ", frc);
+        displayInfoOnDS("BlPos: ", blc);
+        displayInfoOnDS("BrPos: ", brc);
+        displayInfoOnDS("FlPwr", flpwr);
+        displayInfoOnDS("FrPwr", frpwr);
+        displayInfoOnDS("BlPwr", blpwr);
+        displayInfoOnDS("BrPwr", brpwr);
 
-//        displayBigOnDS("-------IMU SENSOR DATA--------------------------------");
+//        displayHeadingsOnDS("-------IMU SENSOR DATA--------------------------------");
 //        displaySmallOnDS("Yaw Angle: ", YawAngle);
 //        displaySmallOnDS("Pitch Angle: ", PitchAngle);
 //        displaySmallOnDS("Roll Angle: ", RollAngle);
-//        displayBigOnDS("-------ODOMETRY DATA--------------------------------");
+//        displayHeadingsOnDS("-------ODOMETRY DATA--------------------------------");
 //        displaySmallOnDS("FL-Odometry: ", FLOV);
 //        displaySmallOnDS("FR-Odometry", FROV);
 //        displaySmallOnDS("BM-Odometry", BMOV);
@@ -159,11 +164,11 @@ public class S_Functions {
         imu.resetYaw();
     }
 
-    public void displaySmallOnDS(String Heading, double Data) {
+    public void displayInfoOnDS(String Heading, double Data) {
         SammyOpMode.telemetry.addData(Heading, Data);
     }
 
-    public void displayBigOnDS(String Heading) {
+    public void displayHeadingsOnDS(String Heading) {
         SammyOpMode.telemetry.addLine(Heading);
     }
 
@@ -197,10 +202,10 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
 }
 
 
-    public void MoveBothfsls(int TargetPos, double pwr, String Direction) {
-        if (Direction == "up") {
-            fslsLeft.setTargetPosition(-TargetPos);
-            fslsRight.setTargetPosition(-TargetPos);
+    public void MoveBothfsls(double TargetPos, double pwr, String Direction) {
+        if (Direction.equals("up")) {
+            fslsLeft.setTargetPosition((int) -TargetPos);
+            fslsRight.setTargetPosition((int) -TargetPos);
             fslsRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fslsLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fslsRight.setPower(pwr);
@@ -212,9 +217,9 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
             fslsRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             fslsRight.setPower(0);
             fslsLeft.setPower(0);
-        } else if (Direction == "down") {
-            fslsLeft.setTargetPosition(TargetPos);
-            fslsRight.setTargetPosition(TargetPos);
+        } else if (Direction.equals("down")) {
+            fslsLeft.setTargetPosition((int) TargetPos);
+            fslsRight.setTargetPosition((int) TargetPos);
             fslsLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fslsRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fslsLeft.setPower(pwr);
@@ -237,7 +242,7 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
 
 
     public void openClaw() {
-    claw.setPosition(1);
+    claw.setPosition(0.25);
     }
 
     public void closeClaw(){
@@ -258,17 +263,32 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
     }
 
     public void MoveLsUp(){
-        MoveBothfsls(LsPos +1000,0.3,"up");
+        if(LsPos == 0) {
+            LsPos= lowBasket;
+            MoveBothfsls(LsPos, 0.3, "up");
 
+        } else if(LsPos == lowBasket){
+            LsPos= highBasket;
+            MoveBothfsls(LsPos, 0.3, "up");
+        }else if (LsPos == highBasket){
+           SammyOpMode.idle();
+        }
     }
     public void MoveLsDown(){
-        MoveBothfsls(LsPos +1000,0.3,"down");
-
+       if (LsPos == 0) {
+         SammyOpMode.idle();
+       }else if(LsPos == lowBasket) {
+          LsPos = 0;
+           MoveBothfsls(LsPos, 0.3, "down");
+       }else if(LsPos == highBasket){
+           LsPos = lowBasket;
+           MoveBothfsls(LsPos, 0.3, "down");
+       }
     }
     public void PlaceInLowBasket(){
         MoveBothfsls(2000,0.3,"up");
 
         SammyOpMode.sleep(500);
-        claw.setPosition(1000);
+        openClaw();
     }
 }

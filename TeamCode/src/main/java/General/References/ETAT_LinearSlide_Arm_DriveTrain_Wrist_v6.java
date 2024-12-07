@@ -101,7 +101,7 @@ public class ETAT_LinearSlide_Arm_DriveTrain_Wrist_v6 extends LinearOpMode {
     boolean button_flag = false;
     boolean Button_BACK_flag = false;
     boolean Button_Y_flag = false;
-    boolean arm_motorRunning = false;
+    boolean artestRunning = false;
     double ARM_RESET_POSITION = 0;
     double ARM_TOLERANCE = 2.0;
 
@@ -347,7 +347,7 @@ public class ETAT_LinearSlide_Arm_DriveTrain_Wrist_v6 extends LinearOpMode {
             // For Claw code end
 
 //            //For Arm code start==================================================================
-            if ((gamepad2.back) && (!arm_motorRunning)){
+            if ((gamepad2.back) && (!artestRunning)){
                 LEDname.enableLight(false);
                 clawOperation = CLAW_OPEN;
                 clawOperation = Range.clip(clawOperation, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
@@ -358,10 +358,10 @@ public class ETAT_LinearSlide_Arm_DriveTrain_Wrist_v6 extends LinearOpMode {
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(arm_full_speed);
 
-                arm_motorRunning = true;
+                artestRunning = true;
             }
 
-            if ((gamepad2.y) && (!arm_motorRunning)){
+            if ((gamepad2.y) && (!artestRunning)){
                 LEDname.enableLight(false);
 //                clawOperation = CLAW_CLOSE;
 //                clawOperation = Range.clip(clawOperation, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
@@ -371,10 +371,10 @@ public class ETAT_LinearSlide_Arm_DriveTrain_Wrist_v6 extends LinearOpMode {
                 armMotor.setTargetPosition((int) (armTragetPosition));
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(arm_full_speed);
-                arm_motorRunning = true;
+                artestRunning = true;
             }
 
-            if ((gamepad2.b) && (!arm_motorRunning)){
+            if ((gamepad2.b) && (!artestRunning)){
 //                clawOperation = CLAW_OPEN;
 //                clawOperation = Range.clip(clawOperation, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
 //                Claw_Servo.setPosition(clawOperation);
@@ -385,10 +385,10 @@ public class ETAT_LinearSlide_Arm_DriveTrain_Wrist_v6 extends LinearOpMode {
                 armMotor.setTargetPosition((int) (armTragetPosition));
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(arm_full_speed);
-                arm_motorRunning = true;
+                artestRunning = true;
             }
 
-            if ((gamepad2.a) && (!arm_motorRunning)){
+            if ((gamepad2.a) && (!artestRunning)){
                 LEDname.enableLight(false);
 //                clawOperation = CLAW_OPEN;
 //                clawOperation = Range.clip(clawOperation, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
@@ -408,7 +408,7 @@ public class ETAT_LinearSlide_Arm_DriveTrain_Wrist_v6 extends LinearOpMode {
 //                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //                armMotor.setPower(arm_full_speed);
 
-                arm_motorRunning = true;
+                artestRunning = true;
             }
             armPositionFudgeFactor = FUDGE_FACTOR * (gamepad2.right_trigger + (-gamepad2.left_trigger));
             armMotor.setTargetPosition((int) (armTragetPosition + armPositionFudgeFactor));
@@ -417,12 +417,12 @@ public class ETAT_LinearSlide_Arm_DriveTrain_Wrist_v6 extends LinearOpMode {
 
             if (Math.abs(armMotor.getCurrentPosition() - armTragetPosition) < ARM_TOLERANCE && armTragetPosition!= ARM_RESET_POSITION) {
                 armMotor.setPower(arm_half_speed);
-                arm_motorRunning=false;
+                artestRunning=false;
             }
 
             if((armMotor.getCurrentPosition()>=ARM_RESET_POSITION && armMotor.getCurrentPosition()<=10) && armTragetPosition==ARM_RESET_POSITION ) {
                 armMotor.setPower(0);
-                arm_motorRunning=false;
+                artestRunning=false;
             }
 
 //            telemetry.addData("Arm Target Position = ",armMotor.getTargetPosition());

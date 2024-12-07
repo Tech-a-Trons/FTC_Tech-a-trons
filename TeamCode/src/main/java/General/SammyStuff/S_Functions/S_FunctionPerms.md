@@ -5,22 +5,25 @@
 
 
 
-| Functions                  | Variables involved                                                                   | Additional comments and notes                                                        |
-|----------------------------|--------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| init                       |
-| hardwareConfig             | `boolean useEncoder`                                                                 | n/a                                                                                  |
-| telemetryInit              | n/a                                                                                  | n/a                                                                                  |
-| imuInit                    | n/a                                                                                  | n/a                                                                                  |
-| AfterInit                  |
-| telemetryAfterInit         | n/a                                                                                  | n/a                                                                                  |
-| SetTargetPosChassis        | `int flt, double flp, int frt, double frp, int blt, double blp, int brt, double brp` | n/a                                                                                  |
-| Movefsls(1&2)              | `int TrgetPos, double pwr, String Direction`                                         | use Movefsls1 and Movefsls2 to access both                                           |
-| DefaultSlideAndClaw        | n/a                                                                                  | It might bug out if you use it when its already at default during your teleOp period |
-| LiftArmAndOpenClawSpecimin | n/a                                                                                  | n/a                                                                                  |
-| MoveLsUp                   | n/a                                                                                  | used to move slides up one stage(sorry for making that unclear)                      |
-| MoveLsdown                 | n/a                                                                                  | used to move slides down one stage(sorry for making that unclear)                    |
-| PlaceInLowBasket           | n/a                                                                                  | n/a                                                                                  |
-| will add more later        |                                                                                      |                                                                                      |
+| Functions                  | Variables involved                                                                   | Additional comments and notes                                                                             |
+|----------------------------|--------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| **init**                   |
+| hardwareConfig             | `boolean useEncoder`                                                                 | n/a                                                                                                       |
+| telemetryInit              | n/a                                                                                  | n/a                                                                                                       |
+| imuInit                    | n/a                                                                                  | n/a                                                                                                       |
+| **AfterInit**              |
+| displayInfoOnDS            | String Heading, double Data                                                          | n/a                                                                                                       |
+| displayHeadingsOnDS        | String Heading                                                                       | n/a                                                                                                       |
+| telemetryAfterInit         | n/a                                                                                  | n/a                                                                                                       |
+| SetTargetPosChassis        | `int flt, double flp, int frt, double frp, int blt, double blp, int brt, double brp` | n/a                                                                                                       |
+| MoveBothfsls               | `int TargetPos, double pwr, String Direction`                                        | use Movefsls1 and Movefsls2 to access both                                                                |
+| open/closeClaw             | n/a                                                                                  | used as openClaw or closeClaw                                                                             |
+| DefaultSlideAndClaw        | n/a                                                                                  | It might bug out if you use it when its already at default during your teleOp period                      |
+| LiftArmAndOpenClawSpecimin | n/a                                                                                  | n/a                                                                                                       |
+| MoveLsUp                   | n/a                                                                                  | used to move slides up to low basket, then to high basket if clicked again(sorry for making that unclear) |
+| MoveLsdown                 | n/a                                                                                  | used to move slides down from high basket to low basket (sorry for making that unclear)                   |
+| PlaceInLowBasket           | n/a                                                                                  | n/a                                                                                                       |
+| will add more later        |                                                                                      |                                                                                                           |
 
 
 
@@ -45,52 +48,47 @@ Copy and paste the stuff below to get access to
 all the commands(variables are commented out because I
 dont know if you need them. so just in case) 
 Imu is currenty not working and should be commented out
-in teleOp because its only used in Auton
+in teleOp because it is only used in Auton
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-private S_Functions functions = new S_Functions(this);
+// chassis motors
+        DcMotor fl = functions.fl,
+            fr = functions.fr,
+            br = functions.br,
+            bl = functions.bl;
+       //odometry
+        DcMotor fle/* Front Left encoder*/ = functions.fle
+               ,fre /* Front Right encoder*/ = functions. fle,
+               bme /* Back Middle encoder*/ = functions. bme;
+    //move chassis
+        double drive = functions.drive,
+            turn = functions.turn,
+            strafe = functions.strafe;
 
+        double flpwr = functions.flpwr,
+                frpwr = functions.frpwr,
+                blpwr = functions.blpwr,
+                brpwr = functions.flpwr;
+        double flc = functions.flc,
+                frc = functions.frc,
+                blc = functions.blc,
+                brc = functions.brc;
+       //Imu
+        IMU imu = functions.imu;
+        //Telemetry
+//        double YawAngle = functions.getYaw(),
+//               PitchAngle = functions.getPitch(),
+//               RollAngle = functions.getRoll();
+        double FLOV /*Front Left Odomentry Value*/ = functions.fle.getCurrentPosition();
+        double FROV /*Front Right Odomentry Value*/= functions.fre.getCurrentPosition();
+        double BMOV /*Back Middle Odomentry Value*/ = functions.bme.getCurrentPosition();
+       //servo
+        Servo claw = functions.claw;
 
-    
-//
-//    // chassis motors
-//        DcMotor fl = functions.fl,
-//            fr = functions.fr,
-//            br = functions.br,
-//            bl = functions.bl;
-//       //odometry
-//        DcMotor fle/* Front Left encoder*/ = functions.fle
-//               ,fre /* Front Right encoder*/ = functions. fle,
-//               bme /* Back Middle encoder*/ = functions. bme;
-//    //move chassis
-//        double drive = functions.drive, 
-//            turn = functions.turn, 
-//            strafe = functions.strafe;
-//       
-//        double flpwr = functions.flpwr, 
-//                frpwr = functions.frpwr,
-//                blpwr = functions.blpwr, 
-//                brpwr = functions.flpwr;
-//        double flc = functions.flc, 
-//                frc = functions.frc,
-//                blc = functions.blc, 
-//                brc = functions.brc;
-//       //Imu
-//        IMU imu = functions.imu;
-//        //Telemetry
-////        double YawAngle = functions.getYaw();
-////        double PitchAngle = functions.getPitch();
-////        double RollAngle = functions.getRoll();
-//        double FLOV /*Front Left Odomentry Value*/ = functions.fle.getCurrentPosition();
-//        double FROV /*Front Right Odomentry Value*/= functions.fre.getCurrentPosition();
-//        double BMOV /*Back Middle Odomentry Value*/ = functions.bme.getCurrentPosition();
-//       //servo
-//        Servo claw = functions.claw;
-//        
-//        //Linear slides
-//        DcMotor fsls1;
-//        DcMotor fsls2;
+        //Linear slides
+        DcMotor fslsLeft = functions.fslsLeft;
+        DcMotor fslsRight = functions.fslsRight;
     
     public void runOpMode() throws InterruptedException {
     // hardware init and other init goes here

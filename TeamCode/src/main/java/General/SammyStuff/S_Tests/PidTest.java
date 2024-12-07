@@ -1,4 +1,4 @@
-package General.SammyStuff.S_References;
+package General.SammyStuff.S_Tests;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -19,20 +19,20 @@ public class PidTest extends LinearOpMode {
     public static int target = 0;
     public final double ticksInDegree = 700 / 180.0;
 
-    private DcMotor Arm_Motor;
+    private DcMotor Artest;
     @Override
     public void runOpMode() throws InterruptedException {
     controller = new PIDController(p,i,d);
     telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-    Arm_Motor = hardwareMap.get(DcMotor.class, "fl");
+    Artest = hardwareMap.get(DcMotor.class, "fl");
     waitForStart();
     while(opModeIsActive()){
         controller.setPID(p, i, d);
-        int armPos = Arm_Motor.getCurrentPosition();
+        int armPos = Artest.getCurrentPosition();
         double pid = controller.calculate(armPos, target);
         double ff = Math.cos(Math.toRadians(target/ticksInDegree))*f;
         double power =  pid + ff;
-        Arm_Motor.setPower(power);
+        Artest.setPower(power);
     }
     }
 }

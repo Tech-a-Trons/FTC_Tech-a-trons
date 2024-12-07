@@ -5,8 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 import General.SammyStuff.S_Functions.S_Functions;
 
 public class TeleOpv1 extends LinearOpMode {
@@ -48,17 +46,18 @@ public class TeleOpv1 extends LinearOpMode {
         Servo claw = functions.claw;
 
         //Linear slides
-        DcMotor fsls1;
-        DcMotor fsls2;
+        DcMotor fslsLeft = functions.fslsLeft;
+        DcMotor fslsRight = functions.fslsRight;
 
 
     public void runOpMode() throws InterruptedException {
         // hardware init and other init goes here
-        functions.HardwareConfig(true);
+        functions.HardwareConfig(true );
+        functions.telemetryInit();
         waitForStart();
         while (opModeIsActive()) {
             // other game code goes here
-
+            functions.telemetryAfterInit();
             drive = -gamepad1.left_stick_y;
             turn = gamepad1.right_stick_x;
             strafe =gamepad1.left_stick_x;
@@ -80,6 +79,13 @@ public class TeleOpv1 extends LinearOpMode {
                 fr.setPower(frpwr);
                 bl.setPower(blpwr);
                 br.setPower(brpwr);
+            }
+            // other game code goes here
+            if (gamepad2.left_bumper){
+                functions.openClaw();
+            }
+            if(gamepad2.right_bumper){
+                functions.closeClaw();
             }
         }
     }

@@ -114,11 +114,11 @@ private ElapsedTime holdTimer = new ElapsedTime();
         displaySmallOnDS("BlPwr", blpwr);
         displaySmallOnDS("BrPwr", brpwr);
 
-//        displayBigOnDS("-------IMU SENSOR DATA--------------------------------");
+//        displayHeadingsOnDS("-------IMU SENSOR DATA--------------------------------");
 //        displaySmallOnDS("Yaw Angle: ", YawAngle);
 //        displaySmallOnDS("Pitch Angle: ", PitchAngle);
 //        displaySmallOnDS("Roll Angle: ", RollAngle);
-//        displayBigOnDS("-------ODOMETRY DATA--------------------------------");
+//        displayHeadingsOnDS("-------ODOMETRY DATA--------------------------------");
 //        displaySmallOnDS("FL-Odometry: ", FLOV);
 //        displaySmallOnDS("FR-Odometry", FROV);
 //        displaySmallOnDS("BM-Odometry", BMOV);
