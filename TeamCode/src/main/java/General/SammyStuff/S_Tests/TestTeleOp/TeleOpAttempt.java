@@ -1,4 +1,4 @@
-package General.SammyStuff.GameCode.TestTeleOp;
+package General.SammyStuff.S_Tests.TestTeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -14,7 +14,6 @@ public class TeleOpAttempt extends LinearOpMode {
         functions.imuInit();
         waitForStart();
         while (opModeIsActive()) {
-            functions.MoveChassis();
             if (gamepad2.dpad_up) {
                 functions.MoveLsUp();
             }

@@ -1,4 +1,4 @@
-package General.SammyStuff.GameCode.TestTeleOp;
+package General.SammyStuff.S_Tests.TestTeleOp;
 
 import General.SammyStuff.S_OpVersions.S_LinOp;
 

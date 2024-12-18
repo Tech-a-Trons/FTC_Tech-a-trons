@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import General.SammyStuff.S_Functions.S_Functions;
 
-public class TeleOpv1 extends LinearOpMode {
+public class TeleOp extends LinearOpMode {
     private S_Functions functions = new S_Functions(this);
 
 

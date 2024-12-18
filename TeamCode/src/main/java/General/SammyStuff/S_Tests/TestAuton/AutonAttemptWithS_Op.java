@@ -1,7 +1,7 @@
 
 
 
-package General.SammyStuff.GameCode.TestAuton;
+package General.SammyStuff.S_Tests.TestAuton;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 

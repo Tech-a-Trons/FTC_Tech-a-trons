@@ -1,4 +1,4 @@
-package General.SammyStuff.GameCode.TestTeleOp;
+package General.SammyStuff.S_Tests.TestTeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;

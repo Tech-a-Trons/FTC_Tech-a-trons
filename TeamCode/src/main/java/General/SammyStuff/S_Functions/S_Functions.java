@@ -9,10 +9,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class S_Functions {
@@ -49,8 +51,9 @@ public class S_Functions {
     double highBasket = 483 * LsTickPerMM;
     double lowBasket = 241.5 * LsTickPerMM;
     double LsPos =  0;
-
-
+    //names
+    HardwareMap hmap;
+   Telemetry telemetry;
    //arm
     public DcMotor arm;
 
@@ -58,19 +61,19 @@ public class S_Functions {
     public void HardwareConfig(boolean useEncoder) {
     
 
-        fl = SammyOpMode.hardwareMap.get(DcMotor.class, "fl");
-        fr = SammyOpMode.hardwareMap.get(DcMotor.class, "fr");
-        bl = SammyOpMode.hardwareMap.get(DcMotor.class, "bl");
-        br = SammyOpMode.hardwareMap.get(DcMotor.class, "br");
-        fle = SammyOpMode.hardwareMap.dcMotor.get("fl");
-        fre = SammyOpMode.hardwareMap.dcMotor.get("fr");
-        bme =SammyOpMode.hardwareMap.dcMotor.get("bl");
-        imu = SammyOpMode.hardwareMap.get(IMU.class, "imu");
-        claw = SammyOpMode.hardwareMap.get(Servo.class, "claw");
-        ActiveIntake = SammyOpMode.hardwareMap.get(CRServo.class, "activeintake");
-        fslsLeft = SammyOpMode.hardwareMap.get(DcMotor.class, "lsl");
-        fslsRight = SammyOpMode.hardwareMap.get(DcMotor.class, "Lsr");
-        arm = SammyOpMode.hardwareMap.get(DcMotor.class,"arm");
+        fl =  hmap.get(DcMotor.class, "fl");
+        fr =  hmap.get(DcMotor.class, "fr");
+        bl =  hmap.get(DcMotor.class, "bl");
+        br =  hmap.get(DcMotor.class, "br");
+        fle =  hmap.dcMotor.get("fl");
+        fre =  hmap.dcMotor.get("fr");
+        bme = hmap.dcMotor.get("bl");
+        imu =  hmap.get(IMU.class, "imu");
+        claw =  hmap.get(Servo.class, "claw");
+        ActiveIntake =  hmap.get(CRServo.class, "activeintake");
+        fslsLeft =  hmap.get(DcMotor.class, "lsl");
+        fslsRight =  hmap.get(DcMotor.class, "Lsr");
+        arm =  hmap.get(DcMotor.class,"arm");
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -114,9 +117,9 @@ public class S_Functions {
 
     public void telemetryInit() {
 
-        SammyOpMode.telemetry.addData("Status", "Initialized");
-        SammyOpMode.telemetry.update();
-        SammyOpMode.telemetry.setMsTransmissionInterval(100);
+         telemetry.addData("Status", "Initialized");
+         telemetry.update();
+         telemetry.setMsTransmissionInterval(100);
     }
 
     public void telemetryAfterInit() {
@@ -146,7 +149,7 @@ public class S_Functions {
 //        displaySmallOnDS("BM-Odometry", BMOV);
 
 
-        SammyOpMode.telemetry.update();
+         telemetry.update();
 
     }
 
@@ -165,11 +168,11 @@ public class S_Functions {
     }
 
     public void displayInfoOnDS(String Heading, double Data) {
-        SammyOpMode.telemetry.addData(Heading, Data);
+         telemetry.addData(Heading, Data);
     }
 
     public void displayHeadingsOnDS(String Heading) {
-        SammyOpMode.telemetry.addLine(Heading);
+         telemetry.addLine(Heading);
     }
 
 
@@ -210,7 +213,7 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
             fslsLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fslsRight.setPower(pwr);
             fslsLeft.setPower(pwr);
-            while (SammyOpMode.opModeIsActive() && fslsLeft.isBusy()) {
+            while ( SammyOpMode.opModeIsActive() && fslsLeft.isBusy()) {
                 SammyOpMode.idle();
             }
             fslsLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -224,7 +227,7 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
             fslsRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fslsLeft.setPower(pwr);
             fslsRight.setPower(pwr);
-            while (SammyOpMode.opModeIsActive() && fslsLeft.isBusy()) {
+            while ( SammyOpMode.opModeIsActive() && fslsLeft.isBusy()) {
                 SammyOpMode.idle();
             }
             fslsLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -271,12 +274,12 @@ public void SetTargetPosChassis(int flt,double flp, int frt,double frp, int blt,
             LsPos= highBasket;
             MoveBothfsls(LsPos, 0.3, "up");
         }else if (LsPos == highBasket){
-           SammyOpMode.idle();
+            SammyOpMode.idle();
         }
     }
     public void MoveLsDown(){
        if (LsPos == 0) {
-         SammyOpMode.idle();
+           SammyOpMode.idle();
        }else if(LsPos == lowBasket) {
           LsPos = 0;
            MoveBothfsls(LsPos, 0.3, "down");
