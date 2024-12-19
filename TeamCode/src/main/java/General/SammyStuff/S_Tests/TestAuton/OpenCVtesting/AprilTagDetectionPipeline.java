@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 
-package General.SammyStuff.S_Tests.TestTeleOp.OpenCVtesting;
+package General.SammyStuff.S_Tests.TestAuton.OpenCVtesting;
 
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.CvType;
