@@ -3,9 +3,8 @@
 
 
 
-////Please dont edit this one. Only use it for reference
-////Use v7 instead to edit
-
+////Basically the same as v6 but u can edit this one
+////Also please init the odometry before u edit. Someone do that
 
 
 
@@ -26,9 +25,9 @@
 //import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 //
 ////@Disabled
-//@Autonomous(name = "ETAT_AUTO_v6_RIGHT_new", group = "ETAT")
-////@TeleOp(name = "ETAT_AUTO_v6_RIGHT", group = "ETAT")
-//public class ETAT_AUTO_v6_RIGHT_new extends LinearOpMode {
+//@Autonomous(name = "ETAT_AUTO_v7_RIGHT_new", group = "ETAT")
+////@TeleOp(name = "ETAT_AUTO_v7_RIGHT", group = "ETAT")
+//public class ETAT_AUTO_v7_RIGHT_new extends LinearOpMode {
 //    //Hardware Map Names
 //    String flName = "fl", frName = "fr", blName = "bl", brName = "br";
 //    String LeftLinearSlideName = "lsl", RightLinearSlideName = "lsr";

@@ -1,15 +1,16 @@
 //package General.References;
 //
-
-
-
-////Please dont edit this one. Only use it for reference
-////Use v7 instead to edit
-
-
-
-
-
+//
+//
+//
+//
+////Basically the same as v6, but u can make edits on this file
+////Also please init the odometry. Someone do that.
+//
+//
+//
+//
+//import com.arcrobotics.ftclib.kinematics.Odometry;
 //import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 //import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 //import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -26,9 +27,9 @@
 //import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 //
 ////@Disabled
-//@Autonomous(name = "ETAT_AUTO_v6_RIGHT_new", group = "ETAT")
-////@TeleOp(name = "ETAT_AUTO_v6_RIGHT", group = "ETAT")
-//public class ETAT_AUTO_v6_RIGHT_new extends LinearOpMode {
+//@Autonomous(name = "ETAT_AUTO_v7_LEFT", group = "ETAT")
+////@TeleOp(name = "ETAT_AUTO_v7_LEFT", group = "ETAT")
+//public class ETAT_AUTO_v7_LEFT extends LinearOpMode {
 //    //Hardware Map Names
 //    String flName = "fl", frName = "fr", blName = "bl", brName = "br";
 //    String LeftLinearSlideName = "lsl", RightLinearSlideName = "lsr";
@@ -147,8 +148,8 @@
 //    public final static double CLAW_OPEN_S = 0.17;
 //    double clawOperation = CLAW_HOME;
 //
-//    // Odometry
-//    OdometryGlobalCoordinatePosition globalPositionUpdate;
+////    Odometry.
+////    OdometryGlobalCoordinatePosition globalPositionUpdate;
 //
 //
 //    @Override
@@ -265,14 +266,16 @@
 //
 //        // For Odometry
 //        //Create and start GlobalCoordinatePosition thread to constantly update the global coordinate positions
-//        globalPositionUpdate = new OdometryGlobalCoordinatePosition(verticalLeft, verticalRight, horizontal, COUNTS_PER_INCH, 75);
+//        //globalPositionUpdate = new OdometryGlobalCoordinatePosition(verticalLeft, verticalRight, horizontal, COUNTS_PER_INCH, 75);
 //        Thread positionThread = new Thread(globalPositionUpdate);
 //        positionThread.start();
 //
-//        globalPositionUpdate.reverseRightEncoder();
+//       // globalPositionUpdate.reverseRightEncoder();
 //        globalPositionUpdate.reverseLeftEncoder();
 ////        globalPositionUpdate.reverseNormalEncoder();
 //
+//
+//        // Arm
 //        if (Math.abs(armMotor.getCurrentPosition() - armTargetPosition) < ARM_TOLERANCE && armTargetPosition!= ARM_RESET_POSITION) {
 //            armMotor.setPower(arm_half_speed);
 //            arm_motorRunning=false;
@@ -282,22 +285,23 @@
 //            armMotor.setPower(0);
 //            arm_motorRunning=false;
 //        }
-//
 //        //For Arm code End==================================================================
 //
+//        //For Odometry code start here===========================================================
+//        //if ((gamepad1.start) && (gamepad1.x)) {
 //        int SLEEPvalue = 600; //500
-//        // STEP0:
+//        //STEP0:
 //        clawOperation = CLAW_CLOSE;
 //        clawOperation = Range.clip(clawOperation, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
 //        Claw_Servo.setPosition(clawOperation);
 //        sleep(100);
 //
 //        // STEP1:
-//        Drive_To_XY_Position(17,5,0.4,0,1);  // Y changed from -15 to -5
+//        Drive_To_XY_Position(18,-5,0.5,0,1);  // Y changed from -15 to -5
 //        sleep(SLEEPvalue);
 //
 //        //STEP2:
-//        Turn_Robot(65, 0.5);  // 67
+//        Turn_Robot(65, 0.5);  // 65 --> 67
 //        sleep(SLEEPvalue);
 //
 //        //STEP3: Set Arm poistion to 0
@@ -312,7 +316,7 @@
 //        sleep(SLEEPvalue);
 //
 //        //STEP4: Position the arm to Hang the specimen
-//        armTargetPosition = ((int) (174 * ARM_TICKS_PER_DEGREE)); // 172
+//        armTargetPosition = ((int) (174 * ARM_TICKS_PER_DEGREE));
 //        armMotor.setTargetPosition((int) (armTargetPosition));
 //        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //        armMotor.setPower(arm_full_speed);
@@ -322,7 +326,7 @@
 //        sleep(SLEEPvalue);
 //
 //        //STEP5: Pull the back so that specimen can clip to rod
-//        Drive_To_XY_Position(17,-3,0.4,0,1);  // Y = -13 to -11
+//        Drive_To_XY_Position(16,-13,0.4,0,1);  // Y = -13 to -11
 //
 //        //STEP6: Open the Claw
 //        clawOperation = CLAW_OPEN;
@@ -338,33 +342,38 @@
 //        while (armMotor.isBusy()){
 //            idle();
 //        }
+//        sleep(200);
+//
+//        sleep(10000);
 //
 //        //STEP6 : Reset.
 //        imu.resetYaw();
 //        sleep(200);
 //
 //        //STEP7: Rotate 67
-//        Turn_Robot(96, 0.75);  //  == 95--96
+//        Turn_Robot(100, 0.7);  //  == 175-- 165
 //        while (FrontRight.isBusy() || FrontLeft.isBusy() || BackRight.isBusy() || BackLeft.isBusy()) { idle();}
 //
-//        Drive_To_XY_Position(11,10,0.6,0,1);  // Y=7 -- 19
+//        Drive_To_XY_Position(12,7,0.6,0,1);  // Y = -12--> -18  x=60--> 58
 //        while (FrontRight.isBusy() || FrontLeft.isBusy() || BackRight.isBusy() || BackLeft.isBusy()) { idle();}
 //
-////        while(opModeIsActive()){
-////            //Display Global (x, y, theta) coordinates
-////            telemetry.addData("X Position", globalPositionUpdate.returnXCoordinate() / COUNTS_PER_INCH);
-////            telemetry.addData("Y Position", globalPositionUpdate.returnYCoordinate() / COUNTS_PER_INCH);
-////            telemetry.addData("Orientation (Degrees)", globalPositionUpdate.returnOrientation());
-////
-////            telemetry.addData("Vertical left encoder position", verticalLeft.getCurrentPosition());
-////            telemetry.addData("Vertical right encoder position", verticalRight.getCurrentPosition());
-////            telemetry.addData("horizontal encoder position", horizontal.getCurrentPosition());
-////
-////            telemetry.addData("Thread Active", positionThread.isAlive());
-////            telemetry.update();
-////        }
-//        setPowerAll(0,0,0,0);
-//        //Stop the thread
+//        while(opModeIsActive()){
+//            //Display Global (x, y, theta) coordinates
+//            telemetry.addData("X Position", globalPositionUpdate.returnXCoordinate() / COUNTS_PER_INCH);
+//            telemetry.addData("Y Position", globalPositionUpdate.returnYCoordinate() / COUNTS_PER_INCH);
+//            telemetry.addData("Orientation (Degrees)", globalPositionUpdate.returnOrientation());
+//
+//            telemetry.addData("Vertical left encoder position", verticalLeft.getCurrentPosition());
+//            telemetry.addData("Vertical right encoder position", verticalRight.getCurrentPosition());
+//            telemetry.addData("horizontal encoder position", horizontal.getCurrentPosition());
+//
+//            telemetry.addData("Thread Active", positionThread.isAlive());
+//            telemetry.update();
+//        }
+//        //}
+//        //For Odometry code End==================================================================
+//    //}
+//    //Stop the thread
 //        globalPositionUpdate.stop();
 //    }
 //
