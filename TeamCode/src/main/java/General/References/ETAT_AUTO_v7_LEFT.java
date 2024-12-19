@@ -310,9 +310,9 @@
 //        armMotor.setTargetPosition((int) (armTargetPosition));
 //        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //        armMotor.setPower(arm_full_speed);
-//        while (armMotor.isBusy()){
-//            idle();
-//        }
+////        while (armMotor.isBusy()){
+////            idle();
+////        }
 //        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //        sleep(SLEEPvalue);
 //
@@ -323,8 +323,8 @@
 //        armMotor.setPower(arm_full_speed);
 ////                sleep(5000);
 //        // new code need to test.
-//        while (armMotor.isBusy()){idle();}
-//        sleep(SLEEPvalue);
+////        while (armMotor.isBusy()){idle();}
+////        sleep(SLEEPvalue);
 //
 //        //STEP5: Pull the back so that specimen can clip to rod
 //        Drive_To_XY_Position(16,-13,0.4,0,1);  // Y = -13 to -11
