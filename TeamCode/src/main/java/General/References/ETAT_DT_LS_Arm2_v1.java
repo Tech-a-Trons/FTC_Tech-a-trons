@@ -310,7 +310,6 @@ public class ETAT_DT_LS_Arm2_v1 extends LinearOpMode {
                     Claw_Servo.setPosition(clawOperation);
                 }
             }
-
             // For Claw code end
 
 //            //For Arm code start==================================================================
@@ -324,9 +323,9 @@ public class ETAT_DT_LS_Arm2_v1 extends LinearOpMode {
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 armMotor.setPower(arm_full_speed);
 
-                while (armMotor.isBusy()){
-                    idle();
-                }
+//                while (armMotor.isBusy()){
+//                    idle();
+//                }
                 armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 armMotor.setPower(0);
                 arm_motorRunning = true;
