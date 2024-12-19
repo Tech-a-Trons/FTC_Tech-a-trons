@@ -4,6 +4,7 @@
 
 
 ////Please don't edit this one. Only use it for reference
+////Use the new v7 version
 
 
 
