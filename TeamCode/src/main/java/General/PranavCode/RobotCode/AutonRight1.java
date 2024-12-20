@@ -22,11 +22,11 @@ public class AutonRight1 extends LinearOpMode {
     DcMotor br = null;
     DcMotor ls1 = null;
     DcMotor ls2 = null;
-    DcMotor arm = null;
+    // DcMotor arm = null;
 //    DcMotor fle = null;
 //    DcMotor fre = null;
 //    DcMotor bme = null;
-    Servo servo1;
+    //Servo servo1;
     IMU imu;
 
 
@@ -50,7 +50,7 @@ public class AutonRight1 extends LinearOpMode {
 
         //1
         //TEST CODE
-        servo1.setPosition(0);
+        //servo1.setPosition(0);
         fl.setTargetPosition(500);
         fr.setTargetPosition(500);
         bl.setTargetPosition(500);
@@ -61,16 +61,16 @@ public class AutonRight1 extends LinearOpMode {
         if (YawAng() < 180) {
             Pwr(0.25, -0.25, 0.25, -0.25);
         }
-        arm.setTargetPosition(-670);
-        arm.setPower(0.3);
+        //arm.setTargetPosition(-670);
+        //arm.setPower(0.3);
         fl.setTargetPosition(400);
         fr.setTargetPosition(400);
         bl.setTargetPosition(400);
         br.setTargetPosition(400);
         Pwr(0.3,0.3,0.3,0.3);
-        servo1.setPosition(1);
-        arm.setTargetPosition(0);
-        arm.setPower(0.35);
+        //servo1.setPosition(1);
+        //arm.setTargetPosition(0);
+        //arm.setPower(0.35);
 
         //3
         if (YawAng() > 90) {
