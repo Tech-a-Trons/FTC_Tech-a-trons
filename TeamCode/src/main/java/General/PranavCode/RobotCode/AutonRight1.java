@@ -139,7 +139,7 @@ public class AutonRight1 extends LinearOpMode {
 
             //3
             if (YawAng() < 90) {
-                Pwr(0.25, -0.25, 0.25, -0.25);
+                Pwr(-0.25, 0.25, -0.25, 0.25);
             }
         }
         //Before this consult and check code
