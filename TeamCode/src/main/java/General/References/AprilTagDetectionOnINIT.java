@@ -19,29 +19,31 @@
  * SOFTWARE.
  */
 
-package General.SammyStuff.S_Tests.TestAuton.OpenCVtesting;
+package General.References;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.ArrayList;
 
-import General.SammyStuff.S_Tests.TestAuton.OpenCVtesting.AprilTagDetectionPipeline;
+import General.SammyStuff.S_Tests.TestAuton.OpenCVtesting.Pipelines.AprilTagDetectionPipeline;
 
-@TeleOp
-public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
+@TeleOp(name = "CVTEST")
+public class AprilTagDetectionOnINIT extends LinearOpMode
 {
+
+  // This code uses OpenCv and will be reference
+ // we are probably using the built in april tag detector but will be using open cv for color detection
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -55,13 +57,37 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     double fy = 578.272;
     double cx = 402.145;
     double cy = 221.506;
+    MultipleTelemetry telemetry = new MultipleTelemetry( FtcDashboard.getInstance().getTelemetry());
+
 
     // UNITS ARE METERS
     double tagsize = 0.166;
 
-    int ID_TAG_OF_INTEREST = 18; // Tag ID 18 from the 36h11 family
+    // tracking the id
+    int zero = 0;
+    int one = 1;
+    int two = 2;
+    int three = 3;
+    int four = 4;
+    int five= 5;
+    int six = 6;
+    int seven = 7;
+    int eight = 8;
+    int nine = 9;
+    int ten = 10;
+    int eleven = 11;
+    int twelve = 12;
+    int thirteen = 13;
+    int fourteen = 14;
+    int fifteen = 15;
+    int sixteen = 16;
+    int seventeen = 17;
+    int eighteen = 18;
+    int nineteen = 19;
 
-    AprilTagDetection tagOfInterest = null;
+
+
+    org.openftc.apriltag.AprilTagDetection tagOfInterest = null;
 
     @Override
     public void runOpMode()
@@ -69,6 +95,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
+
 
         camera.setPipeline(aprilTagDetectionPipeline);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
@@ -94,19 +121,24 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
          */
         while (!isStarted() && !isStopRequested())
         {
-            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
+            ArrayList<org.openftc.apriltag.AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
 
             if(currentDetections.size() != 0)
             {
                 boolean tagFound = false;
 
-                for(AprilTagDetection tag : currentDetections)
+                for(org.openftc.apriltag.AprilTagDetection tag : currentDetections)
                 {
-                    if(tag.id == ID_TAG_OF_INTEREST)
+                    if(tag.id == zero ||tag.id == one|| tag.id==two || tag.id==three||tag.id == four||
+                            tag.id == five||tag.id==six||tag.id==seven||tag.id==eight||tag.id==nine||
+                            tag.id==ten||tag.id==eleven||tag.id==twelve||tag.id==thirteen||tag.id==fourteen||
+                            tag.id==fifteen||tag.id==sixteen|| tag.id == seventeen || tag.id == nineteen ||
+                            tag.id == eighteen)
                     {
                         tagOfInterest = tag;
                         tagFound = true;
                         break;
+
                     }
                 }
 
@@ -170,40 +202,22 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         }
 
         /* Actually do something useful */
-        if(tagOfInterest == null)
-        {
-            /*
-             * Insert your autonomous code here, presumably running some default configuration
-             * since the tag was never sighted during INIT
-             */
-        }
-        else
-        {
-            /*
-             * Insert your autonomous code here, probably using the tag pose to decide your configuration.
-             */
+       if (tagOfInterest.id == seventeen){
 
-            // e.g.
-            if(tagOfInterest.pose.x <= 20)
-            {
-                // do something
-            }
-            else if(tagOfInterest.pose.x >= 20 && tagOfInterest.pose.x <= 50)
-            {
-                // do something else
-            }
-            else if(tagOfInterest.pose.x >= 50)
-            {
-                // do something else
-            }
-        }
+       }else if(tagOfInterest == null|| tagOfInterest.id == eighteen){
+
+    }else if (tagOfInterest.id == nineteen){
+
+       }else{
+
+       }
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
         while (opModeIsActive()) {sleep(20);}
     }
 
-    void tagToTelemetry(AprilTagDetection detection)
+    void tagToTelemetry(org.openftc.apriltag.AprilTagDetection detection)
     {
         Orientation rot = Orientation.getOrientation(detection.pose.R, AxesReference.INTRINSIC, AxesOrder.YXZ, AngleUnit.DEGREES);
 
