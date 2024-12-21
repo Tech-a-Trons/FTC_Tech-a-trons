@@ -22,11 +22,11 @@ public class AutonRight1 extends LinearOpMode {
     DcMotor br = null;
     DcMotor ls1 = null;
     DcMotor ls2 = null;
-    // DcMotor arm = null;
+    DcMotor arm = null;
 //    DcMotor fle = null;
 //    DcMotor fre = null;
 //    DcMotor bme = null;
-    //Servo servo1;
+    Servo servo1;
     IMU imu;
 
 
@@ -61,19 +61,20 @@ public class AutonRight1 extends LinearOpMode {
         br.setPower(0);
 
         imu = hardwareMap.get(IMU.class, "imu");
-        //arm = hm.get(DcMotor.class, "arm");
+        arm = hardwareMap.get(DcMotor.class, "arm");
 //        fle = hardwareMap.dcMotor.get("fl");
 //        fre = hardwareMap.dcMotor.get("fr");
 //        bme = hardwareMap.dcMotor.get("bl");
-        //servo1 = hm.get(Servo.class, "claw");
+        servo1 = hardwareMap.get(Servo.class, "claw");
 
         ls1 = hardwareMap.get(DcMotor.class, "lsl");
         ls2 = hardwareMap.get(DcMotor.class, "lsr");
 
         ls1.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        //arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         IMU.Parameters IMUp;
 
@@ -108,6 +109,11 @@ public class AutonRight1 extends LinearOpMode {
         fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         telemetry.addLine("Init + Config : Press the start button");
         telemetry.update();
@@ -161,12 +167,6 @@ public class AutonRight1 extends LinearOpMode {
             if (YawAng() < 90) {
                 Pwr(-0.25, 0.25, -0.25, 0.25);
             }
-            telemetry.clear();
-            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
-            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
-            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
-            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
-            telemetry.update();
             sleep(10);
 
             //4
@@ -184,8 +184,173 @@ public class AutonRight1 extends LinearOpMode {
             sleep(10);
 
             //5
+            fl.setTargetPosition(600);
+            fr.setTargetPosition(600);
+            bl.setTargetPosition(600);
+            br.setTargetPosition(600);
+            Pwr(-0.1,0.1, 0.1, -0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
 
+            //6
+            fl.setTargetPosition(630);
+            fr.setTargetPosition(630);
+            bl.setTargetPosition(630);
+            br.setTargetPosition(630);
+            Pwr(0.1,0.1, 0.1, 0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
 
+            //7
+            if (YawAng() < 90) {
+                Pwr(-0.25, 0.25, -0.25, 0.25);
+            }
+            sleep(10);
+
+            //8
+            fl.setTargetPosition(800);
+            fr.setTargetPosition(800);
+            bl.setTargetPosition(800);
+            br.setTargetPosition(800);
+            Pwr(0.1,0.1, 0.1, 0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
+
+            //9
+            fl.setTargetPosition(630);
+            fr.setTargetPosition(630);
+            bl.setTargetPosition(630);
+            br.setTargetPosition(630);
+            Pwr(-0.1,-0.1, -0.1, -0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
+
+            //10
+            fl.setTargetPosition(650);
+            fr.setTargetPosition(650);
+            bl.setTargetPosition(650);
+            br.setTargetPosition(650);
+            Pwr(0.1,-0.1, -0.1, 0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
+
+            //11
+            fl.setTargetPosition(820);
+            fr.setTargetPosition(820);
+            bl.setTargetPosition(820);
+            br.setTargetPosition(820);
+            Pwr(0.1,0.1, 0.1, 0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
+
+            //12
+            fl.setTargetPosition(650);
+            fr.setTargetPosition(650);
+            bl.setTargetPosition(650);
+            br.setTargetPosition(650);
+            Pwr(-0.1,-0.1, -0.1, -0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
+
+            //13
+            fl.setTargetPosition(670);
+            fr.setTargetPosition(670);
+            bl.setTargetPosition(670);
+            br.setTargetPosition(670);
+            Pwr(0.1,-0.1, -0.1, 0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
+
+            //14
+            fl.setTargetPosition(840);
+            fr.setTargetPosition(840);
+            bl.setTargetPosition(840);
+            br.setTargetPosition(840);
+            Pwr(0.1,0.1, 0.1, 0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
+
+            //15
+            fl.setTargetPosition(800);
+            fr.setTargetPosition(800);
+            bl.setTargetPosition(800);
+            br.setTargetPosition(800);
+            Pwr(-0.1,0.1, 0.1, -0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
+
+            //16
+            if (YawAng() < 90) {
+                Pwr(-0.25, 0.25, -0.25, 0.25);
+            }
+            sleep(10);
+
+            //17
+            fl.setTargetPosition(600);
+            fr.setTargetPosition(600);
+            bl.setTargetPosition(600);
+            br.setTargetPosition(600);
+            Pwr(-0.1,0.1, 0.1, -0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
+
+            //18
+            //arm.setTargetPosition(-670);
         }
     }
 }
