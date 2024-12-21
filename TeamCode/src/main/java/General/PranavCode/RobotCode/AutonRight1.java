@@ -44,7 +44,67 @@ public class AutonRight1 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        functions.hw(true);
+        fl = hardwareMap.get(DcMotor.class, "fl");
+        fr = hardwareMap.get(DcMotor.class, "fr");
+        bl = hardwareMap.get(DcMotor.class, "bl");
+        br = hardwareMap.get(DcMotor.class, "br");
+
+        fl.setDirection(DcMotorSimple.Direction.REVERSE);
+        bl.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        fl.setPower(0);
+        fr.setPower(0);
+        bl.setPower(0);
+        br.setPower(0);
+
+        imu = hardwareMap.get(IMU.class, "imu");
+        //arm = hm.get(DcMotor.class, "arm");
+//        fle = hardwareMap.dcMotor.get("fl");
+//        fre = hardwareMap.dcMotor.get("fr");
+//        bme = hardwareMap.dcMotor.get("bl");
+        //servo1 = hm.get(Servo.class, "claw");
+
+        ls1 = hardwareMap.get(DcMotor.class, "lsl");
+        ls2 = hardwareMap.get(DcMotor.class, "lsr");
+
+        ls1.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        //arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        IMU.Parameters IMUp;
+
+        IMUp = new IMU.Parameters(
+                new RevHubOrientationOnRobot(
+                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                        RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                )
+        );
+        imu.initialize(IMUp);
+
+        YawPitchRollAngles robotOrientation;
+        robotOrientation = imu.getRobotYawPitchRollAngles();
+
+        double Yaw   = robotOrientation.getYaw(AngleUnit.DEGREES);
+        double Pitch = robotOrientation.getPitch(AngleUnit.DEGREES);
+        double Roll  = robotOrientation.getRoll(AngleUnit.DEGREES);
+
+        imu.resetYaw();
+
+        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
 
