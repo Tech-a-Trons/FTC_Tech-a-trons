@@ -44,6 +44,9 @@ public class AutonRight1 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+        telemetry.addData("Status: ", "Init Complete!");
+        telemetry.update();
+
         fl = hardwareMap.get(DcMotor.class, "fl");
         fr = hardwareMap.get(DcMotor.class, "fr");
         bl = hardwareMap.get(DcMotor.class, "bl");
@@ -106,35 +109,36 @@ public class AutonRight1 extends LinearOpMode {
         bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        telemetry.addLine("Init + Config : Press the start button");
+        telemetry.update();
+
         waitForStart();
 
         while (opModeIsActive()) {
             //1
             //TEST CODE
             //servo1.setPosition(0);
-            fl.setTargetPosition(500);
-            fr.setTargetPosition(500);
-            bl.setTargetPosition(500);
-            br.setTargetPosition(500);
-            Pwr(0.25, 0.25, 0.25, 0.25);
+            fl.setTargetPosition(300);
+            fr.setTargetPosition(300);
+            bl.setTargetPosition(300);
+            br.setTargetPosition(300);
+            Pwr(0.1, 0.1, 0.1, 0.1);
+            sleep(10);
 
             //2
-            if (YawAng() < 180) {
-                Pwr(0.25, -0.25, 0.25, -0.25);
-            }
             //arm.setTargetPosition(-670);
             //arm.setPower(0.3);
-            fl.setTargetPosition(400);
-            fr.setTargetPosition(400);
-            bl.setTargetPosition(400);
-            br.setTargetPosition(400);
+            fl.setTargetPosition(200);
+            fr.setTargetPosition(200);
+            bl.setTargetPosition(200);
+            br.setTargetPosition(200);
             Pwr(0.3, 0.3, 0.3, 0.3);
             //servo1.setPosition(1);
             //arm.setTargetPosition(0);
             //arm.setPower(0.35);
 
             //3
-            if (YawAng() > 90) {
+            if (YawAng() < 90) {
                 Pwr(0.25, -0.25, 0.25, -0.25);
             }
         }
