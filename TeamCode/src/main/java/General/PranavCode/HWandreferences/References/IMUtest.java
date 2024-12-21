@@ -11,7 +11,6 @@ import com.qualcomm.hardware.bosch.BHI260IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 @Autonomous(name = "IMUSen")
-@Disabled
 
 public class IMUtest extends LinearOpMode {
 
