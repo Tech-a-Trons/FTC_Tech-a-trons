@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 
-package General.SammyStuff.S_Tests.TestAuton.OpenCVtesting;
+package General.References;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -36,8 +36,10 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@TeleOp(name = "CVtest")
-public class AprilTagAutonomousInitDetectionExampleSammy extends LinearOpMode
+import General.SammyStuff.S_Tests.TestAuton.OpenCVtesting.Pipelines.AprilTagDetectionPipeline;
+
+@TeleOp(name = "CVTEST")
+public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -56,12 +58,7 @@ public class AprilTagAutonomousInitDetectionExampleSammy extends LinearOpMode
     // UNITS ARE METERS
     double tagsize = 0.166;
 
-    // tag id of sleeve
-    int left = 17;
-    int middle = 18;
-    int right = 19;
-
-
+    int ID_TAG_OF_INTEREST = 18; // Tag ID 18 from the 36h11 family
 
     AprilTagDetection tagOfInterest = null;
 
@@ -102,11 +99,9 @@ public class AprilTagAutonomousInitDetectionExampleSammy extends LinearOpMode
             {
                 boolean tagFound = false;
 
-
-
                 for(AprilTagDetection tag : currentDetections)
                 {
-                    if(tag.id == left|| tag.id == middle || tag.id == right)
+                    if(tag.id == ID_TAG_OF_INTEREST)
                     {
                         tagOfInterest = tag;
                         tagFound = true;
@@ -174,13 +169,33 @@ public class AprilTagAutonomousInitDetectionExampleSammy extends LinearOpMode
         }
 
         /* Actually do something useful */
-       if( tagOfInterest.id == left ){
+        if(tagOfInterest == null)
+        {
+            /*
+             * Insert your autonomous code here, presumably running some default configuration
+             * since the tag was never sighted during INIT
+             */
+        }
+        else
+        {
+            /*
+             * Insert your autonomous code here, probably using the tag pose to decide your configuration.
+             */
 
-       }else if(tagOfInterest == null||tagOfInterest.id == middle){
-
-    }else if (tagOfInterest.id == right){
-
-       }
+            // e.g.
+            if(tagOfInterest.pose.x <= 20)
+            {
+                // do something
+            }
+            else if(tagOfInterest.pose.x >= 20 && tagOfInterest.pose.x <= 50)
+            {
+                // do something else
+            }
+            else if(tagOfInterest.pose.x >= 50)
+            {
+                // do something else
+            }
+        }
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
