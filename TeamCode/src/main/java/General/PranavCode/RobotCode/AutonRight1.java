@@ -115,6 +115,13 @@ public class AutonRight1 extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+
             //1
             //TEST CODE
             //servo1.setPosition(0);
@@ -123,6 +130,12 @@ public class AutonRight1 extends LinearOpMode {
             bl.setTargetPosition(300);
             br.setTargetPosition(300);
             Pwr(0.1, 0.1, 0.1, 0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
             sleep(10);
 
             //2
@@ -132,17 +145,47 @@ public class AutonRight1 extends LinearOpMode {
             fr.setTargetPosition(200);
             bl.setTargetPosition(200);
             br.setTargetPosition(200);
-            Pwr(0.3, 0.3, 0.3, 0.3);
+            Pwr(0.1, 0.1, 0.1, 0.1);
             //servo1.setPosition(1);
             //arm.setTargetPosition(0);
             //arm.setPower(0.35);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
 
             //3
             if (YawAng() < 90) {
                 Pwr(-0.25, 0.25, -0.25, 0.25);
             }
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
+
+            //4
+            fl.setTargetPosition(350);
+            fr.setTargetPosition(350);
+            bl.setTargetPosition(350);
+            br.setTargetPosition(350);
+            Pwr(0.1,0.1, 0.1, 0.1);
+            telemetry.clear();
+            telemetry.addData( "fl: ",String.valueOf(fl.getCurrentPosition()));
+            telemetry.addData( "fr: ", String.valueOf(fr.getCurrentPosition()));
+            telemetry.addData("bl: ", String.valueOf(bl.getCurrentPosition()));
+            telemetry.addData("br: ",String.valueOf(br.getCurrentPosition()));
+            telemetry.update();
+            sleep(10);
+
+            //5
+
+
         }
-        //Before this consult and check code
-        //Then code rest
     }
 }
