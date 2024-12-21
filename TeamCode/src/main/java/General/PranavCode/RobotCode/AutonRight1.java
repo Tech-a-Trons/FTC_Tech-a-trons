@@ -108,35 +108,36 @@ public class AutonRight1 extends LinearOpMode {
 
         waitForStart();
 
-        //1
-        //TEST CODE
-        //servo1.setPosition(0);
-        fl.setTargetPosition(500);
-        fr.setTargetPosition(500);
-        bl.setTargetPosition(500);
-        br.setTargetPosition(500);
-        Pwr(0.25,0.25 ,0.25 ,0.25);
+        while (opModeIsActive()) {
+            //1
+            //TEST CODE
+            //servo1.setPosition(0);
+            fl.setTargetPosition(500);
+            fr.setTargetPosition(500);
+            bl.setTargetPosition(500);
+            br.setTargetPosition(500);
+            Pwr(0.25, 0.25, 0.25, 0.25);
 
-        //2
-        if (YawAng() < 180) {
-            Pwr(0.25, -0.25, 0.25, -0.25);
+            //2
+            if (YawAng() < 180) {
+                Pwr(0.25, -0.25, 0.25, -0.25);
+            }
+            //arm.setTargetPosition(-670);
+            //arm.setPower(0.3);
+            fl.setTargetPosition(400);
+            fr.setTargetPosition(400);
+            bl.setTargetPosition(400);
+            br.setTargetPosition(400);
+            Pwr(0.3, 0.3, 0.3, 0.3);
+            //servo1.setPosition(1);
+            //arm.setTargetPosition(0);
+            //arm.setPower(0.35);
+
+            //3
+            if (YawAng() > 90) {
+                Pwr(0.25, -0.25, 0.25, -0.25);
+            }
         }
-        //arm.setTargetPosition(-670);
-        //arm.setPower(0.3);
-        fl.setTargetPosition(400);
-        fr.setTargetPosition(400);
-        bl.setTargetPosition(400);
-        br.setTargetPosition(400);
-        Pwr(0.3,0.3,0.3,0.3);
-        //servo1.setPosition(1);
-        //arm.setTargetPosition(0);
-        //arm.setPower(0.35);
-
-        //3
-        if (YawAng() > 90) {
-            Pwr(0.25, -0.25, 0.25, -0.25);
-        }
-
         //Before this consult and check code
         //Then code rest
     }
