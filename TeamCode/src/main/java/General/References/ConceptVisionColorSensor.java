@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package General.References;
 
 import android.graphics.Color;
 import android.util.Size;
@@ -27,14 +27,13 @@ import android.util.Size;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.opencv.ImageRegion;
 import org.firstinspires.ftc.vision.opencv.PredominantColorProcessor;
+
 
 /*
  * This OpMode illustrates how to use a video source (camera) as a color sensor
@@ -58,10 +57,11 @@ import org.firstinspires.ftc.vision.opencv.PredominantColorProcessor;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Disabled
+
 @Autonomous(name = "Concept: Vision Color-Sensor", group = "Concept")
 public class ConceptVisionColorSensor extends LinearOpMode
 {
+
     MultipleTelemetry telemetry = new MultipleTelemetry(FtcDashboard.getInstance().getTelemetry());
 
     @Override
@@ -88,15 +88,16 @@ public class ConceptVisionColorSensor extends LinearOpMode
          *     This will force any other colored region into one of these colors.
          *     eg: Green may be reported as YELLOW, as this may be the "closest" match.
          */
-
+       
         PredominantColorProcessor colorSensor = new PredominantColorProcessor.Builder()
                 .setRoi(ImageRegion.asUnityCenterCoordinates(-0.1, 0.1, 0.1, -0.1))
                 .setSwatches(
                         PredominantColorProcessor.Swatch.RED,
                         PredominantColorProcessor.Swatch.BLUE,
-                        PredominantColorProcessor.Swatch.YELLOW,
-                        PredominantColorProcessor.Swatch.BLACK,
-                        PredominantColorProcessor.Swatch.WHITE)
+                        PredominantColorProcessor.Swatch.YELLOW
+                       // PredominantColorProcessor.Swatch.BLACK,
+                       // PredominantColorProcessor.Swatch.WHITE
+                                )
                 .build();
 
         /*

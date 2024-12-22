@@ -1,4 +1,4 @@
-package General.SammyStuff.S_Tests.TestAuton.OpenCVtesting.colorDetection;
+package General.SammyStuff.S_Tests.TestAuton.VIsiontesting.colorDetection;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -55,8 +55,8 @@ public class openCvColorDetection extends OpMode {
         Mat RedCrop;
         Mat BlueCrop;
 
-        int Redavgfin;
-        int Blueavgfin;
+        double Redavgfin;
+        double Blueavgfin;
         Mat outPut = new Mat();
         Scalar RectColor = new Scalar(255, 0, 0, 0);
 
@@ -73,20 +73,22 @@ public class openCvColorDetection extends OpMode {
             BlueCrop = YCbCr.submat(Fullrect);
 
             Core.extractChannel(RedCrop, RedCrop, 2);
-            Core.extractChannel(BlueCrop, BlueCrop, 0);
+            Core.extractChannel(BlueCrop, BlueCrop, 1);
             Scalar redavg = Core.mean(RedCrop);
             Scalar blueavg = Core.mean(RedCrop);
-            Redavgfin = (int) redavg.val[0];
-            Blueavgfin = (int) blueavg.val[0];
+            Redavgfin =  redavg.val[0];
+            Blueavgfin =  blueavg.val[0];
 
 
-            if (Redavgfin>100&& Redavgfin<110) {
+            if (Redavgfin>99&& Redavgfin<108) {
                 telemetry.addLine("Red sample has been detected");
                 telemetry.addData("red value", Redavgfin);
 
             }
-            else if (Redavgfin > 110 ) {
+            else if (Redavgfin >=108 ) {
                 telemetry.addLine("Yellow sample has been detected");
+            }else if (Redavgfin < Blueavgfin){
+                telemetry.addLine("blue sample has been detected");
             }else{
                 telemetry.addLine("No samples detected");
             }

@@ -36,7 +36,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-import General.SammyStuff.S_Tests.TestAuton.OpenCVtesting.Pipelines.AprilTagDetectionPipeline;
+import General.SammyStuff.S_Tests.TestAuton.VIsiontesting.Pipelines.AprilTagDetectionPipeline;
 
 @TeleOp(name = "CVTEST")
 public class AprilTagDetectionOnINIT extends LinearOpMode
