@@ -111,8 +111,9 @@ public class SensorGoBildaPinpointExample extends LinearOpMode {
         This is recommended before you run your autonomous, as a bad initial calibration can cause
         an incorrect starting value for x, y, and heading.
          */
-        //odo.recalibrateIMU();
+
         odo.resetPosAndIMU();
+        odo.recalibrateIMU();
 
         telemetry.addData("Status", "Initialized");
         telemetry.addData("X offset", odo.getXOffset());
@@ -142,13 +143,17 @@ public class SensorGoBildaPinpointExample extends LinearOpMode {
             //odo.update(GoBildaPinpointDriver.readData.ONLY_UPDATE_HEADING);
 
 
-            if (gamepad1.a){
-                odo.resetPosAndIMU(); //resets the position to 0 and recalibrates the IMU
-            }
+//            if (gamepad1.a){
+//                odo.resetPosAndIMU(); //resets the position to 0 and recalibrates the IMU
+//            }
+//
+//            if (gamepad1.b){
+//                odo.recalibrateIMU(); //recalibrates the IMU without resetting position
+//            }
 
-            if (gamepad1.b){
-                odo.recalibrateIMU(); //recalibrates the IMU without resetting position
-            }
+            //odo.resetPosAndIMU();
+
+            //odo.recalibrateIMU();
 
             /*
             This code prints the loop frequency of the REV Control Hub. This frequency is effected
@@ -167,14 +172,14 @@ public class SensorGoBildaPinpointExample extends LinearOpMode {
              */
             Pose2D pos = odo.getPosition();
             String data = String.format(Locale.US, "{X: %.3f, Y: %.3f, H: %.3f}", pos.getX(DistanceUnit.MM), pos.getY(DistanceUnit.MM), pos.getHeading(AngleUnit.DEGREES));
-            telemetry.addData("Position", data);
+            telemetry.addData("Position1", data);
 
             /*
             gets the current Velocity (x & y in mm/sec and heading in degrees/sec) and prints it.
              */
             Pose2D vel = odo.getVelocity();
             String velocity = String.format(Locale.US,"{XVel: %.3f, YVel: %.3f, HVel: %.3f}", vel.getX(DistanceUnit.MM), vel.getY(DistanceUnit.MM), vel.getHeading(AngleUnit.DEGREES));
-            telemetry.addData("Velocity", velocity);
+            telemetry.addData("Velocity1", velocity);
 
 
             /*
