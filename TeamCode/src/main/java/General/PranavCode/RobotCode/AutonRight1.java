@@ -12,7 +12,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 @Autonomous (name = "AutonRightPran")
-public class AutonRight1 extends LinearOpMode {
+public class
+AutonRight1 extends LinearOpMode {
 
     private PranFunctions functions = new PranFunctions(this);
 
