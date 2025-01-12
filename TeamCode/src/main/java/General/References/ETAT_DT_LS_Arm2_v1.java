@@ -143,7 +143,7 @@ public class ETAT_DT_LS_Arm2_v1 extends LinearOpMode {
         BackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         //For Linear SLide
-        RightLinearSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+       // RightLinearSlide.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // For Arm
 //        armMotor.setDirection(DcMotorSimple.Direction.REVERSE);

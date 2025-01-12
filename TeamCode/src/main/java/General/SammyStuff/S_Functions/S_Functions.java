@@ -44,6 +44,8 @@ public class S_Functions {
     //servo
     public Servo claw;
     public CRServo ActiveIntake;
+    public Servo clawPivot;
+    public Servo ChannelSlides;
     //LinearSlides
     public DcMotor fslsLeft;
     public DcMotor fslsRight;
@@ -70,10 +72,13 @@ public class S_Functions {
         bme = hmap.dcMotor.get("bl");
         imu =  hmap.get(IMU.class, "imu");
         claw =  hmap.get(Servo.class, "claw");
+        ChannelSlides = hmap.get(Servo.class,"channelSlides");
+        clawPivot = hmap.get(Servo.class,"clawPivot");
         ActiveIntake =  hmap.get(CRServo.class, "activeintake");
         fslsLeft =  hmap.get(DcMotor.class, "lsl");
         fslsRight =  hmap.get(DcMotor.class, "Lsr");
         arm =  hmap.get(DcMotor.class,"arm");
+
         fl.setDirection(DcMotorSimple.Direction.REVERSE);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -92,6 +97,10 @@ public class S_Functions {
             bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+            fslsLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            fslsRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             fle.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             bme.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

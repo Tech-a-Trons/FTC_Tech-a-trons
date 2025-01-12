@@ -13,7 +13,10 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 @Autonomous(name = "CVScratchTest")
 public class Apriltag2ndtut extends LinearOpMode {
-
+    double cx = 640;
+    double cy = 360;
+    double fx =959.646;
+    double fy = 959.646;
     MultipleTelemetry telemetry = new MultipleTelemetry( FtcDashboard.getInstance().getTelemetry());
     @Override
     public void runOpMode() throws InterruptedException {
@@ -24,11 +27,12 @@ public class Apriltag2ndtut extends LinearOpMode {
                 .setDrawCubeProjection(true)
                 .setDrawTagID(true)
                 .setDrawTagOutline(true)
+                .setLensIntrinsics(fx,fy,cx,cy)
                 .build();
         VisionPortal Vportal = new VisionPortal.Builder()
                 .addProcessor(tagProcessor)
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
-                .setCameraResolution(new Size(640, 480))
+                .setCameraResolution(new Size(1280, 720))
                 .build();
 
 
@@ -45,12 +49,12 @@ public class Apriltag2ndtut extends LinearOpMode {
                 double myTagPoseRoll = tag.ftcPose.roll;
                 double myTagPoseYaw = tag.ftcPose.yaw;
                 telemetry.addData("Apriltag detected:", tag.id);
-                telemetry.addData("x", myTagPoseX*100);
-                telemetry.addData("y", myTagPoseY*100);
-                telemetry.addData("z", myTagPoseZ*100);
-                telemetry.addData("yaw", myTagPoseYaw*100);
-                telemetry.addData("roll", myTagPoseRoll*100);
-                telemetry.addData("pitch", myTagPosePitch*100);
+                telemetry.addData("x", myTagPoseX);
+                telemetry.addData("y", myTagPoseY);
+                telemetry.addData("z", myTagPoseZ);
+                telemetry.addData("yaw", myTagPoseYaw);
+                telemetry.addData("roll", myTagPoseRoll);
+                telemetry.addData("pitch", myTagPosePitch);
 
 
                 telemetry.update();
