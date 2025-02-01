@@ -8,11 +8,12 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class S_teleOpThatShouldWork extends LinearOpMode {
-
        //servos
-    Servo ChannelSlides;
-    Servo claw;
-    Servo clawPivot;
+    public Servo SzoneSlide = null;
+
+    Servo speciminClaw;
+    Servo sampleClaw;
+    Servo sampleClawPivot;
 
     //Drive Train
     double drive; // drive: left joystick y-axis
@@ -25,9 +26,29 @@ public class S_teleOpThatShouldWork extends LinearOpMode {
 
 
     DcMotor fl,fr,bl,br;
+//sleides
+    boolean SzoneSlideExtended = false;
+    private boolean SzoneSlide_lastBump = false;
+//slides
+public DcMotor LeftLinearSlide = null;
+    public DcMotor RightLinearSlide = null;
+    final double LS_TICKS_PER_MM = 537.7 / 120.0;
+    double LS_full_speed = 0.8;   //0.8 or 1.0
+    double LS_half_speed = LS_full_speed / 2;   // div 2
 
+    double LS_OneThird_speed = LS_full_speed / 3;   // div 3
+    boolean LS_motorRunning = false;
+    double LS_RESET_POSITION = 0;
+    double LS_TOLERANCE = 2.0;
 
+    //toggles
+   public static boolean SpeciminClawOpened = true;
+   public static boolean SampleClawOpened = true;
+   public static boolean GoingClockWise = true;
 
+   
+   
+   public static double SampleClawPivotPos =  0.325;
     @Override
     public void runOpMode() throws InterruptedException {
         Gamepad currentGamepad1 = new Gamepad();
@@ -36,8 +57,11 @@ public class S_teleOpThatShouldWork extends LinearOpMode {
         Gamepad previousGamepad1 = new Gamepad();
         Gamepad previousGamepad2 = new Gamepad();
 
-
-        ChannelSlides = hardwareMap.get(Servo.class, "channelSlides");
+        sampleClawPivot.setPosition(0.325);
+        speciminClaw = hardwareMap.get(Servo.class, "claw");
+        
+        sampleClaw.setPosition(0);
+        
 
         waitForStart();
 
@@ -78,10 +102,60 @@ public class S_teleOpThatShouldWork extends LinearOpMode {
 
         //Drive code ends Here
 
+        //Claw code starts here
+
+            //speciminCLaw
+        if(currentGamepad2.right_bumper && !previousGamepad2.right_bumper){
+
+            SpeciminClawOpened = !SpeciminClawOpened;
+        }
+
+        if (SpeciminClawOpened){
+        speciminClaw.setPosition(0);//close
+        }else if(!SpeciminClawOpened){
+            speciminClaw.setPosition(0.3);//open
+        }
+
+            //sample claw
+
+        if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper){
+            SampleClawOpened = !SampleClawOpened;
+        }
+
+        if (SampleClawOpened){
+            sampleClaw.setPosition(0.4);//close
+        }else if(!SampleClawOpened){
+         sampleClaw.setPosition(0.15);//open
+        }
 
 
 
+        //Claw Code End
 
+
+        // Claw Pivot code Start
+
+        if (currentGamepad2.y&&!previousGamepad2.y) {
+
+           if (GoingClockWise){
+               SampleClawPivotPos = SampleClawPivotPos - 0.1625;// goes in intervals of 0.1625
+               sampleClawPivot.setPosition(SampleClawPivotPos);
+
+           }else if(!GoingClockWise){
+               SampleClawPivotPos = SampleClawPivotPos + 0.1625;// goes in intervals of 0.1625
+               sampleClawPivot.setPosition(SampleClawPivotPos);
+           }
+        }
+
+        if (SampleClawPivotPos == 0.65|| SampleClawPivotPos == 0){
+            GoingClockWise = !GoingClockWise;
+        }
+
+
+        // Claw Pivot code Start and is Signinficantly simplified :)
+
+
+        //LS and Channel SLide will be used with PID so not in this one :)
 
 
     }

@@ -37,12 +37,17 @@ public class opencvRed extends LinearOpMode {
     // Calculate the distance using the formula
     public static final double objectWidthInRealWorldUnits = 3.5;  // Replace with the actual width of the object in real-world units
     public static final double focalLength = 800;  // Replace with the focal length of the camera in pixels
+    double WP1 = 0;
+    double WP2 = 0.1625;
+    double WP3 = 0.325;
+    double WP4 = 0.4875;
+    double WP5 = 0.65;
 
 
 
     @Override
     public void runOpMode() {
-        clawPivot = hardwareMap.get(Servo.class, "clawPivot");
+        clawPivot = hardwareMap.get(Servo.class, "wrist");
         initOpenCV();
         FtcDashboard dashboard = FtcDashboard.getInstance();
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
@@ -59,16 +64,34 @@ public class opencvRed extends LinearOpMode {
 //                telemetry.addData("Angle status", "not updating");
 //            }
 
-            double oneDegree = 0.00278;
-            double ClawPivotPos = 0.5-(oneDegree*(int)angle);
-            clawPivot.setPosition(ClawPivotPos);
-            telemetry.addData("Coordinate", "(" + (int) cX + ", " + (int) cY + ")");
-            telemetry.addData("Distance in Inch", (getDistance(width)));
-            telemetry.addData("angle", ClawPivotPos);
-            telemetry.update();
+            while (opModeIsActive()) {
+                double oneDegree = 0.00278;
+                double ClawPivotPos1 = (oneDegree * (int) angle);
+                double ClawPivotPos2 = 0;
 
-            if(gamepad2.a){
-                AngleFound =false;
+                if(ClawPivotPos1<=18){
+                    ClawPivotPos2 = WP1;
+                }else if (ClawPivotPos1<=0.36&&ClawPivotPos1 >0.18){
+                    ClawPivotPos2 = WP2;
+                }else if(ClawPivotPos1<=0.54&& ClawPivotPos1>0.36){
+                    ClawPivotPos2 = WP3;
+                }else if(ClawPivotPos1<=0.72&&ClawPivotPos1 >0.54){
+                    ClawPivotPos2 = WP4;
+                }else if (ClawPivotPos1<=0.90&&ClawPivotPos1>0.72){
+                    ClawPivotPos2 = WP5;
+                }
+
+
+                telemetry.addData("Coordinate", "(" + (int) cX + ", " + (int) cY + ")");
+                telemetry.addData("Distance in Inch", (getDistance(width)));
+                telemetry.addData("angle", ClawPivotPos1);
+                telemetry.update();
+                if (gamepad2.a) {
+                    clawPivot.setPosition(ClawPivotPos2);
+                }
+                if (gamepad2.back){
+                    clawPivot.setPosition(WP3);
+                }
             }
 
 
@@ -131,7 +154,6 @@ public class opencvRed extends LinearOpMode {
                 Imgproc.putText(input, angleLabel, new Point(cX + 10, cY + 60), Imgproc.FONT_HERSHEY_SIMPLEX, 0.5, new Scalar(0, 255, 0), 2);
                while(Double.isNaN(angle)&& !AngleFound) {
                    angle = getAngle(largestContour);
-                   AngleFound = true;
                }
 
                 Moments moments = Imgproc.moments(largestContour);
@@ -198,13 +220,14 @@ public class opencvRed extends LinearOpMode {
 
 
         if (largestContour == null || largestContour.toArray().length == 0) {
-            // no countours were found so we return anull value
+            // no countours were found so we return a null value
             return Double.NaN;
         }
         RotatedRect rotatedRect = Imgproc.minAreaRect(new  MatOfPoint2f(largestContour.toArray()));
         angle = rotatedRect.angle;
 
         return angle;
+
     }
 }
 

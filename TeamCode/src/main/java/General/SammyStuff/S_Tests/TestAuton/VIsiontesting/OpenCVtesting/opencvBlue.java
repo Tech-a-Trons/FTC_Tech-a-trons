@@ -71,7 +71,7 @@ public class opencvBlue extends LinearOpMode {
              clawPivot.setPosition(ClawPivotPos);
             }
             if (gamepad2.back){
-                clawPivot.setPosition(0);
+                clawPivot.setPosition(0.325);
             }
         }
 

@@ -79,7 +79,7 @@ import General.SammyStuff.S_Tests.TestAuton.VIsiontesting.colorDetection.openCvC
 
 @TeleOp(name = "Concept: Vision Color-Locator", group = "Concept")
 public class ConceptVisionColorLocator extends LinearOpMode {
-    MultipleTelemetry telemetry = new MultipleTelemetry(FtcDashboard.getInstance().getTelemetry());
+    //  MultipleTelemetry telemetry = new MultipleTelemetry(FtcDashboard.getInstance().getTelemetry());
 
 
     @Override
@@ -190,7 +190,7 @@ public class ConceptVisionColorLocator extends LinearOpMode {
              */
             ColorBlobLocatorProcessor.Util.sortByArea(SortOrder.DESCENDING, blobs);
             ColorBlobLocatorProcessor.Util.filterByArea(50,20000,blobs);
-            ColorBlobLocatorProcessor.Blob largestBlob = blobs.get(1);
+            ColorBlobLocatorProcessor.Blob largestBlob = blobs.get(0);
             /*
              * The list of Blobs can be sorted using the same Blob attributes as listed above.
              * No more than one sort call should be made.  Sorting can use ascending or descending order.
@@ -206,7 +206,6 @@ public class ConceptVisionColorLocator extends LinearOpMode {
 //            ArrayList<ColorBlobLocatorProcessor.Blob> contours = new ArrayList<>();
 //
 
-            boolean AngleFound = false;
             double angle = 0;
             for (ColorBlobLocatorProcessor.Blob b : blobs) {
 
@@ -223,12 +222,7 @@ public class ConceptVisionColorLocator extends LinearOpMode {
             }
 
 
-            if(angle<=70&&angle>=100) {
-                double ClawPivotPos = 0.25;
-                clawPivot.setPosition(ClawPivotPos);
-                telemetry.addData("angle(just checking)",angle);
-                telemetry.update();
-            }
+
         }
     }
 }

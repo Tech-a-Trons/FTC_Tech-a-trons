@@ -1,4 +1,4 @@
-package General.SammyStuff.GameCode.TeleOp;
+package General.SammyStuff.GameCode.TeleOp.IndividualTests;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;

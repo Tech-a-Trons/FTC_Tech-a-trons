@@ -87,7 +87,7 @@ public class RedBlobDetectionPipeline extends OpenCvPipeline {
         // yellow samples
 //        Scalar lowerYellow = new Scalar(80, 100, 100);
 //        Scalar upperYellow = new Scalar(110, 255, 255);
-        //blue samples
+//        //blue samples
         Scalar lowerYellow = new Scalar(0, 100, 100);
         Scalar upperYellow = new Scalar(30, 255, 255);
 
