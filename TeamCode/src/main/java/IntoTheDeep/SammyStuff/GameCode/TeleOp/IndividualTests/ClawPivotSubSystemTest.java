@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import IntoTheDeep.SammyStuff.GameCode.subsystems.ClawPivot;
+import IntoTheDeep.SammyStuff.GameCode.subsystems.FTCLIB.ClawPivot;
 @TeleOp(name = "ClawPivotSubsystemTest")
 public class ClawPivotSubSystemTest extends LinearOpMode {
 

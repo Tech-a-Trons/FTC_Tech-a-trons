@@ -9,11 +9,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import IntoTheDeep.SammyStuff.GameCode.subsystems.ClawPivot;
-import IntoTheDeep.SammyStuff.GameCode.subsystems.LinearSlides;
-import IntoTheDeep.SammyStuff.GameCode.subsystems.sampleClaw;
-import IntoTheDeep.SammyStuff.GameCode.subsystems.specClaw;
-import IntoTheDeep.SammyStuff.GameCode.subsystems.submersibleSlides;
+import IntoTheDeep.SammyStuff.GameCode.subsystems.FTCLIB.ClawPivot;
+import IntoTheDeep.SammyStuff.GameCode.subsystems.FTCLIB.LinearSlides;
+import IntoTheDeep.SammyStuff.GameCode.subsystems.FTCLIB.sampleClaw;
+import IntoTheDeep.SammyStuff.GameCode.subsystems.FTCLIB.specClaw;
+import IntoTheDeep.SammyStuff.GameCode.subsystems.FTCLIB.submersibleSlides;
 @TeleOp(name = "S_teleOpw/FTCLIB")
 public class S_TeleOpWithNotesFromPolaris extends LinearOpMode {
 
@@ -64,8 +64,8 @@ public class S_TeleOpWithNotesFromPolaris extends LinearOpMode {
 //    MecanumDrive mecanumDrive = new MecanumDrive(fl, fr, bl, br);
 
     //gamepads
-    GamepadEx driver;
-    GamepadEx tools;
+//    GamepadEx driver;
+//    GamepadEx tools;
 
 
     @Override
@@ -80,9 +80,9 @@ public class S_TeleOpWithNotesFromPolaris extends LinearOpMode {
         bl = hardwareMap.get(DcMotor.class,"bl");
         br = hardwareMap.get(DcMotor.class,"br");
 
-
-        driver = new GamepadEx(gamepad1);
-        tools = new GamepadEx(gamepad2);
+//
+//        driver = new GamepadEx(gamepad1);
+//        tools = new GamepadEx(gamepad2);
 
 
         Gamepad currentGamepad1 = new Gamepad();

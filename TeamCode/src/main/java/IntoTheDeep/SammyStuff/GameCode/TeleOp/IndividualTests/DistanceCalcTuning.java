@@ -24,16 +24,18 @@ import org.opencv.core.Scalar;
 
 import java.util.List;
 
-@TeleOp(name = "DistanceCalcTests")
+@TeleOp(name = "DistanceCalcTest")
 public class DistanceCalcTuning  extends LinearOpMode {
 
-    double focalLength = 822.317;
+    double focalLength = 1312.5;
     double actualWidth = 1.5;
+
+
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         ColorBlobLocatorProcessor colorLocator = new ColorBlobLocatorProcessor.Builder()
-                .setTargetColorRange(ColorRange.RED)// use a predefined color match
+                .setTargetColorRange(ColorRange.BLUE)// use a predefined color match
                 .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY)    // exclude blobs inside blobs
                 //.setRoi(ImageRegion.asUnityCenterCoordinates(-0.2, 1, 0.2, -1))  // search central 1/4 of camera view
                 .setRoi(ImageRegion.entireFrame())
@@ -70,6 +72,9 @@ public class DistanceCalcTuning  extends LinearOpMode {
 
 
                 largestBlob = blobs.get(0);
+
+
+
                 RotatedRect boxFit = largestBlob.getBoxFit();
 //                MatOfPoint size = largestBlob.getContour();
 
@@ -79,14 +84,16 @@ public class DistanceCalcTuning  extends LinearOpMode {
                 org.opencv.core.Size myBoxFitSize;
                 myBoxFitSize = boxFit.size;
 
+
+
                 double width;
                 double height;
                 if (boxFit.angle == 90) {
-                    height = myBoxFitSize.width;
-                    width = myBoxFitSize.height;
-                } else {
                     width = myBoxFitSize.width;
                     height = myBoxFitSize.height;
+                } else {
+                   height = myBoxFitSize.width;
+                    width = myBoxFitSize.height;
                 }
 
 //                double width = size.size().width;

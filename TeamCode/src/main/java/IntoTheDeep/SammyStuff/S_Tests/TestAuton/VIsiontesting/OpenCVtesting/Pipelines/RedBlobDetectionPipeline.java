@@ -31,24 +31,33 @@ public class RedBlobDetectionPipeline extends OpenCvPipeline {
     // Calculate the distance using the formula
     public static final double objectWidthInRealWorldUnits = 3.75;  // Replace with the actual width of the object in real-world units
     public static final double focalLength = 728;  // Replace with the focal length of the camera in pixels
+    MatOfPoint largestContour;
+
     @Override
     public Mat processFrame(Mat input) {
-        // Preprocess the frame to detect yellow regions
-        Mat yellowMask = preprocessFrame(input);
+        // Preprocess the frame to detect Blue regions
+        Mat BlueMask = preprocessFrame(input);
 
-        // Find contours of the detected yellow regions
+
+        // Find contours of the detected Blue regions
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();
-        Imgproc.findContours(yellowMask, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+        Imgproc.findContours(BlueMask, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
-        // Find the largest yellow contour (blob)
-        MatOfPoint largestContour = findLargestContour(contours);
+        // Find the largest Blue contour (blob)
+        largestContour = findLargestContour(contours);
+
 
         if (largestContour != null) {
-            // Draw a red outline around the largest detected object
-            Imgproc.drawContours(input, contours, contours.indexOf(largestContour), new Scalar(0, 255, 255), 2);
+
+
+
+
+            Imgproc.drawContours(input, contours, contours.indexOf(largestContour), new Scalar(0, 255,255), 2);
+
             // Calculate the width of the bounding box
             width = calculateWidth(largestContour);
+
 
             // Display the width next to the label
             String widthLabel = "Width: " + (int) width + " pixels";
@@ -60,10 +69,8 @@ public class RedBlobDetectionPipeline extends OpenCvPipeline {
 
             String angleLabel = "angle:" + getAngle(largestContour) + "degrees";
             Imgproc.putText(input, angleLabel, new Point(cX + 10, cY + 60), Imgproc.FONT_HERSHEY_SIMPLEX, 0.5, new Scalar(0, 255, 0), 2);
-            while(Double.isNaN(angle)&& !AngleFound) {
-                angle = getAngle(largestContour);
-                AngleFound = false;
-            }
+
+            angle = getAngle(largestContour);
 
             Moments moments = Imgproc.moments(largestContour);
             cX = moments.get_m10() / moments.get_m00();
@@ -75,32 +82,35 @@ public class RedBlobDetectionPipeline extends OpenCvPipeline {
 
         }
 
+
         return input;
     }
 
+
     private Mat preprocessFrame(Mat frame) {
         Mat hsvFrame = new Mat();
+
+
         Imgproc.cvtColor(frame, hsvFrame, Imgproc.COLOR_BGR2HSV);
-        // red samples
-//        Scalar lowerYellow = new Scalar(110, 100, 100);
-//        Scalar upperYellow = new Scalar(140, 255, 255);
-        // yellow samples
-//        Scalar lowerYellow = new Scalar(80, 100, 100);
-//        Scalar upperYellow = new Scalar(110, 255, 255);
-//        //blue samples
-        Scalar lowerYellow = new Scalar(0, 100, 100);
-        Scalar upperYellow = new Scalar(30, 255, 255);
+        //blue samples
+        Scalar lowerBlue = new Scalar(0, 100, 50);
+        Scalar upperBlue = new Scalar(50, 255, 255);
 
 
-        Mat yellowMask = new Mat();
-        Core.inRange(hsvFrame, lowerYellow, upperYellow, yellowMask);
+
+
+
+        Mat BlueMask = new Mat();
+
+        Core.inRange(hsvFrame, lowerBlue, upperBlue, BlueMask);
 
         Mat kernel = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5));
-        Imgproc.morphologyEx(yellowMask, yellowMask, Imgproc.MORPH_OPEN, kernel);
-        Imgproc.morphologyEx(yellowMask, yellowMask, Imgproc.MORPH_CLOSE, kernel);
+        Imgproc.morphologyEx(BlueMask, BlueMask, Imgproc.MORPH_OPEN, kernel);
+        Imgproc.morphologyEx(BlueMask, BlueMask, Imgproc.MORPH_CLOSE, kernel);
 
-        return yellowMask;
+        return BlueMask;
     }
+
 
     private MatOfPoint findLargestContour(List<MatOfPoint> contours) {
         double maxArea = 0;
@@ -121,10 +131,12 @@ public class RedBlobDetectionPipeline extends OpenCvPipeline {
         Rect boundingRect = Imgproc.boundingRect(contour);
         return boundingRect.width;
     }
+
     public static double getDistance(double width) {
         double distance = (objectWidthInRealWorldUnits * focalLength) / width;
         return distance;
     }
+
     public double getAngle(MatOfPoint largestContour) {
 
 
@@ -132,14 +144,16 @@ public class RedBlobDetectionPipeline extends OpenCvPipeline {
             // no countours were found so we return anull value
             return Double.NaN;
         }
-        RotatedRect rotatedRect = Imgproc.minAreaRect(new  MatOfPoint2f(largestContour.toArray()));
+        RotatedRect rotatedRect = Imgproc.minAreaRect(new MatOfPoint2f(largestContour.toArray()));
         angle = rotatedRect.angle;
+        if (rotatedRect.size.width < rotatedRect.size.height) {
+            angle += 90;
+        }
 
         return angle;
     }
+
 }
-
-
 
 
 

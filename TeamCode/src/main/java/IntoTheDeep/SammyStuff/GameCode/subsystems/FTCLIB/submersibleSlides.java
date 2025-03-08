@@ -1,4 +1,4 @@
-package IntoTheDeep.SammyStuff.GameCode.subsystems;
+package IntoTheDeep.SammyStuff.GameCode.subsystems.FTCLIB;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
